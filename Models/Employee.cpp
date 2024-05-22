@@ -84,7 +84,5 @@ void Employee::setRemarks(std::string newRemarks) {
     this->remarks = newRemarks;
 }
 
-
-
-
+//methode
 void Employee::updateProfile() {}
