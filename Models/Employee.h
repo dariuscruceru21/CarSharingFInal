@@ -9,22 +9,23 @@
 #include <string>
 
 class Employee {
-private:
 
+protected:
     std::string name;
     std::string surname;
     std::string email;
-    std::string position;
     std::string abbreviation;
-    float salary;
     std::string remarks;
     tm *birthdate;
-
+    float salary;
+    std::string position;
 public:
 
     //constructor
     Employee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
              std::string abbreviation, float salary, std::string remarks);
+
+    Employee();
 
     //getters
     std::string getName();

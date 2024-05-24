@@ -17,6 +17,8 @@ Employee::Employee(std::string name, std::string surname, std::string email, std
     this->remarks = remarks;
 }
 
+Employee::Employee() {}
+
 //getters
 
 std::string Employee::getName() {
