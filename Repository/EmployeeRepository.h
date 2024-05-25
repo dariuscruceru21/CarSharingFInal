@@ -18,13 +18,16 @@ public:
 
     ~EmployeeRepository() {}
 
-    void createEmployee();
+    void createEmployee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
+                        std::string abbreviation, float salary, std::string remarks);
 
-    auto findEmployeeByName();
+    Employee findEmployeeByName(const std::string& employeeName, const std::string& employeeSurname);
 
     std::vector<Employee> findEmployeeByString();
 
+
     auto saveEmployee();
+
 
     auto deleteEmployee();
 
