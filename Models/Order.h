@@ -79,6 +79,12 @@ public:
     //order number is issued automatically by the system
     int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
 
+
+    //transform obect into csv format
+    std::string toCSV() const;
+
+    //transform object from csv format
+    void fromCSV(const std::string &csvLine);
 };
 
 
