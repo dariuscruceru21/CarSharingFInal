@@ -129,3 +129,50 @@ void Order::writeAll() {
     std::cout<<"Ordered by "<<user.getUserLastName()<<", handled by"<<employee.getUserLastName()<<"\n";
     std::cout<<"-->Observation: "<<observation<<"\n\n";
 }
+
+
+
+
+
+void Order::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
+    std::list<Order> orderList;
+    for (Order obj: repository)
+    {
+        if (obj.begin >= &start && obj.end <= &end)   //object is to be written on the screen; add to orderList
+        {
+            orderList.push_back(obj);
+        }
+    }
+
+    orderList.sort(Order::compareByTotalPrice);
+
+    std::cout<<"All orders between the date of "<<&start<<" and "<<&end<<":\n";
+    for (Order i: orderList)
+    {
+        std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+    }
+}
+
+Order Order::searchOrderByOrderNumber(std::list<Order> repository, int orderNr) {
+    for (Order obj: repository)
+    {
+        if (obj.orderNumber == orderNr)
+            return obj;
+    }
+}
+
+void Order::totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type) {
+    if (type == "month")
+        for (Order obj: repository)
+        {
+            if (obj.begin->tm_mon <= time.tm_mon && obj.end->tm_mon >= time.tm_mon) //if the month is included in the order's time interval
+                std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+        }
+    else
+        for (Order obj: repository)
+        {
+            if (obj.begin->tm_year >= time.tm_year && obj.end->tm_year <= time.tm_year) //if the time is included in a year
+                std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+
+        }
+}
