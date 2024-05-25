@@ -12,6 +12,7 @@ private:
     std::string name;
     std::string surname;
     std::string phone;
+    std::string customerEmail;
     std::string address;
     std::string remarks;
     bool gdprDeleted;
@@ -37,6 +38,8 @@ public:
 
     std::string getRemarks();
 
+    std::string getEmail();
+
     bool getGdprDeleted();
 
     void setName(std::string newName);
@@ -44,6 +47,8 @@ public:
     void setSurname(std::string newSurname);
 
     void setPhone(std::string newPhone);
+
+    void setEmail(std::string newEmail);
 
     void setAddress(std::string newAddress);
 
