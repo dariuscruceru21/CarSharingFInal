@@ -1,41 +1,41 @@
 #include "Order.h"
 
-Order::Order(float moneySum, std::string observation, User user, tm *begin, tm *end, Car car,
-                         std::list <Order> repository) : car(car) {
-    //order type: reservation (begin is given by parameter)
+Order::Order(float totalCost, std::string observation, User user, tm *start, tm *end, Car car,
+             std::list <Order> repository) : car(car) {
+    //order type: reservation (start is given by parameter)
 
-    bool check = callAllValidationFunctions(car,repository,*begin,*end,"Reservation",user);  //requirement B5: Validations
+    bool check = callAllValidationFunctions(car, repository, *start, *end, "Reservation", user);  //requirement B5: Validations
     if (!check) { status = "Error"; return;}  //order is not created; in Repository class, object will not be added if status == Error
 
     time_t now = time(0);
-    this->moneySum = moneySum;
+    this->totalCost = totalCost;
     this->observation = observation;
     this->user = user;
     orderDate = localtime(&now);
     this->status = "Reservation";
-    this->begin = begin;
+    this->start = start;
     this->end = end;
 
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float moneySum, std::string observation, User user, tm *end, Car car, Employee employee1,
-                         std::list <Order> repository)
+Order::Order(float totalCost, std::string observation, User user, tm *end, Car car, Employee employee1,
+             std::list <Order> repository)
         : car(car) {
-    //order type: currently active (begin equals current time)
+    //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,repository,*begin,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,repository,*start,*end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
     this->employee = employee1;
-    this->moneySum = moneySum;
+    this->totalCost = totalCost;
     this->observation = observation;
     time_t now = time(0);
     this->user = user;
     orderDate = localtime(&now);
     this->status = "Order";
-    this->begin = localtime(&now);
+    this->start = localtime(&now);
     this->end = end;
 
 }
@@ -57,12 +57,12 @@ tm Order::getOrderDate() {
     return *orderDate;
 }
 
-void Order::setBegin(tm time) {
-    begin = &time;
+void Order::setStart(tm time) {
+    start = &time;
 }
 
-tm Order::getBegin() {
-    return *begin;
+tm Order::getStart() {
+    return *start;
 }
 
 void Order::setEnd(tm time) {
@@ -106,11 +106,11 @@ Employee Order::getEmployee() {
 }
 
 void Order::setMoney(float sum) {
-    moneySum = sum;
+    totalCost = sum;
 }
 
 float Order::getMoney() {
-    return moneySum;
+    return totalCost;
 }
 
 void Order::setObservation(std::string observation) {
@@ -124,8 +124,8 @@ std::string Order::getObservation() {
 
 
 void Order::writeAll() {
-    std::cout<<orderNumber<<" ordered on "<<orderDate<<"; from "<<begin<<" until "<<end
-             <<" (current status: "<<status<<"), total cost: "<<moneySum<<".\n";  //nu toate detaliile apar
+    std::cout<<orderNumber<<" ordered on "<<orderDate<<"; from "<<start<<" until "<<end
+             <<" (current status: "<<status<<"), total cost: "<<totalCost<<".\n";  //nu toate detaliile apar
     std::cout<<"Ordered by "<<user.getUserLastName()<<", handled by"<<employee.getUserLastName()<<"\n";
     std::cout<<"-->Observation: "<<observation<<"\n\n";
 }
@@ -138,7 +138,7 @@ void Order::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm
     std::list<Order> orderList;
     for (Order obj: repository)
     {
-        if (obj.begin >= &start && obj.end <= &end)   //object is to be written on the screen; add to orderList
+        if (obj.start >= &start && obj.end <= &end)   //object is to be written on the screen; add to orderList
         {
             orderList.push_back(obj);
         }
@@ -149,7 +149,7 @@ void Order::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm
     std::cout<<"All orders between the date of "<<&start<<" and "<<&end<<":\n";
     for (Order i: orderList)
     {
-        std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+        std::cout<<orderNumber<<": price-"<<totalCost<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
     }
 }
 
@@ -165,14 +165,14 @@ void Order::totalSumOfATimeInterval(std::list<Order> repository, tm time, std::s
     if (type == "month")
         for (Order obj: repository)
         {
-            if (obj.begin->tm_mon <= time.tm_mon && obj.end->tm_mon >= time.tm_mon) //if the month is included in the order's time interval
-                std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+            if (obj.start->tm_mon <= time.tm_mon && obj.end->tm_mon >= time.tm_mon) //if the month is included in the order's time interval
+                std::cout<<orderNumber<<": price-"<<totalCost<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
         }
     else
         for (Order obj: repository)
         {
-            if (obj.begin->tm_year >= time.tm_year && obj.end->tm_year <= time.tm_year) //if the time is included in a year
-                std::cout<<orderNumber<<": price-"<<moneySum<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
+            if (obj.start->tm_year >= time.tm_year && obj.end->tm_year <= time.tm_year) //if the time is included in a year
+                std::cout<<orderNumber<<": price-"<<totalCost<<", car-"<<car.brand<<", user-"<<user.getUserLastName()<<", employee-"<<employee.getUserLastName();
 
         }
 }
@@ -196,7 +196,7 @@ bool Order::checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm beg
     for (Order obj: repository)
     {
         if (obj.car.licensePlate == car.licensePlate)  //an order has been found using the same car; check if the new order wants to use it in an already occupied time period
-            if (&end >= obj.begin && &end <= obj.end || &begin <= obj.end && &begin >= obj.begin)
+            if (&end >= obj.start && &end <= obj.end || &begin <= obj.end && &begin >= obj.start)
                 return true;  //car is used, cannot create order
     }
     return false;
@@ -236,9 +236,9 @@ int Order::determineOrderNumber(std::list<Order> repository) {
 std::string Order::toCSV() const {
     std::ostringstream oss;
     oss << this->orderNumber << "," << orderDate->tm_year  << "," << orderDate->tm_mon  << "," <<
-        orderDate->tm_mday << "," << begin << "," << end << "," <<
+        orderDate->tm_mday << "," << start << "," << end << "," <<
         status << "," << car.getLicensePlate() << "," << user.getUserEmail() << "," <<
-        employee.getUserEmail() << "," << moneySum << "," << observation << ",";
+        employee.getUserEmail() << "," << totalCost << "," << observation << ",";
 }
 
 void Order::fromCSV(const std::string &csvLine) {
