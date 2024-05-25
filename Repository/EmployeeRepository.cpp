@@ -13,7 +13,6 @@ void EmployeeRepository::createEmployee(std::string name, std::string surname, s
 
     //logic to add to csv
 
-
 }
 
 Employee EmployeeRepository::findEmployeeByName(const std::string& employeeName, const std::string& employeeSurname) {
