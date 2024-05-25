@@ -8,7 +8,7 @@
 #include <vector>
 #include "../Models/Customer.h"
 
-class ClientHandlingRepository {
+class CustomerHandlingRepository {
 private:
     std::vector<Customer> Customers;
 public:
@@ -17,7 +17,9 @@ public:
 
     // Client Handling functions
     void createCustomer();
+
     void deleteCustomer();
+
     void updateCustomer();
 
     // GDPR related functions
@@ -28,22 +30,33 @@ public:
 
     // Search functions
     void searchCustomersByEmail();
+
     void searchCustomersByPhoneNumber();
+
     void searchCustomersByName();
+
     void searchCustomersByCar();
 
     // Profile editing functions
     void changeCustomerPassword();
+
     void changeCustomerNotes();
+
     void addCarToFavorites();
+
     void removeCarFromFavorites();
 
-    // Validation functions
-    void checkUniqueEmail();
-    void checkFormatEmail();
-    void checkFormatPhoneNumber();
-    void validateProfileByGDPR();
+    //Validation functions
 
+    bool checkUniqueEmail(Customer c);
+
+    //email format: firstname.lastname@smth.com
+    bool checkFormatEmail(Customer c);
+
+    //phone format: +00 123456789
+    bool checkFormatPhoneNumber(Customer c);
+
+    void validateProfileByGDPR();
 
 
 };
