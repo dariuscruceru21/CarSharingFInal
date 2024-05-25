@@ -6,6 +6,7 @@
 
 #include "Employee.h"
 #include "User.h"
+#include "Car.h"
 
 class Order {
 private:
@@ -17,7 +18,7 @@ private:
 
     std::string status;
     Car car;/** TODO */
-    User user;
+    User user; //CUSTOMER??
     Employee employee; /** TODO */
     float totalCost;
     std::string observation;
