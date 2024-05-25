@@ -23,7 +23,7 @@ public:
 
     Employee findEmployeeByName(const std::string& employeeName, const std::string& employeeSurname);
 
-    std::vector<Employee> findEmployeeByString();
+    std::vector<Employee> findEmployeeByString(const std::string& searchString);
 
 
     auto saveEmployee();

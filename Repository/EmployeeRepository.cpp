@@ -24,6 +24,27 @@ std::vector<Employee> EmployeeRepository::findEmployeeByString(const std::string
     // Convert the search string to lowercase for case-insensitive comparison
     std::string lowerSearchString = toLower(searchString);
 
+    // Vector to store matching employees
+    std::vector<Employee> matchingEmployees;
+
+    // Iterate over all employees in the repository
+    for (auto employee : employees) {
+        // Convert each employee attribute to lowercase and check if the search string is a substring
+        if (toLower(employee.getName()).find(lowerSearchString) != std::string::npos || // Check if name contains the search string
+            toLower(employee.getSurname()).find(lowerSearchString) != std::string::npos || // Check if surname contains the search string
+            toLower(employee.getEmail()).find(lowerSearchString) != std::string::npos || // Check if email contains the search string
+            toLower(employee.getPosition()).find(lowerSearchString) != std::string::npos || // Check if position contains the search string
+            toLower(employee.getAbbreviation()).find(lowerSearchString) != std::string::npos || // Check if abbreviation contains the search string
+            toLower(employee.getRemarks()).find(lowerSearchString) != std::string::npos) { // Check if remarks contain the search string
+            // If any attribute contains the search string, add the employee to the matchingEmployees vector
+            matchingEmployees.push_back(employee);
+        }
+    }
+
+    // Return the vector of matching employees
+    return matchingEmployees;
+}
+
 void EmployeeRepository::createEmployee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
                                         std::string abbreviation, float salary, std::string remarks) {
 
@@ -42,24 +63,4 @@ Employee EmployeeRepository::findEmployeeByName(const std::string& employeeName,
         }
     }
 
-}
-    // Vector to store matching employees
-    std::vector<Employee> matchingEmployees;
-
-    // Iterate over all employees in the repository
-    for (const auto& employee : employees) {
-        // Convert each employee attribute to lowercase and check if the search string is a substring
-        if (toLower(employee.getName()).find(lowerSearchString) != std::string::npos || // Check if name contains the search string
-            toLower(employee.getSurname()).find(lowerSearchString) != std::string::npos || // Check if surname contains the search string
-            toLower(employee.getEmail()).find(lowerSearchString) != std::string::npos || // Check if email contains the search string
-            toLower(employee.getPosition()).find(lowerSearchString) != std::string::npos || // Check if position contains the search string
-            toLower(employee.getAbbreviation()).find(lowerSearchString) != std::string::npos || // Check if abbreviation contains the search string
-            toLower(employee.getRemarks()).find(lowerSearchString) != std::string::npos) { // Check if remarks contain the search string
-            // If any attribute contains the search string, add the employee to the matchingEmployees vector
-            matchingEmployees.push_back(employee);
-        }
-    }
-
-    // Return the vector of matching employees
-    return matchingEmployees;
 }
