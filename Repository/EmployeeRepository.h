@@ -22,7 +22,7 @@ public:
 
     auto findEmployeeByName();
 
-    auto findEmployeeByString();
+    std::vector<Employee> findEmployeeByString();
 
     auto saveEmployee();
 
@@ -30,7 +30,7 @@ public:
 
     auto updateEmployee();
 
-    auto listAllEmployees();
+    std::vector<Employee> listAllEmployees();
 
     auto searchEmployee();
 };
