@@ -23,18 +23,18 @@ private:
     std::string observation;
 public:
     //TODO: getters and setters
-    Order(float moneySum, std::string observation, User user, tm *begin, tm *end, Car car,
-                std::list <Order> repository);
-    Order(float moneySum, std::string observation, User user, tm *end, Car car, Employee employee1,
-                std::list <Order> repository);
+    Order(float totalCost, std::string observation, User user, tm *start, tm *end, Car car,
+          std::list <Order> repository);
+    Order(float totalCost, std::string observation, User user, tm *start, Car car, Employee employee1,
+          std::list <Order> repository);
     void changeStatus();
 
     void setOrderNr(int nr);
     int getOrderNr() const;
     void setOrderDate(tm &time);
     tm getOrderDate();
-    void setBegin(tm time);
-    tm getBegin();
+    void setStart(tm time);
+    tm getStart();
     void setEnd(tm time);
     tm getEnd();
     void setStatus(std::string status);
