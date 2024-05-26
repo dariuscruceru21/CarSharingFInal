@@ -27,6 +27,8 @@ public:
              std::string remarks,
              bool gdprDeleted);
 
+    Customer();
+
     void changePassword();
 
     void updateRemarks();

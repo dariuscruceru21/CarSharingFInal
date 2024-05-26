@@ -95,6 +95,3 @@ bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
 
 }
 
-
-
-

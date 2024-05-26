@@ -18,7 +18,9 @@ Customer::Customer(std::string name, std::string surname, std::string phone, std
 
 }
 
+Customer::Customer() {
 
+}
 
 void Customer::changePassword() {
 
