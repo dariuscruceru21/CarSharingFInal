@@ -59,3 +59,22 @@ bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
     //if method returns false => display message : Error in creating customer. One/several mandatory fields must be completed according to GDPR
 
 }
+// Need fromCsv function
+void CustomerHandlingRepository::readFromCsv() {
+    this->Customers.clear();
+    std::ifstream file(this->fileName);
+    std::string line;
+    while(std::getline(file,line)){
+        Customer customer;
+        customer.fromCsv(line);
+        this->Customers.push_back(customer);
+    }
+    file.close();
+}
+// Need a toCsv function in the Customer model
+void CustomerHandlingRepository::writeToCsv() {
+    std::ofstream file(this->fileName);
+    for(auto& customer : this->Customers)
+        file<<customer.toCsv()<<"\n";
+    file.close();
+}

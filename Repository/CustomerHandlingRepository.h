@@ -6,12 +6,21 @@
 #define CARSHARINGFINAL_CUSTOMERHANDLINGREPOSITORY_H
 
 #include <vector>
+#include <fstream>
 #include "../Models/Customer.h"
 
 class CustomerHandlingRepository {
 private:
     std::vector<Customer> Customers;
+    std::string fileName;
+
+    void readFromCsv();
+
+    void writeToCsv();
 public:
+
+    CustomerHandlingRepository(std::string fileName);
+
     // Only Employees are allowed to create, delete and update clients
     // Only Employees are allowed to see Client related data
 
