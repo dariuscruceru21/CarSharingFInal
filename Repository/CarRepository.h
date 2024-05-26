@@ -33,7 +33,7 @@ public:
 
     std::vector<Car> listAllCars();
 
-    std::vector<Car> searchCar(std::string &licensePlate); //V3.2 Auto nach Kennzeichen suchen
+    Car searchCar(std::string &licensePlate); //V3.2 Auto nach Kennzeichen suchen
 
 };
 
