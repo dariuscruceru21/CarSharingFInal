@@ -24,9 +24,9 @@ public:
 
     void addUser(User& user);
 
-    void deleteUser();
+    void deleteUser(int userId);
 
-    void updateUser();
+    void updateUser(User& updatedUser);
 
 };
 
