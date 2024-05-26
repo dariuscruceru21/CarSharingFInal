@@ -29,6 +29,12 @@ public:
     void setUserPassword(std::string newPassword);
     void setUserEmail(std::string newEmail);
 
+    //convert to csv format
+    std::string toCsv();
+
+    //convert into normal type from csv
+    void fromCsv(std::string& csvLine);
+
 };
 
 
