@@ -34,14 +34,14 @@ Car CarRepository::findByLicensePlate(std::string &licensePlate) {
             return car;
     }
     std::cout << "No car with the introduced license plate was found in our repository.";
-}
+    return Car();}
 
 void CarRepository::saveCar(Car &car) {
     this->cars.push_back(car);
     writeToCsv();
 }
 
-void CarRepository::deleteCar(const std::string& licensePlate) {
+void CarRepository::deleteCar(std::string& licensePlate) {
     auto it = std::remove_if(this->cars.begin(), this->cars.end(),
                              [&licensePlate](const Car& car) { return car.getLicensePlate() == licensePlate; });
     this->cars.erase(it, this->cars.end());
