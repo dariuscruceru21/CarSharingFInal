@@ -1,13 +1,10 @@
-//
-// Created by sorin on 5/22/2024.
-//
-
 #include "EmployeeRepository.h"
 #include <algorithm>
 #include <cctype>
-#include "string"
+#include <stdexcept>
+#include <string>
 #include "../Models/Employee.h"
-
+#include "fstream"
 
 // Method to list all employees
 std::vector<Employee> EmployeeRepository::listAllEmployees() {
@@ -15,12 +12,11 @@ std::vector<Employee> EmployeeRepository::listAllEmployees() {
 }
 
 // Method to find employees by any string (search through various attributes with partial matching)
-std::vector<Employee> EmployeeRepository::findEmployeeByString(const std::string& searchString) {
+std::vector<Employee> EmployeeRepository::findEmployeeByString(std::string searchString) {
     // Helper lambda function to convert a string to lowercase
-    auto toLower = [](const std::string& str) {
-        std::string lowerStr = str; // Create a copy of the input string
-        std::transform(lowerStr.begin(), lowerStr.end(), lowerStr.begin(), ::tolower); // Convert each character to lowercase
-        return lowerStr; // Return the lowercase string
+    auto toLower = [](std::string str) {
+        std::transform(str.begin(), str.end(), str.begin(), ::tolower); // Convert each character to lowercase
+        return str; // Return the lowercase string
     };
 
     // Convert the search string to lowercase for case-insensitive comparison
@@ -47,57 +43,79 @@ std::vector<Employee> EmployeeRepository::findEmployeeByString(const std::string
     return matchingEmployees;
 }
 
-void EmployeeRepository::createEmployee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
+void EmployeeRepository::createEmployee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
                                         std::string abbreviation, float salary, std::string remarks) {
-
     Employee newEmployee(name, surname, email, position, birthdate, abbreviation, salary, remarks);
-
     employees.push_back(newEmployee);
-
-    //logic to add to csv
-
+    writeToCsv();  // Write to CSV after adding
 }
 
-Employee EmployeeRepository::findEmployeeByName(const std::string& employeeName, const std::string& employeeSurname) {
-    for (auto current : employees){//go through customers and check current customer name and surname; if it matches => return it
-        if (current.getName() == employeeName && current.getSurname() == employeeSurname){
+Employee EmployeeRepository::findEmployeeByName(std::string employeeName, std::string employeeSurname) {
+    for (auto current : employees) { // Go through employees and check current employee name and surname; if it matches => return it
+        if (current.getName() == employeeName && current.getSurname() == employeeSurname) {
             return current;
         }
     }
-
+    throw std::runtime_error("Employee not found");
 }
-
+/*
+ * ///in opinia mea ii aceasi chestie ca si create,pareri, sanse ,nota ?
 void EmployeeRepository::saveEmployee(Employee employee) {
     employees.push_back(employee);
+    writeToCsv();  // Write to CSV after saving
 }
-
+*/
 void EmployeeRepository::deleteEmployee(std::string employeeName, std::string employeeSurname) {
-    auto it = std::find_if(employees.begin(), employees.end(), [&](Employee emp) {
-        return emp.getName() == employeeName && emp.getSurname() == employeeSurname;
-    });
-    if (it != employees.end()) {
-        employees.erase(it);
-    } else {
-        throw std::runtime_error("Employee not found");
+    for (size_t i = 0; i < employees.size(); ++i) {
+        if (employees[i].getName() == employeeName && employees[i].getSurname() == employeeSurname) {
+            employees.erase(employees.begin() + i);
+            writeToCsv();  // Write to CSV after deleting
+            return;
+        }
     }
+    throw std::runtime_error("Employee not found");
 }
 
-void EmployeeRepository::updateEmployee(std::string employeeName, std::string employeeSurname, std::string newName, std::string newSurname,
-                                        std::string newEmail, std::string newPosition, tm* newBirthdate,
-                                        std::string newAbbreviation, float newSalary, std::string newRemarks) {
-    auto it = std::find_if(employees.begin(), employees.end(), [&](Employee emp) {
-        return emp.getName() == employeeName && emp.getSurname() == employeeSurname;
-    });
-    if (it != employees.end()) {
-        it->setName(newName);
-        it->setSurname(newSurname);
-        it->setEmail(newEmail);
-        it->setPosition(newPosition);
-        it->setBirthdate(newBirthdate);
-        it->setAbbreviation(newAbbreviation);
-        it->setSalary(newSalary);
-        it->setRemarks(newRemarks);
-    } else {
-        throw std::runtime_error("Employee not found");
+void EmployeeRepository::updateEmployee(Employee& updatedEmployee) {
+    bool found = false;
+    for (auto &employee: employees) {
+        if (employee.getEmail() == updatedEmployee.getEmail()) {
+            employee.setName(updatedEmployee.getName());
+            employee.setSurname(updatedEmployee.getSurname());
+            employee.setEmail(updatedEmployee.getEmail());
+            employee.setPosition(updatedEmployee.getPosition());
+            employee.setBirthdate(updatedEmployee.getBirthdate());
+            employee.setAbbreviation(updatedEmployee.getAbbreviation());
+            employee.setSalary(updatedEmployee.getSalary());
+            employee.setRemarks(updatedEmployee.getRemarks());
+            found = true;
+            break;
+        }
     }
+    if (!found) {
+    throw std::runtime_error("Employee not found");
+    }
+    writeToCsv();
+}
+EmployeeRepository::EmployeeRepository(std::string fileName) {
+    readFromCsv();
+}
+
+void EmployeeRepository::readFromCsv() {
+    this->employees.clear();
+    std::ifstream file(this->fileName);
+    std::string line;
+    while (std::getline(file, line)) {
+        Employee employee;
+        employee.fromCsv(line);
+        this->employees.push_back(employee);
+    }
+    file.close();
+}
+
+void EmployeeRepository::writeToCsv() {
+    std::ofstream file(this->fileName);
+    for (auto& employee : this->employees)
+        file << employee.toCsv() << "\n";
+    file.close();
 }

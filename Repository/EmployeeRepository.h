@@ -12,31 +12,34 @@ using namespace std;
 class EmployeeRepository {
 private:
     std::vector<Employee> employees;
-
+    std::string fileName;
 
 public:
     EmployeeRepository() {}
 
     ~EmployeeRepository() {}
 
-    void createEmployee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
+    void createEmployee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
                         std::string abbreviation, float salary, std::string remarks);
 
-    Employee findEmployeeByName(const std::string &employeeName, const std::string &employeeSurname);
+    Employee findEmployeeByName(std::string employeeName,std::string employeeSurname);
 
-    std::vector<Employee> findEmployeeByString(const std::string &searchString);
+    std::vector<Employee> findEmployeeByString(std::string searchString);
 
 
     void saveEmployee(Employee employee);
 
     void deleteEmployee(std::string employeeName, std::string employeeSurname);
 
-    void updateEmployee(std::string employeeName, std::string employeeSurname, std::string newName, std::string newSurname,
-                   std::string newEmail, std::string newPosition, tm *newBirthdate,
-                   std::string newAbbreviation, float newSalary, std::string newRemarks);
+    void updateEmployee(Employee &updatedEmployee);
 
     std::vector<Employee> listAllEmployees();
 
+    void readFromCsv();
+
+    void writeToCsv();
+
+    EmployeeRepository(std::string filename);
 };
 
 
