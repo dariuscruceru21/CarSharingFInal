@@ -55,4 +55,10 @@ public:
     void setColor(const std::string &newColor);
 
     void setRemarks(const std::string &newRemarks);
+
+    //convert to csv format
+    std::string toCsv();
+
+    //convert into normal type from csv
+    void fromCsv(std::string &csvLine);
 };
