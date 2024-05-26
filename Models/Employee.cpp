@@ -7,6 +7,7 @@
 #include "sstream"
 #include<stdexcept>
 
+
 Employee::Employee(std::string name, std::string surname, std::string email, std::string position,  std::string birthdate,
                    std::string abbreviation, float salary, std::string remarks) {
 
@@ -89,11 +90,10 @@ void Employee::setRemarks(std::string newRemarks) {
     this->remarks = newRemarks;
 }
 
-//methode
-void Employee::updateProfile() {}
+//an Employee should only be able to update his--> remarks and password
+void Employee::updateProfile() {
 
-
-
+}
 
 
 std::string Employee::toCsv() {
