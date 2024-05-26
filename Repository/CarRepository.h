@@ -5,7 +5,7 @@
 #ifndef CARSHARINGFINAL_CARREPOSITORY_H
 #define CARSHARINGFINAL_CARREPOSITORY_H
 
-#include "..\Models\Car.h"
+#include "C:\Users\Scoti\CLionProjects\CarSharingFInal\Models\Car.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -30,6 +30,9 @@ public:
     void deleteCar(std::string &licensePlate);
 
     void updateCar(Car &car);
+
+    //metoda de add nu era in uml la carRepo, dar poate trebuie
+    void addCar(Car &car);
 
     std::vector<Car> listAllCars();
 
