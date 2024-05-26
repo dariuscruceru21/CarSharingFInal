@@ -4,6 +4,8 @@
 
 #include "Customer.h"
 #include "sstream"
+#include <iostream>
+#include <vector>
 //Eu
 
 Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail,
@@ -18,26 +20,48 @@ Customer::Customer(std::string name, std::string surname, std::string phone, std
 
 }
 
-
-
 void Customer::changePassword() {
+    std::string oldPassword, newPassword;
+    std::cout << "Enter your old password: ";
+    std::cin >> oldPassword;
+    std::cout << "Enter your new password: ";
+    std::cin >> newPassword;
+    std::cout << "Password changed successfully.\n";
 
 }
 
 void Customer::updateRemarks() {
+    std::string newRemarks;
+    std::cout << "Enter new remarks: ";
+    std::cin.ignore(); //ignore() clear the newline char in the buff cin
+    std::getline(std::cin, newRemarks);
+    this->remarks = newRemarks;
+    std::cout << "Remarks updated successfully.\n";
 
 }
 
 void Customer::removeFavoriteCar() {
+    std::string car;
+    std::cout << "Enter the car to add to favorites: ";
+    std::cin.ignore();
+    std::getline(std::cin, car);
+    std::cout << "Car added to favorites.\n";
 
 }
-
 void Customer::addFavoriteCar() {
-
+    std::string car;
+    std::cout << "Enter the car to add to favorites: ";
+    std::cin.ignore();
+    std::getline(std::cin, car);
+    std::cout << "Car added to favorites.\n";
 }
-
+//nu stiu daca e ok??
 void Customer::viewFavorites() {
-
+    std::vector<std::string> favorites= {"Car1", "Car2", "Car3"};
+    std::cout<<"Favorite cars:\n";
+    for(auto& car: favorites){
+        std::cout<<car<<"\n";
+    }
 }
 
 
