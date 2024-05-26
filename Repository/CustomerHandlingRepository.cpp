@@ -32,5 +32,30 @@ bool CustomerHandlingRepository::checkUniqueEmail(Customer c) {
     }
 
     return flagUnique == 1;
+}
+
+//see header for details
+bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
+    bool gdprDeleted = c.getGdprDeleted();
+
+    //if gdpr is deleted
+    if (gdprDeleted){
+        if (c.getSurname().empty() || c.getName().empty()){
+            return false;
+        } else{
+            return true;
+        }
+
+    }else{
+        if (c.getSurname().empty() || c.getName().empty() || c.getEmail().empty() ||
+        c.getPhone().empty() || c.getAddress().empty()){
+            return false;
+        } else{
+            return true;
+        }
+    }
+
+    //use case in UI:
+    //if method returns false => display message : Error in creating customer. One/several mandatory fields must be completed according to GDPR
 
 }
