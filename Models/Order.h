@@ -55,19 +55,6 @@ public:
     void writeAll();
 
 
-    //B.5 Validierungen   --> is called everytime when an object is created (in the constructor)
-    bool callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
-                                    std::string status, User user);
-
-    //if the car is already used on the given date, an error occurs
-    bool checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end);
-    //begin must be smaller than end
-    bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
-    //a user is not allowed to have more than 5 reservations
-    bool userHasLessThanFiveReservations(User user, std::string status, std::list<Order> repository);
-    //order number is issued automatically by the system
-    int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
-
 
     //transform obect into csv format
     std::string toCSV() const;
