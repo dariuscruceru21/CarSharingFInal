@@ -62,6 +62,8 @@ public:
     //false path to be used in UI to display error message accordingly
     bool validateProfileByGDPR(Customer c);
 
+    bool ageValidation(Customer c);
+
 
 };
 
