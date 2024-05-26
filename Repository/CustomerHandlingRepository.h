@@ -56,7 +56,11 @@ public:
     //phone format: +00 123456789
     bool checkFormatPhoneNumber(Customer c);
 
-    void validateProfileByGDPR();
+    //if gdprDeleted == true => only name and surname MUST be completed
+    //if gdprDeleted == false => everything MUST be completed, except remarks
+    //method returns true if customer has attribs completed accordingly, else false
+    //false path to be used in UI to display error message accordingly
+    bool validateProfileByGDPR(Customer c);
 
 
 };
