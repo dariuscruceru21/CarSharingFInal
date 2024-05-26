@@ -63,7 +63,7 @@ public:
 
     void setRemarks(std::string newRemarks);
 
-    //methode
+    //method
     void updateProfile();
 
     //convert to csv format
