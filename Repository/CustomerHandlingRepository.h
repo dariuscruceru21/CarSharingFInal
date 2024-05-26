@@ -25,11 +25,12 @@ public:
     // Only Employees are allowed to see Client related data
 
     // Client Handling functions
-    void createCustomer();
+    void createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address, std::string remarks, std::string phone,
+                        bool gdprDeleted);
 
-    void deleteCustomer();
+    void deleteCustomer(std::string Email);
 
-    void updateCustomer();
+    void updateCustomer(Customer& updatedCustomer);
 
     // GDPR related functions
     void anonymizeCustomer();
