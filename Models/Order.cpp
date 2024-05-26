@@ -130,3 +130,21 @@ void Order::writeAll() {
     std::cout<<"-->Observation: "<<observation<<"\n\n";
 }
 
+
+std::string OrderRepository::toCSV() const {
+    std::ostringstream oss;
+    oss << this->orderNumber << "," << orderDate->tm_year  << "," << orderDate->tm_mon  << "," <<
+        orderDate->tm_mday << "," << start << "," << end << "," <<
+        status << "," << car.getLicensePlate() << "," << user.getUserEmail() << "," <<
+        employee.getUserEmail() << "," << totalCost << "," << observation << ",";
+}
+
+void OrderRepository::fromCSV(const std::string &csvLine) {
+    std::istringstream ss(csvLine);
+    //std::getline(ss, this->orderNumber, ',');  asa doar pt stringuri
+    ss >> this->orderNumber;      //asa pt int-uri
+    ss.ignore(1); // Ignore the comma
+
+    ss >> this->orderDate;      //asa pt int-uri
+    ss.ignore(1);
+}

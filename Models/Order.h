@@ -54,6 +54,12 @@ public:
     //general function for writing an order's details
     void writeAll();
 
+    //transform obect into csv format
+    std::string toCSV() const;
+
+    //transform object from csv format
+    void fromCSV(const std::string &csvLine);
+
 };
 
 

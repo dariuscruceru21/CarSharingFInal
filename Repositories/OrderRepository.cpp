@@ -19,7 +19,7 @@ void OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repo
     }
 }
 
-Order OrderRepository::searchOrderByOrderNumber(std::list<Order> repository, int orderNr) {
+Order OrderRepository::findOrderByID(std::list<Order> repository, int orderNr) {
     for (Order obj: repository)
     {
         if (obj.orderNumber == orderNr)
@@ -98,21 +98,6 @@ int OrderRepository::determineOrderNumber(std::list<Order> repository) {
 
 
 
-std::string Order::toCSV() const {
-    std::ostringstream oss;
-    oss << this->orderNumber << "," << orderDate->tm_year  << "," << orderDate->tm_mon  << "," <<
-        orderDate->tm_mday << "," << start << "," << end << "," <<
-        status << "," << car.getLicensePlate() << "," << user.getUserEmail() << "," <<
-        employee.getUserEmail() << "," << totalCost << "," << observation << ",";
-}
-
-void Order::fromCSV(const std::string &csvLine) {
-    std::istringstream ss(csvLine);
-    //std::getline(ss, this->orderNumber, ',');  asa doar pt stringuri
-    ss >> this->orderNumber;      //asa pt int-uri
-    ss.ignore(1); // Ignore the comma
-
-    ss >> this->orderDate;      //asa pt int-uri
-    ss.ignore(1);
+void OrderRepository::saveOrder(Order obj) {
 
 }
