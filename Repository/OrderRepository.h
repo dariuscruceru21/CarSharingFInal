@@ -5,17 +5,19 @@
 #include <fstream>
 #include "../Models/Order.h"
 #include <vector>
+#include <list>
 
 class OrderRepository {
 private:
     std::string filename;
+
 public:
 
 
     //B.4 Auflisten der Bestellungen
     void showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
     static bool compareByTotalPrice(Order c1, Order c2)
-    { return c1.moneySum < c2.moneySum; }
+    { return c1.getMoney() < c2.getMoney(); }
 
     Order findOrderByID(std::list<Order> repository, int orderNr);
 
@@ -41,8 +43,15 @@ public:
     void saveOrder(Order obj);
     void deleteOrder(Order obj);
     void updateOrder(Order obj);
-    vector<Order> listAllOrders();
+    std::vector<Order> listAllOrders();
     Order searchOrder(int orderID);
+
+    //B.3 -Grama Andrei
+    //Order & Reservation handling
+    std::list <Order> removeReservation(Order obj);
+    std::list <Order> changeReservation(Order obj);
+
+
 };
 
 

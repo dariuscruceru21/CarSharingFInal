@@ -78,7 +78,7 @@ bool OrderRepository::userHasLessThanFiveReservations(User user, std::string sta
     int ct=0;
     for (Order obj: repository)
     {
-        if (obj.user.getUserEmail() == user.getUserEmail())  //cant have duplicate emails; users can be identified this way then
+        if (obj.getUser().getUserEmail() == user.getUserEmail())  //cant have duplicate emails; users can be identified this way then
             ct++;
     }
 
@@ -90,8 +90,8 @@ bool OrderRepository::userHasLessThanFiveReservations(User user, std::string sta
 int OrderRepository::determineOrderNumber(std::list<Order> repository) {
     int maxi = 0;
     for (Order obj: repository)
-        if (obj.orderNumber > maxi)
-            maxi = obj.orderNumber;
+        if (obj.getOrderNr() > maxi)
+            maxi = obj.getOrderNr();
 
     return maxi + 1;
 }
@@ -103,7 +103,7 @@ void OrderRepository::saveOrder(Order obj) {
 
     std::list<Order> repo;
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
         repo.push_back(obj1);
@@ -131,7 +131,7 @@ void OrderRepository::deleteOrder(Order obj) {
 
     std::list<Order> repo;
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
         if (obj1.getOrderNr() != obj.getOrderNr())
@@ -164,7 +164,7 @@ void OrderRepository::updateOrder(Order obj) {
 
     std::list<Order> repo;
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
         if (obj1.getOrderNr() != obj.getOrderNr())
@@ -187,12 +187,79 @@ void OrderRepository::updateOrder(Order obj) {
     g.close();
 }
 
-vector<Order> OrderRepository::listAllOrders() {
+std::list <Order> OrderRepository::removeReservation(Order obj) {
+    std::ifstream f(filename);
+
+    std::list<Order> repo;
+    std::string line;
+    while (std::getline(f, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        if (obj1.getOrderNr() != obj.getOrderNr())
+            repo.push_back(obj1);
+    }
+    f.close();
+    return repo;
+
+}
+
+
+std::list <Order> OrderRepository::changeReservation(Order obj) {
+    std::ifstream f(filename);
+
+    std::list<Order> repo;
+    std::string line;
+    while (std::getline(f, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        if (obj1.getOrderNr() != obj.getOrderNr())
+            repo.push_back(obj1);
+        else
+            repo.push_back(obj);
+    }
+    f.close();
+
+    std::list<Order> aux;
+    for (Order obj: repo)
+        if (obj.getOrderNr() != obj.getOrderNr())
+            aux.push_back(obj);
+        else if ( /*is admin*/) { /**TODO verification*/
+            int option;
+            std::cin >> option;
+
+            switch (option) {
+                case 1: {    //Admins
+
+                    break;
+                }
+                case 2: {
+
+                    break;
+                }
+            }
+        } else if ( /*is customer*/) {
+            int option;
+            std::cin >> option;
+
+            switch (option) {
+                case 1: {    //customers
+
+                    break;
+                }
+                case 2: {
+
+                    break;
+                }
+            }
+        }
+    return aux;
+}
+std::vector<Order> OrderRepository::listAllOrders() {
     std::ifstream f(filename);
 
     std::vector<Order> repo;
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
         repo.push_back(obj1);
@@ -206,7 +273,7 @@ Order OrderRepository::searchOrder(int orderID) {
     std::ifstream f(filename);
 
     std::string line;
-    while (std::getline(file, line)) {
+    while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
 

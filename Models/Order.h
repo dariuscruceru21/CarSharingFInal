@@ -3,6 +3,7 @@
 
 #include<ctime>
 #include<string>
+#include <list>
 
 #include "Employee.h"
 #include "User.h"
@@ -28,6 +29,7 @@ public:
           std::list <Order> repository);
     Order(float totalCost, std::string observation, User user, tm *start, Car car, Employee employee1,
           std::list <Order> repository);
+    Order(){};
     void changeStatus();
 
     void setOrderNr(int nr);
