@@ -66,3 +66,38 @@ Employee EmployeeRepository::findEmployeeByName(const std::string& employeeName,
     }
 
 }
+
+void EmployeeRepository::saveEmployee(Employee employee) {
+    employees.push_back(employee);
+}
+
+void EmployeeRepository::deleteEmployee(std::string employeeName, std::string employeeSurname) {
+    auto it = std::find_if(employees.begin(), employees.end(), [&](Employee emp) {
+        return emp.getName() == employeeName && emp.getSurname() == employeeSurname;
+    });
+    if (it != employees.end()) {
+        employees.erase(it);
+    } else {
+        throw std::runtime_error("Employee not found");
+    }
+}
+
+void EmployeeRepository::updateEmployee(std::string employeeName, std::string employeeSurname, std::string newName, std::string newSurname,
+                                        std::string newEmail, std::string newPosition, tm* newBirthdate,
+                                        std::string newAbbreviation, float newSalary, std::string newRemarks) {
+    auto it = std::find_if(employees.begin(), employees.end(), [&](Employee emp) {
+        return emp.getName() == employeeName && emp.getSurname() == employeeSurname;
+    });
+    if (it != employees.end()) {
+        it->setName(newName);
+        it->setSurname(newSurname);
+        it->setEmail(newEmail);
+        it->setPosition(newPosition);
+        it->setBirthdate(newBirthdate);
+        it->setAbbreviation(newAbbreviation);
+        it->setSalary(newSalary);
+        it->setRemarks(newRemarks);
+    } else {
+        throw std::runtime_error("Employee not found");
+    }
+}

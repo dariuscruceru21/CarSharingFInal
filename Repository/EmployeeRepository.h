@@ -4,6 +4,7 @@
 
 #ifndef CARSHARING_EMPLOYEEREPOSITORY_H
 #define CARSHARING_EMPLOYEEREPOSITORY_H
+
 #include <vector>
 #include "../Models/Employee.h"
 using namespace std;
@@ -21,21 +22,21 @@ public:
     void createEmployee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
                         std::string abbreviation, float salary, std::string remarks);
 
-    Employee findEmployeeByName(const std::string& employeeName, const std::string& employeeSurname);
+    Employee findEmployeeByName(const std::string &employeeName, const std::string &employeeSurname);
 
-    std::vector<Employee> findEmployeeByString(const std::string& searchString);
-
-
-    auto saveEmployee();
+    std::vector<Employee> findEmployeeByString(const std::string &searchString);
 
 
-    auto deleteEmployee();
+    void saveEmployee(Employee employee);
 
-    auto updateEmployee();
+    void deleteEmployee(std::string employeeName, std::string employeeSurname);
+
+    void updateEmployee(std::string employeeName, std::string employeeSurname, std::string newName, std::string newSurname,
+                   std::string newEmail, std::string newPosition, tm *newBirthdate,
+                   std::string newAbbreviation, float newSalary, std::string newRemarks);
 
     std::vector<Employee> listAllEmployees();
 
-    auto searchEmployee();
 };
 
 
