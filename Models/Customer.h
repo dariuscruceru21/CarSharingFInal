@@ -19,14 +19,10 @@ private:
 
 public:
 
-    Customer(std::string name,
-             std::string surname,
-             std::string phone,
-             std::string customerEmail,
-             std::string address,
-             std::string remarks,
-             bool gdprDeleted);
+    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
+             std::string remarks, bool gdprDeleted);
 
+    //pentru default constructor?
     Customer();
 
     void changePassword();
