@@ -28,15 +28,14 @@ void CustomerHandlingRepository::writeToCsv() {
         file<<customer.toCsv()<<"\n";
     file.close();
 }
-//TODO IMPLEMENTATION
+
 void CustomerHandlingRepository::createCustomer() {
 
 }
-//TODO IMPLEMENTATION
+
 void CustomerHandlingRepository::deleteCustomer() {
 
 }
-//TODO IMPLEMENTATION
 void CustomerHandlingRepository::updateCustomer() {
 
 }
@@ -96,17 +95,6 @@ bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
 
 }
 
-void CustomerHandlingRepository::createCustomer() {
-
-}
-
-void CustomerHandlingRepository::deleteCustomer() {
-
-}
-
-void CustomerHandlingRepository::updateCustomer() {
-
-}
 
 
 
