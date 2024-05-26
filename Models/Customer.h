@@ -39,7 +39,7 @@ public:
 
     void viewFavorites();
 
-    std::string getName();
+    std::string getName() const;
 
     std::string getSurname();
 
@@ -49,7 +49,7 @@ public:
 
     std::string getRemarks();
 
-    std::string getEmail();
+    std::string getEmail() ;
 
     bool getGdprDeleted();
 
