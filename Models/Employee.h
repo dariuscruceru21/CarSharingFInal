@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <ctime>
 
 class Employee {
 
@@ -16,7 +17,7 @@ protected:
     std::string email;
     std::string abbreviation;
     std::string remarks;
-    tm *birthdate;
+    tm* birthdate;
     float salary;
     std::string position;
 public:
@@ -63,6 +64,16 @@ public:
 
     //methode
     void updateProfile();
+
+    //convert to csv format
+    std::string toCsv();
+
+    //convert into normal type from csv
+    void fromCsv(std::string& csvLine);
+
+    // Helper methods for date conversion
+    std::string tmToString(const tm* date) const;
+    tm* stringToTm(const std::string& dateStr) const;
 
 };
 
