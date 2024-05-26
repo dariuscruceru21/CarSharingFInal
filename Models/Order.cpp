@@ -140,11 +140,50 @@ std::string OrderRepository::toCSV() const {
 }
 
 void OrderRepository::fromCSV(const std::string &csvLine) {
+    //-->how it is saved in the csv file:
+    //orderNr orderDateYear orderDateMonth orderDateDay beginYear beginMonth beginDay endYear endMonth endDay
+    //status carLicensePlate customerID employeeID totalCost observation
+
     std::istringstream ss(csvLine);
-    //std::getline(ss, this->orderNumber, ',');  asa doar pt stringuri
+
+    //std::getline(ss, this->orderNumber, ',');  asa pt stringuri
+
     ss >> this->orderNumber;      //asa pt int-uri
     ss.ignore(1); // Ignore the comma
 
-    ss >> this->orderDate;      //asa pt int-uri
+    ss >> this->orderDate->tm_year;
     ss.ignore(1);
+    ss >> this->orderDate->tm_mon;
+    ss.ignore(1);
+    ss >> this->orderDate->tm_mday;
+    ss.ignore(1);
+
+    ss >> this->begin->tm_year;
+    ss.ignore(1);
+    ss >> this->begin->tm_mon;
+    ss.ignore(1);
+    ss >> this->begin->tm_mday;
+    ss.ignore(1);
+
+    ss >> this->end->tm_year;
+    ss.ignore(1);
+    ss >> this->end->tm_mon;
+    ss.ignore(1);
+    ss >> this->end->tm_mday;
+    ss.ignore(1);
+
+    std::getline(ss, this->status, ',');
+
+    std::getline(ss, this->car->licensePlate, ',');
+
+    ss >> this->customer->id;
+    ss.ignore(1);
+
+    ss >> this->employee->id;
+    ss.ignore(1);
+
+    ss >> this->totalCost;
+    ss.ignore(1);
+
+    std::getline(ss, this->observation, ',');
 }

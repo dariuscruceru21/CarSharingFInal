@@ -1,13 +1,14 @@
 #ifndef CARSHARINGFINAL_ORDERREPOSITORY_H
 #define CARSHARINGFINAL_ORDERREPOSITORY_H
 #include <iostream>
-#include <list>
+#include <string>
 #include <fstream>
 #include "../Models/Order.h"
+#include <vector>
 
 class OrderRepository {
 private:
-    std::list<Order> repository;
+    std::string filename;
 public:
 
 
@@ -38,6 +39,10 @@ public:
     //--Repository functions--
     //Order findOrderByID -> is included in B4
     void saveOrder(Order obj);
+    void deleteOrder(Order obj);
+    void updateOrder(Order obj);
+    vector<Order> listAllOrders();
+    Order searchOrder(int orderID);
 };
 
 
