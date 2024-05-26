@@ -65,6 +65,7 @@ void CustomerHandlingRepository::readFromCsv() {
     std::ifstream file(this->fileName);
     std::string line;
     while(std::getline(file,line)){
+        //empty constructor
         Customer customer;
         customer.fromCsv(line);
         this->Customers.push_back(customer);
