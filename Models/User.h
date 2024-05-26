@@ -17,6 +17,8 @@ private:
 public:
     User(int id, std::string email, std::string password, std::string firstName, std::string lastName);
     User();
+
+    //functie care returneaza true daca te ai logat corect Ppoate de mutat in controller
     bool login();
 
     std::string getUserEmail() const;

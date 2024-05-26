@@ -109,6 +109,7 @@ void Employee::fromCsv(std::string &csvLine) {
     std::getline(ss,this->email,',');
     std::getline(ss,this->position,',');
     //trebuie vazit ce ii de facut cu birthdate care ii time
+    ss >> reinterpret_cast<signed char &>(this->birthdate);
     std::getline(ss,this->abbreviation,',');
     ss >> this->salary;
     ss.ignore(1);

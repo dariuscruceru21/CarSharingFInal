@@ -18,6 +18,15 @@ private:
     bool gdprDeleted;
 
 public:
+
+    Customer(std::string name,
+             std::string surname,
+             std::string phone,
+             std::string customerEmail,
+             std::string address,
+             std::string remarks,
+             bool gdprDeleted);
+
     void changePassword();
 
     void updateRemarks();
@@ -55,6 +64,12 @@ public:
     void setRemarks(std::string newRemarks);
 
     void setGdprDeleted(bool newGdprDeleted);
+
+    //convert to csv format
+    std::string toCsv();
+
+    //convert into normal type from csv
+    void fromCsv(std::string &csvLine);
 };
 
 
