@@ -8,6 +8,7 @@
 #include <vector>
 #include <fstream>
 #include "../Models/Customer.h"
+#include "Car.h"
 
 class CustomerHandlingRepository {
 private:
@@ -36,16 +37,14 @@ public:
     void anonymizeCustomer();
 
     // Listing functions
-    void listCustomersSortedByName();
+    std::vector<Customer> listCustomersSortedByName();
 
     // Search functions
-    void searchCustomersByEmail();
+    std::vector<Customer> searchCustomersByEmail(std::string email);
 
-    void searchCustomersByPhoneNumber();
+    std::vector<Customer> searchCustomersByPhoneNumber(std::string phoneNumber);
 
-    void searchCustomersByName();
-
-    void searchCustomersByCar();
+    std::vector<Customer> searchCustomersByName(std::string surname);
 
     // Profile editing functions
     void changeCustomerPassword();
@@ -71,8 +70,6 @@ public:
     //method returns true if customer has attribs completed accordingly, else false
     //false path to be used in UI to display error message accordingly
     bool validateProfileByGDPR(Customer c);
-
-    bool ageValidation(Customer c);
 
 
 };

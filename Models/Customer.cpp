@@ -43,7 +43,7 @@ void Customer::viewFavorites() {
 }
 
 
-std::string Customer::getName() {
+std::string Customer::getName () const {
     return name;
 }
 

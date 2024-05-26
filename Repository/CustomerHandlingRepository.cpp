@@ -4,6 +4,7 @@
 
 #include "CustomerHandlingRepository.h"
 #include <regex>
+#include <algorithm>
 #include "../Models/Customer.h"
 
 CustomerHandlingRepository::CustomerHandlingRepository(const std::string& fileName) {
@@ -112,5 +113,43 @@ bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
     //use case in UI:
     //if method returns false => display message : Error in creating customer. One/several mandatory fields must be completed according to GDPR
 
+}
+
+std::vector<Customer> CustomerHandlingRepository::listCustomersSortedByName() {
+    std::vector<Customer> sortedCustomers = Customers; // Create a copy of the Customers vector
+    std::sort(sortedCustomers.begin(), sortedCustomers.end(), [](const Customer& a, const Customer& b) {
+        return a.getName() < b.getName();
+    });
+    return sortedCustomers; // Return the sorted vector
+}
+
+std::vector<Customer> CustomerHandlingRepository::searchCustomersByEmail(std::string email) {
+    std::vector<Customer> results;
+    for (auto &customer: Customers) {
+        if (customer.getEmail() == email) {
+            results.push_back(customer);
+        }
+    }
+    return results;
+}
+
+std::vector<Customer> CustomerHandlingRepository::searchCustomersByPhoneNumber(std::string phoneNumber) {
+    std::vector<Customer> results;
+    for (auto &customer: Customers) {
+        if (customer.getPhone() == phoneNumber) {
+            results.push_back(customer);
+        }
+    }
+    return results;
+}
+
+std::vector<Customer> CustomerHandlingRepository::searchCustomersByName(std::string surname) {
+    std::vector<Customer> results;
+    for (auto &customer: Customers) {
+        if (customer.getSurname() == surname) {
+            results.push_back(customer);
+        }
+    }
+    return results;
 }
 
