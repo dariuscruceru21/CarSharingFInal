@@ -28,26 +28,23 @@ CarRepository::CarRepository(std::string fileName) {
     readFromCsv();
 }
 
-//cadou---> decomenteaza si da push :))
 Car CarRepository::findByLicensePlate(std::string &licensePlate) {
-    for(Car obj: this->cars){
-        if(obj.getLicensePlate()==licensePlate)
-            return obj;
+    for(const Car& car : this->cars){
+        if(car.getLicensePlate() == licensePlate)
+            return car;
     }
-}
-
-//cadou---> decomenteaza si da push :))
-void CarRepository::addCar(Car &car) {
-   /* this->cars.push_back(car);
-    writeToCsv();   */
+    std::cout << "No car with the introduced license plate was found in our repository.";
 }
 
 void CarRepository::saveCar(Car &car) {
-
+    this->cars.push_back(car);
+    writeToCsv();
 }
 
-void CarRepository::deleteCar(std::string &licensePlate) {
-
+void CarRepository::deleteCar(const std::string& licensePlate) {
+    auto it = std::remove_if(this->cars.begin(), this->cars.end(),
+                             [&licensePlate](const Car& car) { return car.getLicensePlate() == licensePlate; });
+    this->cars.erase(it, this->cars.end());
 }
 
 void CarRepository::updateCar(Car &car) {
