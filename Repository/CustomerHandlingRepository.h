@@ -19,7 +19,7 @@ private:
     void writeToCsv();
 public:
 
-    CustomerHandlingRepository(std::string fileName);
+    CustomerHandlingRepository(const std::string& fileName);
 
     // Only Employees are allowed to create, delete and update clients
     // Only Employees are allowed to see Client related data

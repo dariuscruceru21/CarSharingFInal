@@ -6,6 +6,42 @@
 #include <regex>
 #include "../Models/Customer.h"
 
+CustomerHandlingRepository::CustomerHandlingRepository(const std::string& fileName) {
+    readFromCsv();
+}
+
+void CustomerHandlingRepository::readFromCsv() {
+    this->Customers.clear();
+    std::ifstream file(this->fileName);
+    std::string line;
+    while(std::getline(file,line)){
+        Customer customer;
+        customer.fromCsv(line);
+        this->Customers.push_back(customer);
+    }
+    file.close();
+}
+
+void CustomerHandlingRepository::writeToCsv() {
+    std::ofstream file(this->fileName);
+    for(auto& customer : this->Customers)
+        file<<customer.toCsv()<<"\n";
+    file.close();
+}
+//TODO IMPLEMENTATION
+void CustomerHandlingRepository::createCustomer() {
+
+}
+//TODO IMPLEMENTATION
+void CustomerHandlingRepository::deleteCustomer() {
+
+}
+//TODO IMPLEMENTATION
+void CustomerHandlingRepository::updateCustomer() {
+
+}
+
+
 bool CustomerHandlingRepository::checkFormatEmail(Customer c) {
     std::string email = c.getEmail();
     const std::regex pattern(R"(^[a-zA-Z]+(?:\.[a-zA-Z]+)?@[a-zA-Z]+\.[a-zA-Z]{2,}$)");
@@ -59,22 +95,18 @@ bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
     //if method returns false => display message : Error in creating customer. One/several mandatory fields must be completed according to GDPR
 
 }
-// Need fromCsv function
-void CustomerHandlingRepository::readFromCsv() {
-    this->Customers.clear();
-    std::ifstream file(this->fileName);
-    std::string line;
-    while(std::getline(file,line)){
-        Customer customer;
-        customer.fromCsv(line);
-        this->Customers.push_back(customer);
-    }
-    file.close();
+
+void CustomerHandlingRepository::createCustomer() {
+
 }
-// Need a toCsv function in the Customer model
-void CustomerHandlingRepository::writeToCsv() {
-    std::ofstream file(this->fileName);
-    for(auto& customer : this->Customers)
-        file<<customer.toCsv()<<"\n";
-    file.close();
+
+void CustomerHandlingRepository::deleteCustomer() {
+
 }
+
+void CustomerHandlingRepository::updateCustomer() {
+
+}
+
+
+
