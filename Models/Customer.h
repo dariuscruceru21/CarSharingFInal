@@ -60,7 +60,7 @@ public:
 
     void setGdprDeleted(bool newGdprDeleted);
 
-    //convert to csv format
+    //convert to csv forma
     std::string toCsv();
 
     //convert into normal type from csv

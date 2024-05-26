@@ -6,7 +6,7 @@
 #include "sstream"
 #include <iostream>
 #include <vector>
-//Eu
+
 
 Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail,
                    std::string address, std::string remarks, bool gdprDeleted) {
