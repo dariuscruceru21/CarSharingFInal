@@ -97,7 +97,123 @@ int OrderRepository::determineOrderNumber(std::list<Order> repository) {
 }
 
 
-
 void OrderRepository::saveOrder(Order obj) {
+    //read all current orders into a list, add the new object to the list, then save the new list
+    std::ifstream f(filename);
 
+    std::list<Order> repo;
+    std::string line;
+    while (std::getline(file, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        repo.push_back(obj1);
+    }
+    f.close();
+    repo.push_back(obj);
+
+
+    std::ofstream g(filename);
+    if (!g.is_open()) {
+        std::cerr << "Could not open the file: " << filename << std::endl;
+        return;
+    }
+
+    for (const auto &obj1 : repo) {
+        g << obj1.toCSV() << std::endl;
+    }
+
+    g.close();
+}
+
+void OrderRepository::deleteOrder(Order obj) {
+    //read all current orders into a list, except for the one we want to remove
+    std::ifstream f(filename);
+
+    std::list<Order> repo;
+    std::string line;
+    while (std::getline(file, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        if (obj1.getOrderNr() != obj.getOrderNr())
+            repo.push_back(obj1);
+    }
+    f.close();
+
+    std::ofstream g(filename);
+    if (!g.is_open()) {
+        std::cerr << "Could not open the file: " << filename << std::endl;
+        return;
+    }
+
+    for (const auto &obj1 : repo) {
+        g << obj1.toCSV() << std::endl;
+    }
+
+    g.close();
+}
+
+void OrderRepository::updateOrder(Order obj) {
+    //read all current orders into a list, except for the one, which will be replaced by the updated version
+
+    /*int orderNr1; tm* orderDate1, begin1,end1; std::string status1;
+    std::string carLicensePlate1; int customerID1, employeeID1;
+    float totalCost1; std::string observation1;*/  //partea asta creca vine in UI sau Controller
+                                                   //(si se da ca parametru obiectul nou cu acelasi ID ca inainte)
+
+    std::ifstream f(filename);
+
+    std::list<Order> repo;
+    std::string line;
+    while (std::getline(file, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        if (obj1.getOrderNr() != obj.getOrderNr())
+            repo.push_back(obj1);
+        else
+            repo.push_back(obj);
+    }
+    f.close();
+
+    std::ofstream g(filename);
+    if (!g.is_open()) {
+        std::cerr << "Could not open the file: " << filename << std::endl;
+        return;
+    }
+
+    for (const auto &obj1 : repo) {
+        g << obj1.toCSV() << std::endl;
+    }
+
+    g.close();
+}
+
+vector<Order> OrderRepository::listAllOrders() {
+    std::ifstream f(filename);
+
+    std::vector<Order> repo;
+    std::string line;
+    while (std::getline(file, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        repo.push_back(obj1);
+    }
+    f.close();
+
+    return repo;
+}
+
+Order OrderRepository::searchOrder(int orderID) {
+    std::ifstream f(filename);
+
+    std::string line;
+    while (std::getline(file, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+
+        if (obj1.getOrderNr() == orderID)
+            return obj1;
+    }
+    f.close();
+    std::cout<<"Error: object does not exist";
+    return;
 }
