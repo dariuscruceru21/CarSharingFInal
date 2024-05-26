@@ -40,3 +40,28 @@ void UserRepository::addUser(User &user) {
     this->users.push_back(user);
     writeToCsv();
 }
+
+//iterates through user vector and deletes the searched user
+void UserRepository::deleteUser(int userId) {
+    for (int i = 0; i < users.size(); i++){
+        if (users[i].getUserId() == userId){
+            users.erase(users.begin() + i);
+            break;
+        }
+    }
+    writeToCsv();
+}
+
+//iterates through user vector and modifies the attributes of a specified user
+void UserRepository::updateUser(User& updatedUser) {
+    for (auto& user:users){
+        if (user.getUserId() == updatedUser.getUserId()){
+            user.setUserFirstName(updatedUser.getUserFirstName());
+            user.setUserLastName(updatedUser.getUserLastName());
+            user.setUserEmail(updatedUser.getUserEmail());
+            user.setUserPassword(updatedUser.getUserPassword());
+            break;
+        }
+    }
+    writeToCsv();
+}

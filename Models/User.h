@@ -23,6 +23,7 @@ public:
     std::string getUserPassword() const;
     std::string getUserFirstName() const;
     std::string getUserLastName() const;
+    int getUserId() const;
 
     void setUserFirstName(std::string newFirstName);
     void setUserLastName(std::string newLastName);

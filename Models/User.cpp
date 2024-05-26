@@ -29,6 +29,10 @@ std::string User::getUserPassword() const {
     return this->password;
 }
 
+int User::getUserId() const {
+    return this->id;
+}
+
 void User::setUserFirstName(std::string newFirstName) {
     this->firstName = newFirstName;
 }
