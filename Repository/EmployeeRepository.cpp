@@ -5,6 +5,8 @@
 #include "EmployeeRepository.h"
 #include <algorithm>
 #include <cctype>
+#include "string"
+#include "../Models/Employee.h"
 
 
 // Method to list all employees
