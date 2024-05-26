@@ -1,10 +1,13 @@
 #ifndef CARSHARINGFINAL_ORDERREPOSITORY_H
 #define CARSHARINGFINAL_ORDERREPOSITORY_H
-
+#include <iostream>
+#include <list>
+#include <fstream>
+#include "../Models/Order.h"
 
 class OrderRepository {
 private:
-
+    std::list<Order> repository;
 public:
 
 
@@ -13,7 +16,7 @@ public:
     static bool compareByTotalPrice(Order c1, Order c2)
     { return c1.moneySum < c2.moneySum; }
 
-    Order searchOrderByOrderNumber(std::list<Order> repository, int orderNr);
+    Order findOrderByID(std::list<Order> repository, int orderNr);
 
     void totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
 
@@ -32,11 +35,9 @@ public:
     int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
 
 
-    //transform obect into csv format
-    std::string toCSV() const;
-
-    //transform object from csv format
-    void fromCSV(const std::string &csvLine);
+    //--Repository functions--
+    //Order findOrderByID -> is included in B4
+    void saveOrder(Order obj);
 };
 
 
