@@ -9,7 +9,6 @@ private:
     std::vector<Order> orders;
 
 
-
 public:
 
 };
