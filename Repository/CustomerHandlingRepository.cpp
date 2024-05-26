@@ -29,15 +29,34 @@ void CustomerHandlingRepository::writeToCsv() {
     file.close();
 }
 
-void CustomerHandlingRepository::createCustomer() {
-
+void CustomerHandlingRepository::createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address, std::string remarks, std::string phone,
+                                                bool gdprDeleted) {
+    Customer newCustomer(name,surname,phone,customerEmail,address,remarks,gdprDeleted);
+    Customers.push_back(newCustomer);
 }
 
-void CustomerHandlingRepository::deleteCustomer() {
-
+void CustomerHandlingRepository::deleteCustomer(std::string email) {
+    for (int i = 0; i < Customers.size(); i++){
+        if (Customers[i].getEmail() == email){
+            Customers.erase(Customers.begin() + i);
+            break;
+        }
+    }
+    writeToCsv();
 }
-void CustomerHandlingRepository::updateCustomer() {
-
+void CustomerHandlingRepository::updateCustomer(Customer& updatedCustomer) {
+    for (auto& customer:Customers){
+        if (customer.getEmail() == updatedCustomer.getEmail()){
+            customer.setName(updatedCustomer.getName());
+            customer.setAddress(updatedCustomer.getAddress());
+            customer.setGdprDeleted(updatedCustomer.getGdprDeleted());
+            customer.setPhone(updatedCustomer.getPhone());
+            customer.setSurname(updatedCustomer.getSurname());
+            customer.setRemarks(updatedCustomer.getRemarks());
+            break;
+        }
+    }
+    writeToCsv();
 }
 
 
