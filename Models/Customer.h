@@ -18,7 +18,7 @@ private:
     bool gdprDeleted;
 
 public:
-
+    Customer();
     Customer(std::string name, std::string surname, std::string phone, std::string customerEmail,
              std::string address, std::string remarks, bool gdprDeleted);
 
