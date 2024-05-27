@@ -1,10 +1,9 @@
 #include "Order.h"
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
-             std::list <Order> repository) : car(car) {
+Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
 
-    bool check = callAllValidationFunctions(car, repository, *start, *end, "Reservation", user);  //requirement B5: Validations
+    bool check = callAllValidationFunctions(car, *start, *end, "Reservation", user);  //requirement B5: Validations
     if (!check) { status = "Error"; return;}  //order is not created; in Repository class, object will not be added if status == Error
 
     time_t now = time(0);
@@ -15,16 +14,14 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *start,
     this->status = "Reservation";
     this->start = start;
     this->end = end;
-
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1,
-             std::list <Order> repository)
+Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1)
         : car(car) {
     //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,repository,*start,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,*start,*end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -38,8 +35,12 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *end, C
     this->start = localtime(&now);
     this->end = end;
 
+
 }
 
+void Order::setRepository(std::list<Order> list) {
+    repository = list;
+}
 
 void Order::setOrderNr(int nr) {
     orderNumber = nr;
@@ -132,20 +133,20 @@ void Order::writeAll() {
 
 
 
-bool Order::callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
+bool Order::callAllValidationFunctions(Car car, tm begin, tm end,
                                                  std::string status, Customer user) {
-    if (checkIfCarIsAlreadyUsed(car,repository,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
+    if (checkIfCarIsAlreadyUsed(car,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
 
     if (!checkIfBeginIsSmallerOrEqualEnd(begin,end)) {std::cout<<"\nError: Begin time surpasses end time\n"; return false;}
 
-    if (!userHasLessThanFiveReservations(user,status,repository)) {std::cout<<"\nError: number of reservations cannot exceed 5\n"; return false;}
+    if (!userHasLessThanFiveReservations(user,status)) {std::cout<<"\nError: number of reservations cannot exceed 5\n"; return false;}
 
     orderNumber = determineOrderNumber(repository);
 
     return true;
 }
 
-bool Order::checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end) {
+bool Order::checkIfCarIsAlreadyUsed(Car car, tm begin, tm end) {
     for (Order obj: repository)
     {
         if (obj.car.getLicensePlate() == car.getLicensePlate())  //an order has been found using the same car; check if the new order wants to use it in an already occupied time period
@@ -160,7 +161,7 @@ bool Order::checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end) {
     return false;
 }
 
-bool Order::userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository) {
+bool Order::userHasLessThanFiveReservations(Customer user, std::string status) {
     if (status != "Reservation") return true;  //order is not a reservation, will not be problematic
 
     int ct=0;
@@ -229,15 +230,34 @@ void Order::fromCSV(const std::string &csvLine) {
 
     std::getline(ss, this->status, ',');
 
-    std::getline(ss, this->car.getLicensePlate(), ',');
+    std::string  carLiscensePlate = this->car.getLicensePlate();
+    std::getline(ss, carLiscensePlate, ',');
+    this->car.setLicensePlate(carLiscensePlate);
 
-    std::getline(ss, this->customer.getEmail(), ',');
+    std::string customerEmail = this->customer.getEmail();
+    std::getline(ss, customerEmail, ',');
+    this->customer.setEmail(customerEmail);
 
-    ss >> this->employee.getEmail();
-    ss.ignore(1);
+    std::string employeeEmail = this->employee.getEmail();
+    std::getline(ss,employeeEmail,',');
+    this->employee.setEmail(employeeEmail);
+
 
     ss >> this->totalCost;
     ss.ignore(1);
 
     std::getline(ss, this->observation, ',');
+}
+void Order::displayOrder() {
+    std::cout << "Order Number: " << orderNumber << "\n";
+    std::cout << "Total Cost: " << totalCost << "\n";
+    std::cout << "Observation: " << observation << "\n";
+    std::cout << "Customer: " << customer.getName() << ", Contact: " << customer.getPhone() << "\n";
+    std::cout << "Start Time: " << (start->tm_year + 2000) << "-" << (start->tm_mon + 1) << "-" << start->tm_mday
+                      << " " << start->tm_hour << ":" << start->tm_min << "\n"
+                      << "End Time: " << (end->tm_year + 2000) << "-" << (end->tm_mon + 1) << "-" << end->tm_mday
+                      << " " << end->tm_hour << ":" << end->tm_min << "\n";
+    std::cout << "Car: " << car.getModel() << " " << car.getModel() << ", Plate: " << car.getLicensePlate() << "\n";
+    std::cout << "Employee: " << employee.getName() << ", Position: " << employee.getPosition() << "\n";
+    std::cout << "Status: " << status << "\n";
 }

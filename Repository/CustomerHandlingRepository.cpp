@@ -153,3 +153,6 @@ std::vector<Customer> CustomerHandlingRepository::searchCustomersByName(std::str
     return results;
 }
 
+std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
+    return this->Customers;
+}

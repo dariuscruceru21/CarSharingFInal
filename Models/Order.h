@@ -24,14 +24,15 @@ private:
     Employee employee; /** TODO */
     float totalCost;
     std::string observation;
+    static std::list <Order> repository;
 public:
-    //TODO: getters and setters
-    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
-          std::list <Order> repository);
-    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1,
-          std::list <Order> repository);
+
+    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car);
+    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1);
     Order(){};
     void changeStatus();
+
+    void setRepository(std::list<Order> list);
 
     void setOrderNr(int nr);
     int getOrderNr() const;
@@ -58,15 +59,15 @@ public:
     void writeAll();
 
     //B.5 Validierungen   --> is called everytime when an object is created (in the constructor)
-    bool callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
+    bool callAllValidationFunctions(Car car, tm begin, tm end,
                                     std::string status, Customer user);
 
     //if the car is already used on the given date, an error occurs
-    static bool checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end);
+    static bool checkIfCarIsAlreadyUsed(Car car, tm begin, tm end);
     //begin must be smaller than end
     static bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
     //a user is not allowed to have more than 5 reservations
-    static bool userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository);
+    static bool userHasLessThanFiveReservations(Customer user, std::string status);
     //order number is issued automatically by the system
     static int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
 
@@ -77,6 +78,7 @@ public:
     //transform object from csv format
     void fromCSV(const std::string &csvLine);
 
+    void displayOrder();
 };
 
 

@@ -12,8 +12,18 @@ private:
     std::string transmission;
     std::string color;
     std::string remarks;
+    bool isActive;
 
 public:
+
+
+    Car(std::string licensePlate, std::string model, std::string brand, int yearOfFirstRegistration,
+        int mileage, float dailyRate, std::string fuelType, std::string transmission, std::string color,
+        std::string remarks, bool isActive);
+
+    Car();
+
+
     // Getters
     std::string getLicensePlate() const;
 
@@ -61,4 +71,7 @@ public:
 
     //convert into normal type from csv
     void fromCsv(std::string &csvLine);
+
+    void setisActive(bool isActive);
+    bool getisActive();
 };

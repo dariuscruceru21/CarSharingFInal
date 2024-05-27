@@ -119,3 +119,7 @@ void EmployeeRepository::writeToCsv() {
         file << employee.toCsv() << "\n";
     file.close();
 }
+
+std::vector<Employee> EmployeeRepository::getEmployes() {
+    return std::vector<Employee>();
+}

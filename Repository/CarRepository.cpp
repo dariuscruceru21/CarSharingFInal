@@ -79,10 +79,13 @@ std::vector<Car> CarRepository::listAllCars() {
 
 }
 
-Car CarRepository::searchCar(std::string &licensePlate) {
-    for(Car obj:this->cars){
-        if(obj.getLicensePlate() == licensePlate)
-            return obj;
+std::vector<Car> CarRepository::searchCar(std::string &licensePlate) {
+    std::vector results = std::vector<Car>{};
+    for(Car car:this->cars){
+        size_t found = car.getLicensePlate().find(licensePlate);
+        if (found != std::string::npos)  {
+            results.push_back(car);
+        }
     }
 }
 

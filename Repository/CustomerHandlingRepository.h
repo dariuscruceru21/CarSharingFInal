@@ -8,17 +8,23 @@
 #include <vector>
 #include <fstream>
 #include "../Models/Customer.h"
-#include "Car.h"
+#include "../Models/Car.h"
 
 class CustomerHandlingRepository {
 private:
     std::vector<Customer> Customers;
     std::string fileName;
 
+
+public:
+
+
+
+    std::vector<Customer> geterCustomers();
+
     void readFromCsv();
 
     void writeToCsv();
-public:
 
     CustomerHandlingRepository(const std::string& fileName);
 
@@ -45,15 +51,6 @@ public:
     std::vector<Customer> searchCustomersByPhoneNumber(std::string phoneNumber);
 
     std::vector<Customer> searchCustomersByName(std::string surname);
-
-    // Profile editing functions
-    void changeCustomerPassword();
-
-    void changeCustomerNotes();
-
-    void addCarToFavorites();
-
-    void removeCarFromFavorites();
 
     //Validation functions
 

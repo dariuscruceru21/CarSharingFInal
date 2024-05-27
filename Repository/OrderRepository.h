@@ -9,36 +9,34 @@
 
 class OrderRepository {
 private:
-    std::string filename;
+    std::string filename = "CarSharingFInal/Information/Orders.csv";
+    std::list<Order> orders;
 
 public:
 
-    OrderRepository(std::string filename);
-
+//    void allOrders();
     //B.4 Auflisten der Bestellungen
     std::list<Order> showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
     static bool compareByTotalPrice(Order c1, Order c2)
     { return c1.getMoney() < c2.getMoney(); }
 
-    Order findOrderByID(std::list<Order> repository, int orderNr);
-
     void totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
 
-
-
+//    std::list<Order> fromFile();
 
     //--Repository functions--
     //Order findOrderByID -> is included in B4
-    void saveOrder(Order obj);
+    void saveOrder(Order obj) const;
     void deleteOrder(Order obj);
     void updateOrder(Order obj);
-    std::vector<Order> listAllOrders();
+    std::list<Order> listAllOrders() const;
     Order searchOrder(int orderID);
 
     //B.3 -Grama Andrei
     //Order & Reservation handling
-    std::list <Order> removeReservation(Order obj);
-    std::list <Order> changeReservation(Order obj);
+    std::string returnUserType(Order obj);
+    std::list <Order> removeReservation(int orderNr);
+    std::list <Order> changeReservation(int orderNr);
 
 
 };

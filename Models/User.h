@@ -5,6 +5,11 @@
 #ifndef CARSHARINGFINAL_USER_H
 #define CARSHARINGFINAL_USER_H
 #include <string>
+#include "../Repository/CustomerHandlingRepository.h"
+#include "../Repository/EmployeeRepository.h"
+#include "../Models/Customer.h"
+#include "../Models/Employee.h"
+
 
 class User {
 private:
@@ -31,6 +36,12 @@ public:
     void setUserLastName(std::string newLastName);
     void setUserPassword(std::string newPassword);
     void setUserEmail(std::string newEmail);
+
+    std::string inputEmail();
+
+    std::string inputPassword();
+
+
 
     //convert to csv format
     std::string toCsv();

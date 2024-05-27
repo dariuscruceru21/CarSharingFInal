@@ -1,8 +1,7 @@
 #include "OrderRepository.h"
 
-OrderRepository::OrderRepository(std::string filename) {
-    this->filename = filename;
-}
+
+
 
 std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
     std::list<Order> orderList;
@@ -25,13 +24,6 @@ std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list
     return orderList;
 }
 
-Order OrderRepository::findOrderByID(std::list<Order> repository, int orderNr) {
-    for (Order obj: repository)
-    {
-        if (obj.getOrderNr() == orderNr)
-            return obj;
-    }
-}
 
 void OrderRepository::totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type) { //type: either month or year
     if (type == "month")
@@ -50,7 +42,7 @@ void OrderRepository::totalSumOfATimeInterval(std::list<Order> repository, tm ti
 }
 
 
-void OrderRepository::saveOrder(Order obj) {
+void OrderRepository::saveOrder(Order obj) const {
     //read all current orders into a list, add the new object to the list, then save the new list
     std::ifstream f(filename);
 
@@ -142,7 +134,19 @@ void OrderRepository::updateOrder(Order obj) {
 }
 
 //B.3
-std::list <Order> OrderRepository::removeReservation(Order obj) {
+std::string OrderRepository::returnUserType(Order obj) {
+    std::ifstream f("../Information/Customers.csv");
+
+    std::list<Customer> repo1;
+    std::string line;
+    while (std::getline(f, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        /**TODO waiting for permission check (login page) */
+    }
+}
+
+std::list <Order> OrderRepository::removeReservation(int orderNr) {
     std::ifstream f(filename);
 
     std::list<Order> repo;
@@ -150,16 +154,18 @@ std::list <Order> OrderRepository::removeReservation(Order obj) {
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        if (obj1.getOrderNr() != obj.getOrderNr())
+        if (obj1.getOrderNr() != orderNr)
             repo.push_back(obj1);
+        else if(obj1.getCustomer())
     }
+
     f.close();
     return repo;
 
 }
 
 //B.3.3
-std::list <Order> OrderRepository::changeReservation(Order obj) {
+std::list <Order> OrderRepository::changeReservation(int orderNr) {
     std::ifstream f(filename);
 
     std::list<Order> repo;
@@ -167,61 +173,59 @@ std::list <Order> OrderRepository::changeReservation(Order obj) {
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        if (obj1.getOrderNr() != obj.getOrderNr())
+        if (obj1.getOrderNr() != orderNr)
             repo.push_back(obj1);
-        else
-            repo.push_back(obj);
+
     }
     f.close();
 
-    std::list<Order> aux;
-    for (Order obj: repo)
-        if (obj.getOrderNr() != obj.getOrderNr())
-            aux.push_back(obj);
-        else if ( /*is admin*/) { /**TODO verification*/
-            int option;
-            std::cin >> option;
-
-            switch (option) {
-                case 1: {    //Admins
-
-                    break;
-                }
-                case 2: {
-
-                    break;
-                }
-            }
-        } else if ( /*is customer*/) {
-            int option;
-            std::cin >> option;
-
-            switch (option) {
-                case 1: {    //customers
-
-                    break;
-                }
-                case 2: {
-
-                    break;
-                }
-            }
-        }
+//    std::list<Order> aux;
+//    for (Order obj: repo)
+//        if (obj.getOrderNr() != obj.getOrderNr())
+//            aux.push_back(obj);
+//        else if ( /*is admin*/) { /**TODO verification*/
+//            int option;
+//            std::cin >> option;
+//
+//            switch (option) {
+//                case 1: {    //Admins
+//
+//                    break;
+//                }
+//                case 2: {
+//
+//                    break;
+//                }
+//            }
+//        } else if ( /*is customer*/) {
+//            int option;
+//            std::cin >> option;
+//
+//            switch (option) {
+//                case 1: {    //customers
+//
+//                    break;
+//                }
+//                case 2: {
+//
+//                    break;
+//                }
+//            }
+//        }
     return aux;
 }
-std::vector<Order> OrderRepository::listAllOrders() {
+std::list<Order> OrderRepository::listAllOrders() const {
     std::ifstream f(filename);
 
-    std::vector<Order> repo;
     std::string line;
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        repo.push_back(obj1);
+        orders.push_back(obj1);
     }
     f.close();
 
-    return repo;
+    return orders;
 }
 
 Order OrderRepository::searchOrder(int orderID) {

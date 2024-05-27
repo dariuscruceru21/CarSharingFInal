@@ -8,7 +8,7 @@
 #include<stdexcept>
 
 
-Employee::Employee(std::string name, std::string surname, std::string email, std::string position,  std::string birthdate,
+Employee::Employee(std::string name, std::string surname, std::string email, std::string password,std::string position,  std::string birthdate,
                    std::string abbreviation, float salary, std::string remarks) {
 
     this->name = name;
@@ -117,3 +117,6 @@ void Employee::fromCsv(std::string &csvLine) {
 }
 
 
+std::string Employee::getPassword() {
+    return this->password;
+}
