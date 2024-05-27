@@ -77,6 +77,7 @@ public:
     //transform object from csv format
     void fromCSV(const std::string &csvLine);
 
+    void displayOrder();
 };
 
 

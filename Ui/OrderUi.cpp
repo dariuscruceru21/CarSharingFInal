@@ -1,8 +1,6 @@
-//
-// Created by Alex on 5/27/2024.
-//
 #include "OrderUi.h"
-#include <iostream>
+#include <iomanip>
+#include <string>
 
 void OrderUi::displayMenu() {
     std::cout << "Order Management System\n";
@@ -56,40 +54,162 @@ void OrderUi::handleUserInput() {
 }
 
 void OrderUi::createOrder() {
-    controller.createOrder();
+    float totalCost;
+    std::string observation;
+    Customer user;
+    tm start = {}, end = {};
+    Car car;
+    Employee employee;
+
+    std::cout << "Enter total cost: ";
+    std::cin >> totalCost;
+    std::cin.ignore();
+
+    std::cout << "Enter observation: ";
+    std::getline(std::cin, observation);
+
+    std::string customerName, customerContact;
+    std::cout << "Enter customer name: ";
+    std::getline(std::cin, customerName);
+    std::cout << "Enter customer contact: ";
+    std::getline(std::cin, customerContact);
+    user.setName(customerName);
+    user.setPhone(customerContact);
+
+    std::cout << "Enter start time (year month day hour minute): ";
+    std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
+    start.tm_year -= 2000;
+    start.tm_mon -= 1;
+
+    std::cout << "Enter end time (year month day hour minute): ";
+    std::cin >> end.tm_year >> end.tm_mon >> end.tm_mday >> end.tm_hour >> end.tm_min;
+    end.tm_year -= 2000;
+    end.tm_mon -= 1;
+
+    std::string carMake, carModel, carPlate;
+    std::cin.ignore(); // Clear the input buffer
+    std::cout << "Enter car make: ";
+    std::getline(std::cin, carMake);
+    std::cout << "Enter car model: ";
+    std::getline(std::cin, carModel);
+    std::cout << "Enter car plate number: ";
+    std::getline(std::cin, carPlate);
+    car.setModel(carMake);
+    car.setModel(carModel);
+    car.setLicensePlate(carPlate);
+
+    std::string employeeName, employeePosition;
+    std::cout << "Enter employee name: ";
+    std::getline(std::cin, employeeName);
+    std::cout << "Enter employee position: ";
+    std::getline(std::cin, employeePosition);
+    employee.setName(employeeName);
+    employee.setPosition(employeePosition);
+
+    controller.createOrder(totalCost, observation, user, start, end, car, employee);
     std::cout << "Order created successfully.\n";
 }
 
 void OrderUi::updateOrder() {
-    controller.updateOrder();
+    float totalCost;
+    std::string observation;
+    Customer user;
+    tm start = {}, end = {};
+    Car car;
+    Employee employee;
+    int id;
+
+    std::cout << "Enter order ID to update: ";
+    std::cin >> id;
+    std::cin.ignore();
+
+    std::cout << "Enter total cost: ";
+    std::cin >> totalCost;
+    std::cin.ignore();
+
+    std::cout << "Enter observation: ";
+    std::getline(std::cin, observation);
+
+    std::string customerName, customerContact;
+    std::cout << "Enter customer name: ";
+    std::getline(std::cin, customerName);
+    std::cout << "Enter customer contact: ";
+    std::getline(std::cin, customerContact);
+    user.setName(customerName);
+    user.setPhone(customerContact);
+
+    std::cout << "Enter start time (year month day hour minute): ";
+    std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
+    start.tm_year -= 2000;
+    start.tm_mon -= 1;
+
+    std::cout << "Enter end time (year month day hour minute): ";
+    std::cin >> end.tm_year >> end.tm_mon >> end.tm_mday >> end.tm_hour >> end.tm_min;
+    end.tm_year -= 2000;
+    end.tm_mon -= 1;
+
+    std::string carMake, carModel, carPlate;
+    std::cin.ignore(); // Clear the input buffer
+    std::cout << "Enter car make: ";
+    std::getline(std::cin, carMake);
+    std::cout << "Enter car model: ";
+    std::getline(std::cin, carModel);
+    std::cout << "Enter car plate number: ";
+    std::getline(std::cin, carPlate);
+    car.setModel(carMake);
+    car.setModel(carModel);
+    car.setLicensePlate(carPlate);
+
+    std::string employeeName, employeePosition;
+    std::cout << "Enter employee name: ";
+    std::getline(std::cin, employeeName);
+    std::cout << "Enter employee position: ";
+    std::getline(std::cin, employeePosition);
+    employee.setName(employeeName);
+    employee.setPosition(employeePosition);
+
+    controller.updateOrder(totalCost, observation, user, start, end, car, employee, id);
     std::cout << "Order updated successfully.\n";
 }
 
 void OrderUi::completeOrder() {
-    controller.completeOrder();
+    int id;
+    std::cout << "Enter order ID to complete: ";
+    std::cin >> id;
+    controller.completeOrder(id);
     std::cout << "Order completed successfully.\n";
 }
 
-void OrderUi::takeOverOrder() {
-    controller.takeOverOrder();
-    std::cout << "Order taken over successfully.\n";
-}
-
 void OrderUi::takeAwayOrder() {
-    controller.takeAwayOrder();
+    int id;
+    Employee employee;
+
+    std::cout << "Enter order ID to take away: ";
+    std::cin >> id;
+
+    std::string employeeName, employeePosition;
+    std::cin.ignore(); // Clear the input buffer
+    std::cout << "Enter employee name: ";
+    std::getline(std::cin, employeeName);
+    std::cout << "Enter employee position: ";
+    std::getline(std::cin, employeePosition);
+    employee.setName(employeeName);
+    employee.setPosition(employeePosition);
+
+    controller.takeAwayOrder(id, employee);
     std::cout << "Order taken away successfully.\n";
 }
 
 void OrderUi::listOrders() {
     auto orders = controller.listOrders();
-    for (const auto& order : orders) {
-        std::cout << order << std::endl;
+    for (Order order : orders) {
+        order.displayOrder();
     }
 }
 
 void OrderUi::searchOrder() {
     auto orders = controller.searchOrder();
-    for (const auto& order : orders) {
-        std::cout << order << std::endl;
+    for (Order order : orders) {
+        order.displayOrder();
     }
 }

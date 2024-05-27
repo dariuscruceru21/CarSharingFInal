@@ -249,3 +249,16 @@ void Order::fromCSV(const std::string &csvLine) {
 
     std::getline(ss, this->observation, ',');
 }
+void Order::displayOrder() {
+    std::cout << "Order Number: " << orderNumber << "\n";
+    std::cout << "Total Cost: " << totalCost << "\n";
+    std::cout << "Observation: " << observation << "\n";
+    std::cout << "Customer: " << customer.getName() << ", Contact: " << customer.getPhone() << "\n";
+    std::cout << "Start Time: " << (start->tm_year + 1900) << "-" << (start->tm_mon + 1) << "-" << start->tm_mday
+                      << " " << start->tm_hour << ":" << start->tm_min << "\n"
+                      << "End Time: " << (end->tm_year + 1900) << "-" << (end->tm_mon + 1) << "-" << end->tm_mday
+                      << " " << end->tm_hour << ":" << end->tm_min << "\n";
+    std::cout << "Car: " << car.getModel() << " " << car.getModel() << ", Plate: " << car.getLicensePlate() << "\n";
+    std::cout << "Employee: " << employee.getName() << ", Position: " << employee.getPosition() << "\n";
+    std::cout << "Status: " << status << "\n";
+}
