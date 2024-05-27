@@ -22,6 +22,7 @@ void UserRepository::writeToCsv() {
 
 
 UserRepository::UserRepository(std::string fileName) {
+    this->fileName = fileName;
     readFromCsv();
 }
 
