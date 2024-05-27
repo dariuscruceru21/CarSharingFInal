@@ -6,6 +6,7 @@
 #define CARSHARING_CUSTOMER_H
 
 #include <string>
+#include <vector>
 
 class Customer {
 private:
@@ -16,38 +17,32 @@ private:
     std::string address;
     std::string remarks;
     bool gdprDeleted;
+    std::string password;
+    std::vector<std::string> favoriteCars;
+
+
 
 public:
 
     Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
-             std::string remarks, bool gdprDeleted);
+             std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars);
 
     //pentru default constructor?
     Customer();
 
-    void changePassword();
-
-    void updateRemarks();
-
-    void addFavoriteCar();
-
-    void removeFavoriteCar();
-
-    void viewFavorites();
-
     std::string getName() const;
 
-    std::string getSurname();
+    std::string getSurname() const;
 
-    std::string getPhone();
+    std::string getPhone() const;
 
-    std::string getAddress();
+    std::string getAddress() const;
 
-    std::string getRemarks();
+    std::string getRemarks() const;
 
-    std::string getEmail() ;
+    std::string getEmail() const;
 
-    bool getGdprDeleted();
+    bool getGdprDeleted() const;
 
     void setName(std::string newName);
 
