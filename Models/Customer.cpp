@@ -103,4 +103,10 @@ void Customer::fromCsv(std::string &csvLine) {
 }
 
 
+std::string Customer::getPassword() {
+    return this->password;
+}
 
+void Customer::setPassword(std::string newPassword) {
+    this->password = newPassword;
+}
