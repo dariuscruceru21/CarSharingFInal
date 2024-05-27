@@ -231,12 +231,18 @@ void Order::fromCSV(const std::string &csvLine) {
 
     std::getline(ss, this->status, ',');
 
-    std::getline(ss, this->car.getLicensePlate(), ',');
+    std::string  carLiscensePlate = this->car.getLicensePlate();
+    std::getline(ss, carLiscensePlate, ',');
+    this->car.setLicensePlate(carLiscensePlate);
 
-    std::getline(ss, this->customer.getEmail(), ',');
+    std::string customerEmail = this->customer.getEmail();
+    std::getline(ss, customerEmail, ',');
+    this->customer.setEmail(customerEmail);
 
-    ss >> this->employee.getEmail();
-    ss.ignore(1);
+    std::string employeeEmail = this->employee.getEmail();
+    std::getline(ss,employeeEmail,',');
+    this->employee.setEmail(employeeEmail);
+
 
     ss >> this->totalCost;
     ss.ignore(1);
