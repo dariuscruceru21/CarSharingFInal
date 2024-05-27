@@ -4,9 +4,10 @@
 #include<ctime>
 #include<string>
 #include <list>
+#include "sstream"
 
 #include "Employee.h"
-#include "User.h"
+#include "Customer.h"
 #include "Car.h"
 //
 class Order {
@@ -19,15 +20,15 @@ private:
 
     std::string status;
     Car car;/** TODO */
-    User user; //CUSTOMER??
+    Customer customer;
     Employee employee; /** TODO */
     float totalCost;
     std::string observation;
 public:
     //TODO: getters and setters
-    Order(float totalCost, std::string observation, User user, tm *start, tm *end, Car car,
+    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
           std::list <Order> repository);
-    Order(float totalCost, std::string observation, User user, tm *start, Car car, Employee employee1,
+    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1,
           std::list <Order> repository);
     Order(){};
     void changeStatus();
@@ -44,8 +45,8 @@ public:
     std::string getStatus();
     void setCar(Car car);
     Car getCar();
-    void setUser(User user);
-    User getUser();
+    void setCustomer(Customer user);
+    Customer getCustomer();
     void setEmployee(Employee employee);
     Employee getEmployee();
     void setMoney(float sum);
@@ -56,8 +57,22 @@ public:
     //general function for writing an order's details
     void writeAll();
 
+    //B.5 Validierungen   --> is called everytime when an object is created (in the constructor)
+    bool callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
+                                    std::string status, Customer user);
+
+    //if the car is already used on the given date, an error occurs
+    static bool checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end);
+    //begin must be smaller than end
+    static bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
+    //a user is not allowed to have more than 5 reservations
+    static bool userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository);
+    //order number is issued automatically by the system
+    static int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
+
+
     //transform obect into csv format
-    std::string toCSV() const;
+    std::string toCSV();
 
     //transform object from csv format
     void fromCSV(const std::string &csvLine);

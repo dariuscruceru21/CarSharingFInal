@@ -1,6 +1,6 @@
 #include "Order.h"
 
-Order::Order(float totalCost, std::string observation, User user, tm *start, tm *end, Car car,
+Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
              std::list <Order> repository) : car(car) {
     //order type: reservation (start is given by parameter)
 
@@ -10,7 +10,7 @@ Order::Order(float totalCost, std::string observation, User user, tm *start, tm 
     time_t now = time(0);
     this->totalCost = totalCost;
     this->observation = observation;
-    this->user = user;
+    this->customer = user;
     orderDate = localtime(&now);
     this->status = "Reservation";
     this->start = start;
@@ -19,7 +19,7 @@ Order::Order(float totalCost, std::string observation, User user, tm *start, tm 
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float totalCost, std::string observation, User user, tm *end, Car car, Employee employee1,
+Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1,
              std::list <Order> repository)
         : car(car) {
     //order type: currently active (start equals current time)
@@ -32,7 +32,7 @@ Order::Order(float totalCost, std::string observation, User user, tm *end, Car c
     this->totalCost = totalCost;
     this->observation = observation;
     time_t now = time(0);
-    this->user = user;
+    this->customer = user;
     orderDate = localtime(&now);
     this->status = "Order";
     this->start = localtime(&now);
@@ -89,12 +89,12 @@ Car Order::getCar() {
     return car;
 }
 
-void Order::setUser(User user) {
-    this->user = user;
+void Order::setCustomer(Customer user) {
+    this->customer = user;
 }
 
-User Order::getUser() {
-    return user;
+Customer Order::getCustomer() {
+    return customer;
 }
 
 void Order::setEmployee(Employee employee) {
@@ -126,23 +126,78 @@ std::string Order::getObservation() {
 void Order::writeAll() {
     std::cout<<orderNumber<<" ordered on "<<orderDate<<"; from "<<start<<" until "<<end
              <<" (current status: "<<status<<"), total cost: "<<totalCost<<".\n";  //nu toate detaliile apar
-    std::cout<<"Ordered by "<<user.getUserLastName()<<", handled by"<<employee.getUserLastName()<<"\n";
+    std::cout<<"Ordered by "<<customer.getName()<<", handled by"<<employee.getSurname()<<"\n";
     std::cout<<"-->Observation: "<<observation<<"\n\n";
 }
 
 
-std::string OrderRepository::toCSV() const {
+
+bool Order::callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
+                                                 std::string status, Customer user) {
+    if (checkIfCarIsAlreadyUsed(car,repository,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
+
+    if (!checkIfBeginIsSmallerOrEqualEnd(begin,end)) {std::cout<<"\nError: Begin time surpasses end time\n"; return false;}
+
+    if (!userHasLessThanFiveReservations(user,status,repository)) {std::cout<<"\nError: number of reservations cannot exceed 5\n"; return false;}
+
+    orderNumber = determineOrderNumber(repository);
+
+    return true;
+}
+
+bool Order::checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end) {
+    for (Order obj: repository)
+    {
+        if (obj.car.getLicensePlate() == car.getLicensePlate())  //an order has been found using the same car; check if the new order wants to use it in an already occupied time period
+            if (&end >= obj.start && &end <= obj.end || &begin <= obj.end && &begin >= obj.start)
+                return true;  //car is used, cannot create order
+    }
+    return false;
+}
+
+bool Order::checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end) {
+    if (&begin <= &end) return true;
+    return false;
+}
+
+bool Order::userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository) {
+    if (status != "Reservation") return true;  //order is not a reservation, will not be problematic
+
+    int ct=0;
+    for (Order obj: repository)
+    {
+        if (obj.getCustomer().getEmail() == user.getEmail())  //cant have duplicate emails; users can be identified this way then
+            ct++;
+    }
+
+    if (ct >= 5) return false;  //cannot make order; user reached maximum amount of reservations
+
+    return true;
+}
+
+int Order::determineOrderNumber(std::list<Order> repository) {
+    int maxi = 0;
+    for (Order obj: repository)
+        if (obj.getOrderNr() > maxi)
+            maxi = obj.getOrderNr();
+
+    return maxi + 1;
+}
+
+
+
+std::string Order::toCSV(){
     std::ostringstream oss;
     oss << this->orderNumber << "," << orderDate->tm_year  << "," << orderDate->tm_mon  << "," <<
         orderDate->tm_mday << "," << start << "," << end << "," <<
-        status << "," << car.getLicensePlate() << "," << user.getUserEmail() << "," <<
-        employee.getUserEmail() << "," << totalCost << "," << observation << ",";
+        status << "," << car.getLicensePlate() << "," << customer.getEmail() << "," <<
+        employee.getEmail() << "," << totalCost << "," << observation << ",";
 }
 
-void OrderRepository::fromCSV(const std::string &csvLine) {
+void Order::fromCSV(const std::string &csvLine) {
     //-->how it is saved in the csv file:
     //orderNr orderDateYear orderDateMonth orderDateDay beginYear beginMonth beginDay endYear endMonth endDay
-    //status carLicensePlate customerID employeeID totalCost observation
+    //status carLicensePlate customerEmail employeeEmail totalCost observation
 
     std::istringstream ss(csvLine);
 
@@ -158,11 +213,11 @@ void OrderRepository::fromCSV(const std::string &csvLine) {
     ss >> this->orderDate->tm_mday;
     ss.ignore(1);
 
-    ss >> this->begin->tm_year;
+    ss >> this->start->tm_year;
     ss.ignore(1);
-    ss >> this->begin->tm_mon;
+    ss >> this->start->tm_mon;
     ss.ignore(1);
-    ss >> this->begin->tm_mday;
+    ss >> this->start->tm_mday;
     ss.ignore(1);
 
     ss >> this->end->tm_year;
@@ -174,12 +229,11 @@ void OrderRepository::fromCSV(const std::string &csvLine) {
 
     std::getline(ss, this->status, ',');
 
-    std::getline(ss, this->car->licensePlate, ',');
+    std::getline(ss, this->car.getLicensePlate(), ',');
 
-    ss >> this->customer->id;
-    ss.ignore(1);
+    std::getline(ss, this->customer.getEmail(), ',');
 
-    ss >> this->employee->id;
+    ss >> this->employee.getEmail();
     ss.ignore(1);
 
     ss >> this->totalCost;
