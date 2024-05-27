@@ -14,6 +14,7 @@ class CustomerHandlingRepository {
 private:
     std::vector<Customer> Customers;
     std::string fileName;
+    std::vector<Car> favouriteCars;
 
 
 public:
@@ -32,7 +33,7 @@ public:
     // Only Employees are allowed to see Client related data
 
     // Client Handling functions
-    void createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address, std::string remarks, std::string phone,
+    void createCustomer(std::string name, std::string surname, std::string customerEmail, std::string password, std::string address, std::string remarks, std::string phone,
                         bool gdprDeleted);
 
     void deleteCustomer(std::string Email);
@@ -51,6 +52,17 @@ public:
     std::vector<Customer> searchCustomersByPhoneNumber(std::string phoneNumber);
 
     std::vector<Customer> searchCustomersByName(std::string surname);
+
+    //customer setter methods
+    void changeCustomerPassword(std::string newPassword, std::string emailToSearchBy);
+
+    void changeCustomerRemarks(std::string newRemarks, std::string emailToearchBy);
+
+    void addFavouriteCar(Car newCar);
+
+    void removeFavoriteCar(Car carToRemove);
+
+    void viewFavouriteCars();
 
     //Validation functions
 

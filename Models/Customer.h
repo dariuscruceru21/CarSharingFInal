@@ -26,16 +26,6 @@ public:
     //pentru default constructor?
     Customer();
 
-    void changePassword();
-
-    void updateRemarks();
-
-    void addFavoriteCar();
-
-    void removeFavoriteCar();
-
-    void viewFavorites();
-
     std::string getName() const;
 
     std::string getPassword() ;
