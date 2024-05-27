@@ -15,6 +15,15 @@ private:
     bool isActive;
 
 public:
+
+
+    Car(std::string licensePlate, std::string model, std::string brand, int yearOfFirstRegistration,
+        int mileage, float dailyRate, std::string fuelType, std::string transmission, std::string color,
+        std::string remarks, bool isActive);
+
+    Car();
+
+
     // Getters
     std::string getLicensePlate() const;
 

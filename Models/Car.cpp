@@ -1,6 +1,24 @@
 #include "Car.h"
 #include "sstream"
 
+
+Car::Car(std::string licensePlate, std::string model, std::string brand, int yearOfFirstRegistration, int mileage,
+         float dailyRate, std::string fuelType, std::string transmission, std::string color, std::string remarks,
+         bool isActive) {
+    this->licensePlate = licensePlate;
+    this->model = model;
+    this->brand = brand;
+    this->yearOfFirstRegistration = yearOfFirstRegistration;
+    this->mileage = mileage;
+    this->dailyRate = dailyRate;
+    this->fuelType = fuelType;
+    this->transmission = transmission;
+    this->color = color;
+    this->remarks = remarks;
+    this->isActive = isActive;
+}
+
+
 // Getters
 std::string Car::getLicensePlate() const {
     return licensePlate;
