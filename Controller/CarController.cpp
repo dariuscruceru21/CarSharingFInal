@@ -19,7 +19,7 @@ void CarController::updateCar(Car car) {
 }
 
 
-void CarController::deleteCar(const std::string &licensePlate) {
+void CarController::deleteCar(std::string &licensePlate) {
     carRepository.deleteCar(licensePlate);
 }
 
@@ -35,7 +35,7 @@ std::vector<Car> CarController::listCars() {
 }
 
 
-std::vector<Car> CarController::searchCar(std::string licensePlate) {
+std::vector<Car> CarController::searchCar(std::string &licensePlate) {
     return carRepository.searchCar(licensePlate);
 }
 

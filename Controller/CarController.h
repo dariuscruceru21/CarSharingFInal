@@ -17,10 +17,10 @@ public:
     CarController(CarRepository repository);
    void createCar(Car car);
    void updateCar(Car car);
-   void deleteCar(const std::string &carPlate);
+   void deleteCar(std::string &licensePlate);
    void deactivateCar(Car car);
    std::vector<Car> listCars();
-   std::vector<Car> searchCar(std::string licensePlate);
+   std::vector<Car> searchCar(std::string &licensePlate);
 };
 
 
