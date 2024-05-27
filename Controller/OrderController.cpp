@@ -26,6 +26,18 @@ void OrderController::updateOrder(float totalCost, std::string observation, Cust
     updatedOrder.setMoney(totalCost);
     updatedOrder.setObservation(observation);
     updatedOrder.setEmployee(employee);
-    updatedOrder.setOrderNr(nr);
+    updatedOrder.setOrderNr(id);
     repo.updateOrder(updatedOrder);
+}
+
+void OrderController::completeOrder(int id) {
+    Order completed = repo.searchOrder(id);
+    completed.setStatus("completed");
+    repo.updateOrder(completed);
+}
+
+void OrderController::takeAwayOrder(int id, Employee employee) {
+    Order change = repo.searchOrder(id);
+    change.setEmployee(employee);
+    repo.updateOrder(change);
 }

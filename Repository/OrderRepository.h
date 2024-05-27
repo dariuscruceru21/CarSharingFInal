@@ -18,8 +18,6 @@ public:
     static bool compareByTotalPrice(Order c1, Order c2)
     { return c1.getMoney() < c2.getMoney(); }
 
-    Order findOrderByID(std::list<Order> repository, int orderNr);
-
     void totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
 
 
