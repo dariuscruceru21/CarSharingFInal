@@ -44,3 +44,16 @@ void OrderController::takeAwayOrder(int id, Employee employee) {
     repo.updateOrder(change);
 }
 
+void OrderController::takeOverOrder(int id) {
+    Order change = repo.searchOrder(id);
+    change.setEmployee()
+}
+
+std::list<Order> OrderController::listOrders() {
+    return repo.listAllOrders();
+}
+
+Order OrderController::searchOrder(int id) {
+    return repo.searchOrder(id);
+}
+

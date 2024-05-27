@@ -208,8 +208,9 @@ void OrderUi::listOrders() {
 }
 
 void OrderUi::searchOrder() {
-    auto orders = controller.searchOrder();
-    for (Order order : orders) {
-        order.displayOrder();
-    }
+    int id;
+    std::cout<<" Enter order ID to search: ";
+    std::cin>>id;
+    auto order = controller.searchOrder(id);
+    order.displayOrder();
 }
