@@ -152,6 +152,7 @@ void OrderRepository::deleteOrder(Order obj) {
     g.close();
 }
 
+
 void OrderRepository::updateOrder(Order obj) {
     //read all current orders into a list, except for the one, which will be replaced by the updated version
 
@@ -187,6 +188,7 @@ void OrderRepository::updateOrder(Order obj) {
     g.close();
 }
 
+//B.3
 std::list <Order> OrderRepository::removeReservation(Order obj) {
     std::ifstream f(filename);
 
@@ -203,7 +205,7 @@ std::list <Order> OrderRepository::removeReservation(Order obj) {
 
 }
 
-
+//B.3.3
 std::list <Order> OrderRepository::changeReservation(Order obj) {
     std::ifstream f(filename);
 
