@@ -26,12 +26,13 @@ private:
     std::string observation;
     static std::list <Order> repository;
 public:
-    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
-          std::list <Order> repository);
-    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1,
-          std::list <Order> repository);
+
+    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car);
+    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1);
     Order(){};
     void changeStatus();
+
+    void setRepository(std::list<Order> list);
 
     void setOrderNr(int nr);
     int getOrderNr() const;
