@@ -3,10 +3,13 @@
 
 #include<ctime>
 #include<string>
+#include <list>
+#include "sstream"
 
 #include "Employee.h"
-#include "User.h"
-
+#include "Customer.h"
+#include "Car.h"
+//
 class Order {
 private:
     int orderNumber;
@@ -17,32 +20,33 @@ private:
 
     std::string status;
     Car car;/** TODO */
-    User user;
+    Customer customer;
     Employee employee; /** TODO */
     float totalCost;
     std::string observation;
 public:
     //TODO: getters and setters
-    Order(float moneySum, std::string observation, User user, tm *begin, tm *end, Car car,
-                std::list <Order> repository);
-    Order(float moneySum, std::string observation, User user, tm *end, Car car, Employee employee1,
-                std::list <Order> repository);
+    Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
+          std::list <Order> repository);
+    Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1,
+          std::list <Order> repository);
+    Order(){};
     void changeStatus();
 
     void setOrderNr(int nr);
     int getOrderNr() const;
     void setOrderDate(tm &time);
     tm getOrderDate();
-    void setBegin(tm time);
-    tm getBegin();
+    void setStart(tm time);
+    tm getStart();
     void setEnd(tm time);
     tm getEnd();
     void setStatus(std::string status);
     std::string getStatus();
     void setCar(Car car);
     Car getCar();
-    void setUser(User user);
-    User getUser();
+    void setCustomer(Customer user);
+    Customer getCustomer();
     void setEmployee(Employee employee);
     Employee getEmployee();
     void setMoney(float sum);
@@ -53,38 +57,26 @@ public:
     //general function for writing an order's details
     void writeAll();
 
-
-
-
-    //B.4 Auflisten der Bestellungen
-    void showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
-    static bool compareByTotalPrice(Order c1, Order c2)
-    { return c1.moneySum < c2.moneySum; }
-
-    Order searchOrderByOrderNumber(std::list<Order> repository, int orderNr);
-
-    void totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
-
-
     //B.5 Validierungen   --> is called everytime when an object is created (in the constructor)
     bool callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
-                                    std::string status, User user);
+                                    std::string status, Customer user);
 
     //if the car is already used on the given date, an error occurs
-    bool checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end);
+    static bool checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end);
     //begin must be smaller than end
-    bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
+    static bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
     //a user is not allowed to have more than 5 reservations
-    bool userHasLessThanFiveReservations(User user, std::string status, std::list<Order> repository);
+    static bool userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository);
     //order number is issued automatically by the system
-    int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
+    static int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
 
 
     //transform obect into csv format
-    std::string toCSV() const;
+    std::string toCSV();
 
     //transform object from csv format
     void fromCSV(const std::string &csvLine);
+
 };
 
 

@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <ctime>
 
 class Employee {
 
@@ -16,13 +17,13 @@ protected:
     std::string email;
     std::string abbreviation;
     std::string remarks;
-    tm *birthdate;
+    std::string birthdate;
     float salary;
     std::string position;
 public:
 
     //constructor
-    Employee(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
+    Employee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
              std::string abbreviation, float salary, std::string remarks);
 
     Employee();
@@ -42,12 +43,13 @@ public:
 
     std::string getRemarks();
 
-    tm *getBirthdate();
+    std::string getBirthdate();
 
     //setters
     void setPosition(std::string newPosition);
 
-    void setBirthdate(tm* newBirthdate);
+    //birthdate given by user as DD MM YYY
+    void setBirthdate( std::string newBirthdate);
 
     void setAbbreviation(std::string newAbbreviation);
 
@@ -61,8 +63,14 @@ public:
 
     void setRemarks(std::string newRemarks);
 
-    //methode
+    //method
     void updateProfile();
+
+    //convert to csv format
+    std::string toCsv();
+
+    //convert into normal type from csv
+    void fromCsv(std::string& csvLine);
 
 };
 
