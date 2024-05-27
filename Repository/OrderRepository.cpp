@@ -146,23 +146,74 @@ std::string OrderRepository::returnUserType(Order obj) {
     }
 }
 
-std::list <Order> OrderRepository::removeReservation(int orderNr) {
+/**maybe this ?
+ * TODO
+ * need to modify the params*/
+std::list<Order> OrderRepository::removeReservation(int orderNr, const std::string& requesterRole, const std::string& requesterID) {
     std::ifstream f(filename);
+    if (!f.is_open()) {
+        std::cerr << "Unable to open file " << filename << std::endl;
+        return std::list<Order>();
+    }
 
     std::list<Order> repo;
     std::string line;
+    bool removed = false;
+
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        if (obj1.getOrderNr() != orderNr)
+
+        if (obj1.getOrderNr() != orderNr) {
             repo.push_back(obj1);
-        else if(obj1.getCustomer())
+        } else {
+            // Check if the requester is allowed to remove this reservation
+            if (requesterRole == "admin" || requesterRole == "employee" || obj1.getCustomer() == requesterID) {
+                removed = true;  // Reservation removed
+            } else {
+                // If not allowed, keep the reservation
+                repo.push_back(obj1);
+            }
+        }
     }
 
     f.close();
-    return repo;
 
+    if (removed) {
+        // Save the updated list back to the file
+        std::ofstream outFile(filename, std::ofstream::trunc);
+        if (!outFile.is_open()) {
+            std::cerr << "Unable to open file " << filename << std::endl;
+            return std::list<Order>();
+        }
+
+        for (const auto& order : repo) {
+            outFile << order.toCSV() << "\n";
+        }
+
+        outFile.close();
+    }
+
+    return repo;
 }
+
+//std::list <Order> OrderRepository::removeReservation(int orderNr) {
+//    std::ifstream f(filename);
+//
+//    std::list<Order> repo;
+//    std::string line;
+//    while (std::getline(f, line)) {
+//        Order obj1;
+//        obj1.fromCSV(line);
+//        if (obj1.getOrderNr() != orderNr)
+//            repo.push_back(obj1);
+//        else if(obj1.getCustomer())
+//    }
+//
+//    f.close();
+//    return repo;
+//
+//}
 
 //B.3.3
 std::list <Order> OrderRepository::changeReservation(int orderNr) {
