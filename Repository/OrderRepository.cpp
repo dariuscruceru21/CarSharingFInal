@@ -131,7 +131,19 @@ void OrderRepository::updateOrder(Order obj) {
 }
 
 //B.3
-std::list <Order> OrderRepository::removeReservation(Order obj) {
+std::string OrderRepository::returnUserType(Order obj) {
+    std::ifstream f("../Information/Customers.csv");
+
+    std::list<Customer> repo1;
+    std::string line;
+    while (std::getline(f, line)) {
+        Order obj1;
+        obj1.fromCSV(line);
+        /**TODO waiting for permission check (login page) */
+    }
+}
+
+std::list <Order> OrderRepository::removeReservation(int orderNr) {
     std::ifstream f(filename);
 
     std::list<Order> repo;
@@ -139,16 +151,18 @@ std::list <Order> OrderRepository::removeReservation(Order obj) {
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        if (obj1.getOrderNr() != obj.getOrderNr())
+        if (obj1.getOrderNr() != orderNr)
             repo.push_back(obj1);
+        else if(obj1.getCustomer())
     }
+
     f.close();
     return repo;
 
 }
 
 //B.3.3
-std::list <Order> OrderRepository::changeReservation(Order obj) {
+std::list <Order> OrderRepository::changeReservation(int orderNr) {
     std::ifstream f(filename);
 
     std::list<Order> repo;
@@ -156,46 +170,45 @@ std::list <Order> OrderRepository::changeReservation(Order obj) {
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        if (obj1.getOrderNr() != obj.getOrderNr())
+        if (obj1.getOrderNr() != orderNr)
             repo.push_back(obj1);
-        else
-            repo.push_back(obj);
+
     }
     f.close();
 
-    std::list<Order> aux;
-    for (Order obj: repo)
-        if (obj.getOrderNr() != obj.getOrderNr())
-            aux.push_back(obj);
-        else if ( /*is admin*/) { /**TODO verification*/
-            int option;
-            std::cin >> option;
-
-            switch (option) {
-                case 1: {    //Admins
-
-                    break;
-                }
-                case 2: {
-
-                    break;
-                }
-            }
-        } else if ( /*is customer*/) {
-            int option;
-            std::cin >> option;
-
-            switch (option) {
-                case 1: {    //customers
-
-                    break;
-                }
-                case 2: {
-
-                    break;
-                }
-            }
-        }
+//    std::list<Order> aux;
+//    for (Order obj: repo)
+//        if (obj.getOrderNr() != obj.getOrderNr())
+//            aux.push_back(obj);
+//        else if ( /*is admin*/) { /**TODO verification*/
+//            int option;
+//            std::cin >> option;
+//
+//            switch (option) {
+//                case 1: {    //Admins
+//
+//                    break;
+//                }
+//                case 2: {
+//
+//                    break;
+//                }
+//            }
+//        } else if ( /*is customer*/) {
+//            int option;
+//            std::cin >> option;
+//
+//            switch (option) {
+//                case 1: {    //customers
+//
+//                    break;
+//                }
+//                case 2: {
+//
+//                    break;
+//                }
+//            }
+//        }
     return aux;
 }
 std::vector<Order> OrderRepository::listAllOrders() {

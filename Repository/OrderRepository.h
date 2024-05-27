@@ -33,8 +33,9 @@ public:
 
     //B.3 -Grama Andrei
     //Order & Reservation handling
-    std::list <Order> removeReservation(Order obj);
-    std::list <Order> changeReservation(Order obj);
+    std::string returnUserType(Order obj);
+    std::list <Order> removeReservation(int orderNr);
+    std::list <Order> changeReservation(int orderNr);
 
 
 };
