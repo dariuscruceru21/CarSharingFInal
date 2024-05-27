@@ -263,10 +263,11 @@ std::list <Order> OrderRepository::changeReservation(int orderNr) {
 //                }
 //            }
 //        }
-    return aux;
+    return repo;
 }
 std::list<Order> OrderRepository::listAllOrders() const {
     std::ifstream f(filename);
+    std::list<Order> orders;
 
     std::string line;
     while (std::getline(f, line)) {

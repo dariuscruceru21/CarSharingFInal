@@ -122,7 +122,9 @@ std::string Order::getObservation() {
     return observation;
 }
 
-
+long long Order::getDiff() {
+    return difftime(mktime(end), mktime(start));
+}
 
 void Order::writeAll() {
     std::cout<<orderNumber<<" ordered on "<<orderDate<<"; from "<<start<<" until "<<end
