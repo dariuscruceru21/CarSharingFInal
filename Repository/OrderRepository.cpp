@@ -21,13 +21,6 @@ std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list
     return orderList;
 }
 
-Order OrderRepository::findOrderByID(std::list<Order> repository, int orderNr) {
-    for (Order obj: repository)
-    {
-        if (obj.getOrderNr() == orderNr)
-            return obj;
-    }
-}
 
 void OrderRepository::totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type) { //type: either month or year
     if (type == "month")
