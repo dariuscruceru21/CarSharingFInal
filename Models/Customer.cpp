@@ -7,12 +7,13 @@
 #include <iostream>
 #include <vector>
 
-Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail,
+Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string password,
                    std::string address, std::string remarks, bool gdprDeleted) {
     this->name = name;
     this->surname = surname;
     this->phone = phone;
     this->customerEmail = customerEmail;
+    this->password = password;
     this->address = address;
     this->remarks = remarks;
     this->gdprDeleted = gdprDeleted;
@@ -30,11 +31,10 @@ Customer::Customer() {
 }
 
 void Customer::changePassword() {
-    std::string oldPassword, newPassword;
-    std::cout << "Enter your old password: ";
-    std::cin >> oldPassword;
+    std::string  newPassword;
     std::cout << "Enter your new password: ";
     std::cin >> newPassword;
+    this->setPassword(newPassword);
     std::cout << "Password changed successfully.\n";
 }
 
@@ -140,4 +140,10 @@ void Customer::fromCsv(std::string &csvLine) {
 }
 
 
+std::string Customer::getPassword() {
+    return this->password;
+}
 
+void Customer::setPassword(std::string newPassword) {
+    this->password = newPassword;
+}
