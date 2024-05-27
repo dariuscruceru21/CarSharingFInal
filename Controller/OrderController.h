@@ -7,7 +7,7 @@
 
 class OrderController {
 private:
-    OrderRepository repo;
+    OrderRepository repo("");
 
 public:
     void createOrder();

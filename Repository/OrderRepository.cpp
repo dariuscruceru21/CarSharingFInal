@@ -1,5 +1,9 @@
 #include "OrderRepository.h"
 
+OrderRepository::OrderRepository(std::string filename) {
+    this->filename = filename;
+}
+
 std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
     std::list<Order> orderList;
     for (Order obj: repository)

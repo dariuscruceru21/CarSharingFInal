@@ -13,6 +13,7 @@ private:
 
 public:
 
+    OrderRepository(std::string filename);
 
     //B.4 Auflisten der Bestellungen
     std::list<Order> showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
