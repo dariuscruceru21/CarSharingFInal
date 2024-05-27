@@ -13,6 +13,7 @@ void OrderController::createOrder(float totalCost, std::string observation, Cust
     newOrder.setMoney(totalCost);
     newOrder.setObservation(observation);
     newOrder.setEmployee(employee);
+    newOrder.setRepository(repo.listAllOrders());
     this->repo.saveOrder(newOrder);
 }
 
@@ -27,6 +28,7 @@ void OrderController::updateOrder(float totalCost, std::string observation, Cust
     updatedOrder.setObservation(observation);
     updatedOrder.setEmployee(employee);
     updatedOrder.setOrderNr(id);
+    updatedOrder.setRepository(repo.listAllOrders());
     repo.updateOrder(updatedOrder);
 }
 

@@ -1,7 +1,6 @@
 #include "Order.h"
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
-             std::list <Order> repository) : car(car) {
+Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
 
     bool check = callAllValidationFunctions(car, *start, *end, "Reservation", user);  //requirement B5: Validations
@@ -15,12 +14,10 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *start,
     this->status = "Reservation";
     this->start = start;
     this->end = end;
-    this->repository = repository;
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1,
-             std::list <Order> repository)
+Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1)
         : car(car) {
     //order type: currently active (start equals current time)
 
@@ -37,11 +34,13 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *end, C
     this->status = "Order";
     this->start = localtime(&now);
     this->end = end;
-    this->repository = repository;
 
 
 }
 
+void Order::setRepository(std::list<Order> list) {
+    repository = list;
+}
 
 void Order::setOrderNr(int nr) {
     orderNumber = nr;

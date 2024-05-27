@@ -1,5 +1,8 @@
 #include "OrderRepository.h"
 
+
+
+
 std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
     std::list<Order> orderList;
     for (Order obj: repository)
@@ -211,19 +214,18 @@ std::list <Order> OrderRepository::changeReservation(int orderNr) {
 //        }
     return aux;
 }
-std::vector<Order> OrderRepository::listAllOrders() {
+std::list<Order> OrderRepository::listAllOrders() const {
     std::ifstream f(filename);
 
-    std::vector<Order> repo;
     std::string line;
     while (std::getline(f, line)) {
         Order obj1;
         obj1.fromCSV(line);
-        repo.push_back(obj1);
+        orders.push_back(obj1);
     }
     f.close();
 
-    return repo;
+    return orders;
 }
 
 Order OrderRepository::searchOrder(int orderID) {

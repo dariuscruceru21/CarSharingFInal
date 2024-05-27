@@ -10,9 +10,11 @@
 class OrderRepository {
 private:
     std::string filename = "CarSharingFInal/Information/Orders.csv";
+    std::list<Order> orders;
 
 public:
 
+//    void allOrders();
     //B.4 Auflisten der Bestellungen
     std::list<Order> showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
     static bool compareByTotalPrice(Order c1, Order c2)
@@ -20,15 +22,14 @@ public:
 
     void totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
 
-
-
+//    std::list<Order> fromFile();
 
     //--Repository functions--
     //Order findOrderByID -> is included in B4
     void saveOrder(Order obj) const;
     void deleteOrder(Order obj);
     void updateOrder(Order obj);
-    std::vector<Order> listAllOrders();
+    std::list<Order> listAllOrders() const;
     Order searchOrder(int orderID);
 
     //B.3 -Grama Andrei
