@@ -6,6 +6,7 @@
 #define CARSHARING_CUSTOMER_H
 
 #include <string>
+#include <vector>
 
 class Customer {
 private:
@@ -13,39 +14,45 @@ private:
     std::string surname;
     std::string phone;
     std::string customerEmail;
-    std::string password;
     std::string address;
     std::string remarks;
     bool gdprDeleted;
+    std::string password;
+    std::vector<std::string> favoriteCars;
+
+
 
 public:
 
-    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string password,std::string address,
-             std::string remarks, bool gdprDeleted);
+    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
+             std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars);
 
     //pentru default constructor?
     Customer();
 
     std::string getName() const;
 
-    std::string getPassword() ;
+    std::string getSurname() const;
 
+    std::string getPhone() const;
 
-    std::string getSurname();
+    std::string getAddress() const;
 
-    std::string getPhone();
+    std::string getRemarks() const;
 
-    std::string getAddress();
+    std::string getEmail() const;
 
-    std::string getRemarks();
+    std::string getPassword() const;
 
-    std::string getEmail() ;
+    std::vector<std::string> getFavoriteCars()const;
 
-    bool getGdprDeleted();
-
-    void setName(std::string newName);
+    bool getGdprDeleted() const;
 
     void setPassword(std::string newPassword);
+
+    void setFavoriteCars(std::vector<std::string> newFavoriteCars);
+
+    void setName(std::string newName);
 
     void setSurname(std::string newSurname);
 
@@ -64,12 +71,6 @@ public:
 
     //convert into normal type from csv
     void fromCsv(std::string &csvLine);
-
-    //method to print out the atributes of a customer for the UI
-    std::string toString() {
-        return "Name: " + name + ", Surname: " + surname + ", Phone: " + phone + ", Email: " + customerEmail +
-               ", Address: " + address + ", Remarks: " + remarks + ", GDPR Deleted: " + (gdprDeleted ? "Yes" : "No");
-    }
 };
 
 

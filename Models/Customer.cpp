@@ -7,8 +7,8 @@
 #include <iostream>
 #include <vector>
 
-Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string password,
-                   std::string address, std::string remarks, bool gdprDeleted) {
+Customer:: Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
+                    std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars){
     this->name = name;
     this->surname = surname;
     this->phone = phone;
@@ -17,6 +17,8 @@ Customer::Customer(std::string name, std::string surname, std::string phone, std
     this->address = address;
     this->remarks = remarks;
     this->gdprDeleted = gdprDeleted;
+    this->favoriteCars=favoriteCars;
+
 
 }
 //default constructor?
@@ -28,32 +30,48 @@ Customer::Customer() {
     this->address = "";
     this->remarks = "";
     this->gdprDeleted = false;
+    //this->favoriteCars = "";
 }
 
 std::string Customer::getName () const {
     return name;
 }
 
-std::string Customer::getSurname() {
+std::string Customer::getSurname() const {
     return surname;
 }
 
-std::string Customer::getPhone() {
+std::string Customer::getPhone() const{
     return phone;
 }
 
-std::string Customer::getAddress() {
+std::string Customer::getAddress()const {
     return address;
 }
 
-std::string Customer::getRemarks() {
+std::string Customer::getRemarks() const{
     return remarks;
 }
 
-bool Customer::getGdprDeleted() {
+bool Customer::getGdprDeleted()const {
     return gdprDeleted;
 }
 
+std::string Customer::getPassword() const {
+    return password;
+}
+
+std::vector<std::string> Customer::getFavoriteCars() const {
+    return favoriteCars;
+}
+
+void Customer::setPassword(std::string newPassword) {
+    this->password=newPassword;
+}
+
+void Customer::setFavoriteCars(std::vector<std::string> newFavoriteCars) {
+    this->favoriteCars=newFavoriteCars;
+}
 
 void Customer::setName(std::string newName) {
     this->name = newName;
@@ -98,10 +116,4 @@ void Customer::fromCsv(std::string &csvLine) {
 }
 
 
-std::string Customer::getPassword() {
-    return this->password;
-}
 
-void Customer::setPassword(std::string newPassword) {
-    this->password = newPassword;
-}
