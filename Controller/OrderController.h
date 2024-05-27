@@ -7,11 +7,10 @@
 
 class OrderController {
 private:
-    OrderRepository repo("");
-
+    OrderRepository repo;
 public:
-    void createOrder();
-    void updateOrder();
+    void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee) const;
+    void updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee, int id);
     void completeOrder(); //poate sa returneze costul?
     void takeOverOrder();
     void takeAwayOrder();

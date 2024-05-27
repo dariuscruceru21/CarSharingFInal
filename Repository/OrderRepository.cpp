@@ -1,9 +1,5 @@
 #include "OrderRepository.h"
 
-OrderRepository::OrderRepository(std::string filename) {
-    this->filename = filename;
-}
-
 std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
     std::list<Order> orderList;
     for (Order obj: repository)
@@ -50,7 +46,7 @@ void OrderRepository::totalSumOfATimeInterval(std::list<Order> repository, tm ti
 }
 
 
-void OrderRepository::saveOrder(Order obj) {
+void OrderRepository::saveOrder(Order obj) const {
     //read all current orders into a list, add the new object to the list, then save the new list
     std::ifstream f(filename);
 

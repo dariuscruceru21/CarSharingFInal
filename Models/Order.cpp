@@ -4,7 +4,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *start,
              std::list <Order> repository) : car(car) {
     //order type: reservation (start is given by parameter)
 
-    bool check = callAllValidationFunctions(car, repository, *start, *end, "Reservation", user);  //requirement B5: Validations
+    bool check = callAllValidationFunctions(car, *start, *end, "Reservation", user);  //requirement B5: Validations
     if (!check) { status = "Error"; return;}  //order is not created; in Repository class, object will not be added if status == Error
 
     time_t now = time(0);
@@ -15,7 +15,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *start,
     this->status = "Reservation";
     this->start = start;
     this->end = end;
-
+    this->repository = repository;
     //specification B5.5: employee field is not specified
 }
 
@@ -24,7 +24,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *end, C
         : car(car) {
     //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,repository,*start,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,*start,*end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -37,6 +37,8 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *end, C
     this->status = "Order";
     this->start = localtime(&now);
     this->end = end;
+    this->repository = repository;
+
 
 }
 
@@ -132,20 +134,20 @@ void Order::writeAll() {
 
 
 
-bool Order::callAllValidationFunctions(Car car, std::list<Order> repository, tm begin, tm end,
+bool Order::callAllValidationFunctions(Car car, tm begin, tm end,
                                                  std::string status, Customer user) {
-    if (checkIfCarIsAlreadyUsed(car,repository,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
+    if (checkIfCarIsAlreadyUsed(car,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
 
     if (!checkIfBeginIsSmallerOrEqualEnd(begin,end)) {std::cout<<"\nError: Begin time surpasses end time\n"; return false;}
 
-    if (!userHasLessThanFiveReservations(user,status,repository)) {std::cout<<"\nError: number of reservations cannot exceed 5\n"; return false;}
+    if (!userHasLessThanFiveReservations(user,status)) {std::cout<<"\nError: number of reservations cannot exceed 5\n"; return false;}
 
     orderNumber = determineOrderNumber(repository);
 
     return true;
 }
 
-bool Order::checkIfCarIsAlreadyUsed(Car car, std::list<Order> repository, tm begin, tm end) {
+bool Order::checkIfCarIsAlreadyUsed(Car car, tm begin, tm end) {
     for (Order obj: repository)
     {
         if (obj.car.getLicensePlate() == car.getLicensePlate())  //an order has been found using the same car; check if the new order wants to use it in an already occupied time period
@@ -160,7 +162,7 @@ bool Order::checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end) {
     return false;
 }
 
-bool Order::userHasLessThanFiveReservations(Customer user, std::string status, std::list<Order> repository) {
+bool Order::userHasLessThanFiveReservations(Customer user, std::string status) {
     if (status != "Reservation") return true;  //order is not a reservation, will not be problematic
 
     int ct=0;
