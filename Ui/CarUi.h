@@ -4,9 +4,22 @@
 
 #ifndef CARSHARING_CARUI_H
 #define CARSHARING_CARUI_H
+#include "../Controller/CarController.h"
 
 
-class CarUi {
+class CarUi{
+private:
+    CarController carController;
+    void printMenu();
+    void createCar();
+    void updateCar();
+    void deleteCar();
+    void deactivateCar();
+    void listCars();
+    void searchCar();
+public:
+    CarUi(std::string fileName) : carController(fileName){}
+    void run();
 
 };
 
