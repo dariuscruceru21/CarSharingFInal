@@ -46,15 +46,6 @@ public:
 
     std::vector<Customer> searchCustomersByName(std::string surname);
 
-    // Profile editing functions
-    void changeCustomerPassword();
-
-    void changeCustomerNotes();
-
-    void addCarToFavorites();
-
-    void removeCarFromFavorites();
-
     //Validation functions
 
     bool checkUniqueEmail(Customer c);

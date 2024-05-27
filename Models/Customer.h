@@ -71,7 +71,7 @@ public:
 
     //method to print out the atributes of a customer for the UI
     std::string toString() {
-        return "Name: " + name + ", Surname: " + surname + ", Phone: " + phone + ", Email: " + email +
+        return "Name: " + name + ", Surname: " + surname + ", Phone: " + phone + ", Email: " + customerEmail +
                ", Address: " + address + ", Remarks: " + remarks + ", GDPR Deleted: " + (gdprDeleted ? "Yes" : "No");
     }
 };
