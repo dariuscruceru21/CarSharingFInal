@@ -6,7 +6,7 @@
 #define CARSHARING_CUSTOMERHANDLINGUI_H
 
 
-#include "CustomerController.h"
+#include "../Controller/CustomerController.h"
 #include <iostream>
 #include <string>
 
@@ -24,7 +24,7 @@ private:
     void handleSearchCustomerByName();
 
 public:
-    CustomerUI(std::string fileName) : customerController(fileName) {}
+    CustomerHandlingUI(std::string fileName) : customerController(fileName) {}
     void run();
 };
 
