@@ -15,13 +15,13 @@ public:
 
     void completeOrder(int id);
 
-    void takeOverOrder();
+    void takeOverOrder(int id);
 
     void takeAwayOrder(int id, Employee employee);
 
     std::list<Order> listOrders();
 
-    std::list<Order> searchOrder();
+    Order searchOrder(int id);
 
 };
 
