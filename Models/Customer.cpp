@@ -7,18 +7,16 @@
 #include <iostream>
 #include <vector>
 
-Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail,
-                   std::string address, std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars) {
+Customer::Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string password,
+                   std::string address, std::string remarks, bool gdprDeleted) {
     this->name = name;
     this->surname = surname;
     this->phone = phone;
     this->customerEmail = customerEmail;
+    this->password = password;
     this->address = address;
     this->remarks = remarks;
     this->gdprDeleted = gdprDeleted;
-    this->password=password;
-    this->favoriteCars=favoriteCars;
-
 
 }
 //default constructor?
@@ -30,32 +28,29 @@ Customer::Customer() {
     this->address = "";
     this->remarks = "";
     this->gdprDeleted = false;
-    this->password="";
-
 }
-
 
 std::string Customer::getName () const {
     return name;
 }
 
-std::string Customer::getSurname() const {
+std::string Customer::getSurname() {
     return surname;
 }
 
-std::string Customer::getPhone() const {
+std::string Customer::getPhone() {
     return phone;
 }
 
-std::string Customer::getAddress() const{
+std::string Customer::getAddress() {
     return address;
 }
 
-std::string Customer::getRemarks() const{
+std::string Customer::getRemarks() {
     return remarks;
 }
 
-bool Customer::getGdprDeleted() const{
+bool Customer::getGdprDeleted() {
     return gdprDeleted;
 }
 
@@ -103,4 +98,10 @@ void Customer::fromCsv(std::string &csvLine) {
 }
 
 
+std::string Customer::getPassword() {
+    return this->password;
+}
 
+void Customer::setPassword(std::string newPassword) {
+    this->password = newPassword;
+}
