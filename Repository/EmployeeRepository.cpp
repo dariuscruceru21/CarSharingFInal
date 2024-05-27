@@ -43,9 +43,9 @@ std::vector<Employee> EmployeeRepository::findEmployeeByString(std::string searc
     return matchingEmployees;
 }
 
-void EmployeeRepository::createEmployee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
+void EmployeeRepository::createEmployee(std::string name, std::string surname, std::string email, std::string password, std::string position, std::string birthdate,
                                         std::string abbreviation, float salary, std::string remarks) {
-    Employee newEmployee(name, surname, email, position, birthdate, abbreviation, salary, remarks);
+    Employee newEmployee(name, surname, email, password, position, birthdate, abbreviation, salary, remarks);
     employees.push_back(newEmployee);
     writeToCsv();  // Write to CSV after adding
 }

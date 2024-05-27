@@ -21,7 +21,7 @@ public:
 
     std::vector<Employee> getEmployes();
 
-    void createEmployee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
+    void createEmployee(std::string name, std::string surname, std::string email, std::string password, std::string position, std::string birthdate,
                         std::string abbreviation, float salary, std::string remarks);
 
     Employee findEmployeeByName(std::string employeeName,std::string employeeSurname);

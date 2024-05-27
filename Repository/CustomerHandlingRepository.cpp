@@ -6,6 +6,7 @@
 #include <regex>
 #include <algorithm>
 #include "../Models/Customer.h"
+#include <iostream>
 
 CustomerHandlingRepository::CustomerHandlingRepository(const std::string& fileName) {
     readFromCsv();
@@ -30,9 +31,9 @@ void CustomerHandlingRepository::writeToCsv() {
     file.close();
 }
 
-void CustomerHandlingRepository::createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address, std::string remarks, std::string phone,
+void CustomerHandlingRepository::createCustomer(std::string name, std::string surname, std::string customerEmail, std::string customerPassword, std::string address, std::string remarks, std::string phone,
                                                 bool gdprDeleted) {
-    Customer newCustomer(name,surname,phone,customerEmail,address,remarks,gdprDeleted);
+    Customer newCustomer(name, surname, phone, customerEmail, customerPassword, address, remarks, gdprDeleted);
     Customers.push_back(newCustomer);
 }
 
@@ -155,4 +156,44 @@ std::vector<Customer> CustomerHandlingRepository::searchCustomersByName(std::str
 
 std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
     return this->Customers;
+}
+
+void CustomerHandlingRepository::changeCustomerPassword(std::string newPassword, std::string emailToSearchBy) {
+    for (auto customer : Customers){
+        if (customer.getEmail() == emailToSearchBy){
+            customer.setPassword(newPassword);
+        }
+    }
+}
+
+void CustomerHandlingRepository::changeCustomerRemarks(std::string newRemarks, std::string emailToearchBy) {
+    for (auto customer : Customers){
+        if (customer.getEmail() == emailToearchBy){
+            customer.setRemarks(newRemarks);
+        }
+    }
+}
+
+void CustomerHandlingRepository::addFavouriteCar(Car newCar) {
+    favouriteCars.push_back(newCar);
+}
+
+void CustomerHandlingRepository::removeFavoriteCar(Car carToRemove) {
+    for (int i = 0;i < favouriteCars.size();i++){
+        auto current = favouriteCars[i];
+        if (current.getLicensePlate() == carToRemove.getLicensePlate() && current.getModel() == carToRemove.getModel() &&
+                current.getBrand() == carToRemove.getBrand() && current.getYearOfFirstRegistration() == carToRemove.getYearOfFirstRegistration() &&
+                current.getMileage() == carToRemove.getMileage() && current.getDailyRate() == carToRemove.getDailyRate() &&
+                current.getFuelType() == carToRemove.getFuelType() && current.getTransmission() == carToRemove.getTransmission() &&
+                current.getColor() == carToRemove.getColor() && current.getisActive() == carToRemove.getisActive()) {
+
+            favouriteCars.erase(favouriteCars.begin() + 1);
+        }
+    }
+}
+
+void CustomerHandlingRepository::viewFavouriteCars() {
+    for (auto current : favouriteCars){
+        std::cout << current.getLicensePlate() << " " << current.getModel() << " " << current.getBrand() << " " << current.getYearOfFirstRegistration() << " " << current.getMileage() << " " << current.getDailyRate() << " " << current.getFuelType() << " " << current.getTransmission() << current.getColor() << " " << current.getRemarks() << " " << current.getisActive() << '\n';
+    }
 }
