@@ -35,6 +35,9 @@ void CustomerHandlingRepository::createCustomer(std::string name, std::string su
                                                 bool gdprDeleted) {
     Customer newCustomer(name, surname, phone, customerEmail, customerPassword, address, remarks, gdprDeleted);
     Customers.push_back(newCustomer);
+    Customers.push_back(newCustomer);
+    writeToCsv();
+
 }
 
 void CustomerHandlingRepository::deleteCustomer(std::string email) {
@@ -157,6 +160,9 @@ std::vector<Customer> CustomerHandlingRepository::searchCustomersByName(std::str
 std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
     return this->Customers;
 }
+/std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
+    return this->Customers;
+}
 
 void CustomerHandlingRepository::changeCustomerPassword(std::string newPassword, std::string emailToSearchBy) {
     for (auto customer : Customers){
@@ -164,6 +170,7 @@ void CustomerHandlingRepository::changeCustomerPassword(std::string newPassword,
             customer.setPassword(newPassword);
         }
     }
+    writeToCsv();
 }
 
 void CustomerHandlingRepository::changeCustomerRemarks(std::string newRemarks, std::string emailToearchBy) {
@@ -172,6 +179,7 @@ void CustomerHandlingRepository::changeCustomerRemarks(std::string newRemarks, s
             customer.setRemarks(newRemarks);
         }
     }
+    writeToCsv();
 }
 
 void CustomerHandlingRepository::addFavouriteCar(Car newCar) {
