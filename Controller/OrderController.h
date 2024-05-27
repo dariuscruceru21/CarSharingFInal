@@ -8,6 +8,7 @@
 class OrderController {
 private:
     OrderRepository repo;
+    int day = 86400;
 public:
     void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee) const;
 

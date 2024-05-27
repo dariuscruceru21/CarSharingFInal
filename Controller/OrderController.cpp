@@ -5,6 +5,8 @@
 void OrderController::createOrder(float totalCost, std::string observation, Customer user, tm start, tm end,
                                   Car car, Employee employee) const{
 
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
     Order newOrder;
     newOrder.setCar(car);
     newOrder.setCustomer(user);
@@ -13,6 +15,7 @@ void OrderController::createOrder(float totalCost, std::string observation, Cust
     newOrder.setMoney(totalCost);
     newOrder.setObservation(observation);
     newOrder.setEmployee(employee);
+    newOrder.setOrderDate(*ltm);
     newOrder.setRepository(repo.listAllOrders());
     this->repo.saveOrder(newOrder);
 }
@@ -34,6 +37,12 @@ void OrderController::updateOrder(float totalCost, std::string observation, Cust
 
 void OrderController::completeOrder(int id) {
     Order completed = repo.searchOrder(id);
+    long long diff = completed.getDiff();//dif dintre start si end
+    int numOfDays = diff /day;
+    if(numOfDays * day < diff){
+        numOfDays++;
+    }
+    completed.setMoney(numOfDays * completed.getCar().getDailyRate());
     completed.setStatus("completed");
     repo.updateOrder(completed);
 }
