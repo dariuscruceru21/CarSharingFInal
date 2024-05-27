@@ -63,3 +63,40 @@ void User::fromCsv(std::string &csvLine) {
     std::getline(ss,this->firstName,',');
     std::getline(ss,this->lastName,',');
 }
+
+std::string User::inputEmail() {
+    std::string email;
+    std::cout<<"Enter email";
+    std::cin>>email;
+    return email;
+}
+
+std::string User::inputPassword() {
+    std::string password;
+    std::cout<<"Enter password";
+    std::cin>>password;
+    return password;
+}
+
+
+bool User::login() {
+    CustomerHandlingRepository customerRepo("Customers.csv");
+    EmployeeRepository emplyeeRepo("Employe.csv");
+    std::string email = inputEmail();
+    std::string password = inputPassword();
+    customerRepo.readFromCsv();
+    emplyeeRepo.readFromCsv();
+
+    std::vector<Customer> customers = customerRepo.geterCustomers();
+    std::vector<Employee> employes = emplyeeRepo.getEmployes();
+
+    for(int i = 0; i<customers.size();i++)
+        if(email == customers[i].getEmail() && password == customers[i].getPassword())
+            return true;
+    for(int i = 0; i<employes.size();i++)
+        if(email == employes[i].getEmail() && password == employes[i].getPassword())
+            return true;
+    std::cout<<"Email or Password wrong!";
+    return login();
+
+}

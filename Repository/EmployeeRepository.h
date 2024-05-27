@@ -19,6 +19,8 @@ public:
 
     ~EmployeeRepository() {}
 
+    std::vector<Employee> getEmployes();
+
     void createEmployee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
                         std::string abbreviation, float salary, std::string remarks);
 

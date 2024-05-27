@@ -13,13 +13,14 @@ private:
     std::string surname;
     std::string phone;
     std::string customerEmail;
+    std::string password;
     std::string address;
     std::string remarks;
     bool gdprDeleted;
 
 public:
 
-    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
+    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string password,std::string address,
              std::string remarks, bool gdprDeleted);
 
     //pentru default constructor?
@@ -37,6 +38,9 @@ public:
 
     std::string getName() const;
 
+    std::string getPassword() ;
+
+
     std::string getSurname();
 
     std::string getPhone();
@@ -50,6 +54,8 @@ public:
     bool getGdprDeleted();
 
     void setName(std::string newName);
+
+    void setPassword(std::string newPassword);
 
     void setSurname(std::string newSurname);
 

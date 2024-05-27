@@ -15,6 +15,7 @@ protected:
     std::string name;
     std::string surname;
     std::string email;
+    std::string password;
     std::string abbreviation;
     std::string remarks;
     std::string birthdate;
@@ -23,7 +24,7 @@ protected:
 public:
 
     //constructor
-    Employee(std::string name, std::string surname, std::string email, std::string position, std::string birthdate,
+    Employee(std::string name, std::string surname, std::string email,std::string password, std::string position, std::string birthdate,
              std::string abbreviation, float salary, std::string remarks);
 
     Employee();
@@ -34,6 +35,8 @@ public:
     std::string getSurname();
 
     std::string getEmail();
+
+    std::string getPassword();
 
     std::string getPosition();
 

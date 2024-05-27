@@ -8,17 +8,23 @@
 #include <vector>
 #include <fstream>
 #include "../Models/Customer.h"
-#include "Car.h"
+#include "../Models/Car.h"
 
 class CustomerHandlingRepository {
 private:
     std::vector<Customer> Customers;
     std::string fileName;
 
+
+public:
+
+
+
+    std::vector<Customer> geterCustomers();
+
     void readFromCsv();
 
     void writeToCsv();
-public:
 
     CustomerHandlingRepository(const std::string& fileName);
 
