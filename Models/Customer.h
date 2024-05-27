@@ -68,6 +68,12 @@ public:
 
     //convert into normal type from csv
     void fromCsv(std::string &csvLine);
+
+    //method to print out the atributes of a customer for the UI
+    std::string toString() {
+        return "Name: " + name + ", Surname: " + surname + ", Phone: " + phone + ", Email: " + email +
+               ", Address: " + address + ", Remarks: " + remarks + ", GDPR Deleted: " + (gdprDeleted ? "Yes" : "No");
+    }
 };
 
 
