@@ -12,6 +12,7 @@ private:
     std::string transmission;
     std::string color;
     std::string remarks;
+    bool isActive;
 
 public:
     // Getters
@@ -61,4 +62,7 @@ public:
 
     //convert into normal type from csv
     void fromCsv(std::string &csvLine);
+
+    void setisActive(bool isActive);
+    bool getisActive();
 };

@@ -4,7 +4,7 @@
 
 #include "CustomerController.h"
 
-#include "CustomerController.h"
+
 #include <stdexcept>
 
 void CustomerController::addCustomer(const std::string& name, const std::string& surname, const std::string& customerEmail, const std::string& address, const std::string& remarks, const std::string& phone, bool gdprDeleted) {
