@@ -10,11 +10,17 @@ private:
     OrderRepository repo;
 public:
     void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee) const;
+
     void updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee, int id);
-    void completeOrder(); //poate sa returneze costul?
+
+    void completeOrder(int id);
+
     void takeOverOrder();
-    void takeAwayOrder();
+
+    void takeAwayOrder(int id, Employee employee);
+
     std::list<Order> listOrders();
+
     std::list<Order> searchOrder();
 
 };
