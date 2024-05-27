@@ -42,7 +42,15 @@ public:
 
     std::string getEmail() const;
 
+    std::string getPassword() const;
+
+    std::vector<std::string> getFavoriteCars()const;
+
     bool getGdprDeleted() const;
+
+    void setPassword(std::string newPassword);
+
+    void setFavoriteCars(std::vector<std::string> newFavoriteCars);
 
     void setName(std::string newName);
 
