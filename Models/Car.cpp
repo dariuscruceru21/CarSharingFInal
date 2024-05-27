@@ -83,6 +83,14 @@ void Car::setRemarks(const std::string &newRemarks) {
     this->remarks = newRemarks;
 }
 
+void Car::setisActive(bool isActive) {
+    this->isActive = isActive;
+}
+
+bool Car::getisActive() {
+    return isActive;
+}
+
 std::string Car::toCsv() {
     std::ostringstream oss;
     oss << this->licensePlate << "," << this->model << "," << this->brand << "," << this->yearOfFirstRegistration << ","
@@ -111,4 +119,6 @@ void Car::fromCsv(std::string &csvLine) {
     ss.ignore(1);
 
 }
+
+
 
