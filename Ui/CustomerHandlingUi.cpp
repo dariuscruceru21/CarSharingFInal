@@ -2,10 +2,10 @@
 // Created by stefa on 27/05/2024.
 //
 
-#include "CustomerHandlingUi.h"
+#include "CustomerHandlingUI.h"
 #include <iostream>
 
-void CustomerUI::printMenu() {
+void CustomerHandlingUI::printMenu() {
     std::cout << "Customer Management System" << std::endl;
     std::cout << "1. Add Customer" << std::endl;
     std::cout << "2. Delete Customer" << std::endl;
@@ -17,7 +17,7 @@ void CustomerUI::printMenu() {
     std::cout << "0. Exit" << std::endl;
 }
 
-void CustomerUI::handleAddCustomer() {
+void CustomerHandlingUI::handleAddCustomer() {
     std::string name, surname, email, address, remarks, phone;
     bool gdprDeleted;
 
@@ -44,7 +44,7 @@ void CustomerUI::handleAddCustomer() {
     }
 }
 
-void CustomerUI::handleDeleteCustomer() {
+void CustomerHandlingUI::handleDeleteCustomer() {
     std::string email;
 
     std::cout << "Enter Email of the customer to delete: ";
@@ -54,7 +54,7 @@ void CustomerUI::handleDeleteCustomer() {
     std::cout << "Customer deleted successfully!" << std::endl;
 }
 
-void CustomerUI::handleUpdateCustomer() {
+void CustomerHandlingUI::handleUpdateCustomer() {
     std::string name, surname, email, address, remarks, phone;
     bool gdprDeleted;
 
@@ -83,14 +83,14 @@ void CustomerUI::handleUpdateCustomer() {
     }
 }
 
-void CustomerUI::handleListCustomers() {
+void CustomerHandlingUI::handleListCustomers() {
     std::vector<Customer> customers = customerController.listCustomersSorted();
     for (auto customer : customers) {
         std::cout << customer.toString() << std::endl;
     }
 }
 
-void CustomerUI::handleSearchCustomerByEmail() {
+void CustomerHandlingUI::handleSearchCustomerByEmail() {
     std::string email;
 
     std::cout << "Enter Email to search: ";
@@ -106,7 +106,7 @@ void CustomerUI::handleSearchCustomerByEmail() {
     }
 }
 
-void CustomerUI::handleSearchCustomerByPhoneNumber() {
+void CustomerHandlingUI::handleSearchCustomerByPhoneNumber() {
     std::string phoneNumber;
 
     std::cout << "Enter Phone Number to search: ";
@@ -122,7 +122,7 @@ void CustomerUI::handleSearchCustomerByPhoneNumber() {
     }
 }
 
-void CustomerUI::handleSearchCustomerByName() {
+void CustomerHandlingUI::handleSearchCustomerByName() {
     std::string surname;
 
     std::cout << "Enter Surname to search: ";
@@ -138,7 +138,7 @@ void CustomerUI::handleSearchCustomerByName() {
     }
 }
 
-void CustomerUI::run() {
+void CustomerHandlingUI::run() {
     int choice;
     do {
         printMenu();
