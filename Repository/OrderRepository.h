@@ -9,11 +9,9 @@
 
 class OrderRepository {
 private:
-    std::string filename;
+    std::string filename = "CarSharingFInal/Information/Orders.csv";
 
 public:
-
-    OrderRepository(std::string filename);
 
     //B.4 Auflisten der Bestellungen
     std::list<Order> showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end);
@@ -29,7 +27,7 @@ public:
 
     //--Repository functions--
     //Order findOrderByID -> is included in B4
-    void saveOrder(Order obj);
+    void saveOrder(Order obj) const;
     void deleteOrder(Order obj);
     void updateOrder(Order obj);
     std::vector<Order> listAllOrders();

@@ -25,7 +25,6 @@ private:
     float totalCost;
     std::string observation;
 public:
-    //TODO: getters and setters
     Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car,
           std::list <Order> repository);
     Order(float totalCost, std::string observation, Customer user, tm *start, Car car, Employee employee1,
