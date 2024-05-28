@@ -15,7 +15,7 @@ public:
 
     User findUserByEmail(std::string searchedEmail);
 
-    void addUser(User &user);
+    void addUser(int id, std::string email, std::string password, std::string fisrtName, std::string lastName);
 
     void deleteUser(int userId);
 

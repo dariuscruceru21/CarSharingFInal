@@ -5,7 +5,8 @@
 #ifndef CARSHARINGFINAL_EMPLOYEECONTROLLER_H
 #define CARSHARINGFINAL_EMPLOYEECONTROLLER_H
 
-#include "C:\Users\scoti\CLionProjects\CarSharingFInal\Repository\EmployeeRepository.h"
+#include "../Models/Employee.h"
+#include "../Repository/EmployeeRepository.h"
 #include <vector>
 #include <iostream>
 
@@ -13,27 +14,36 @@ class EmployeeController {
 private:
     EmployeeRepository employeeRepo;
 public:
-    EmployeeController(const std::string &filename) : employeeRepo(filename) {}
+    EmployeeController(std::string &filename);
 
-    void createEmployee();
+    void addEmployee(std::string &name, std::string &surname, std::string &email,
+                     std::string &password, std::string &position, std::string &birthdate,
+                     std::string &abbreviation, float salary, std::string &remarks);
 
-    void updateEmployee();
+    void updateEmployee(std::string &newEmail, std::string &name, std::string &surname,
+                        std::string &newPosition, std::string &newBirthdate, std::string &newAbbreviation,
+                        float newSalary, std::string &newRemarks);
 
-    void deleteEmployee();
+    std::vector<Employee> listAllEmployees();
 
-    void activateDeactivateEmployee();
+    std::vector<Employee> searchEmployee(std::string& searchString);
 
-    void assignRemoveAdminRights();
+    void deleteEmployee(std::string &name, std::string &surname);
 
-    void resetPassword();
+    void activateDeactivateEmployee(std::string &name, std::string &surname );
 
-    void updateProfile();
+    void assignRemoveAdminRights(std::string &name, std::string &surname);
 
-    std::vector<Employee> listEmployees();
+    void resetPassword(std::string &name, std::string &surname);
 
-    std::vector<Employee> searchEmployee();
+    void updateProfile(std::string &name, std::string &surname, std::string &newRemarks);
 
+    Employee getEmployeeByName( std::string& name,  std::string& surname) ;
+
+
+    void updateProfile(string &name, string &surname, const string &newRemarks);
 };
 
 
 #endif //CARSHARINGFINAL_EMPLOYEECONTROLLER_H
+

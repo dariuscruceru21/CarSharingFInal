@@ -26,9 +26,14 @@ private:
     static std::vector<Order> repository;
 public:
 
+
     Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car);
     Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car,
           Employee employee1);
+
+    Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car);
+    Order(float totalCost, std::string observation, Customer user, tm end, Car car, Employee employee1);
+
     Order(){};
 
     void setRepository(std::vector<Order> list);

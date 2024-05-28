@@ -8,8 +8,8 @@ User UserController::findUserByEmail(std::string searchedEmail) {
     return this->userRepo.findUserByEmail(searchedEmail);
 }
 
-void UserController::addUser(User &user) {
-    this->userRepo.addUser(user);
+void UserController::addUser(int id, std::string email, std::string password, std::string fisrtName, std::string lastName) {
+    this->userRepo.createUser(id, email, password, fisrtName, lastName);
 }
 
 void UserController::deleteUser(int userId) {
