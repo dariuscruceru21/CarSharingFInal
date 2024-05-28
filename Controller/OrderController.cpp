@@ -36,8 +36,23 @@ void OrderController::updateOrder(float totalCost, std::string observation, std:
 
 void OrderController::completeOrder(int id) {
     Order completed = repo.searchOrder(id);
-    long long diff = completed.getDiff();//dif dintre start si end
-    completed.setMoney(diff * completed.getCar().getDailyRate());
+
+    Order obj = repo.searchOrder(id);
+    string c1(1, obj.getStart()[8]), c2(1, obj.getStart()[9]);
+    //c1 + c2 is the day of the start date  (format: YYYY/MM/DD)
+    string c3(1, obj.getEnd()[8]), c4(1, obj.getEnd()[9]);
+    //c3 + c4 is the day of the end date (format: YYYY/MM/DD)
+    float numOfDays = std::stof(c3+c4) - std::stoi(c1+c2);
+
+    string c5(1, obj.getStart()[5]), c6(1, obj.getStart()[6]);
+    //c1 + c2 is the month of the start date  (format: YYYY/MM/DD)
+    string c7(1, obj.getEnd()[5]), c8(1, obj.getEnd()[6]);
+    //c3 + c4 is the month of the end date (format: YYYY/MM/DD)
+    float startMonth = std::stof(c5+c6), endMonth = std::stof(c7+c8);
+    numOfDays += (endMonth-startMonth) * 30; //a month has 30 days; + 30*amount of months
+
+    completed.setMoney(numOfDays * completed.getCar().getDailyRate());
+
     completed.setStatus("completed");
     repo.updateOrder(completed);
 }
