@@ -17,11 +17,11 @@ Order::Order(float totalCost, std::string observation, Customer user, tm start, 
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float totalCost, std::string observation, Customer user, tm start, Car car, Employee employee1)
+Order::Order(float totalCost, std::string observation, Customer user, tm end, Car car, Employee employee1)
         : car(car) {
     //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,start,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,*start,end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -33,7 +33,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm start, 
     orderDate = localtime(&now);
     this->status = "Order";
     this->start = localtime(&now);
-    this->start = &start;
+    this->end = &end;
 
 
 }
