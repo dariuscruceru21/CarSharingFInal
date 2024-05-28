@@ -2,6 +2,7 @@
 #include "../Repository//CarRepository.h"
 #include "../Repository//CustomerHandlingRepository.h"
 #include "../Repository//EmployeeRepository.h"
+#include<string.h>
 
 Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
@@ -141,8 +142,69 @@ std::string Order::getObservation() {
     return observation;
 }
 
-long long Order::getDiff() {  ///va trebui putin diferit aici, ma uit eu daca nu
-    return mktime(end)-mktime(start);
+int Order::getDiff() {  ///va trebui putin diferit aici, ma uit eu daca nu
+    std::vector<int> endDate;
+    std::vector<int> startDate;
+    string num1, num2;
+    for(int i = 0; i < 4; i++) {
+        num1[i] = end[i];
+        num2[i] = start[i];
+    }
+    num1[4] = '\n';
+    num2[4] = '\n';
+    endDate[0] = stoi(num1);
+    startDate[0] = stoi(num2);
+    num1.clear();
+    num2.clear();
+    num1[0] = endDate[5];
+    num1[1] = endDate[6];
+    num2[0] = startDate[5];
+    num2[1] = startDate[6];
+    num1[2] = '\n';
+    num2[2] = '\n';
+    endDate[1] = stoi(num1);
+    startDate[1] = stoi(num2);
+    num1.clear();
+    num2.clear();
+    num1[0] = endDate[8];
+    num1[1] = endDate[9];
+    num2[0] = startDate[8];
+    num2[1] = startDate[9];
+    num1[2] = '\n';
+    num2[2] = '\n';
+    endDate[2] = stoi(num1);
+    startDate[2] = stoi(num2);
+    int edays = endDate[2];
+    for (int y = 2024; y < endDate[0]; ++y) {
+        edays += 365;
+    }
+    for (int m = 1; m < endDate[1]; ++m) {
+        switch (m) {
+            case 4: case 6: case 9: case 11:
+                edays += 30;
+            case 2:
+                edays += 28;
+            default:
+                edays += 31;
+        }
+    }
+    int sdays = startDate[2];
+    for (int y = 2024; y < startDate[0]; ++y) {
+        sdays += 365;
+    }
+    for (int m = 1; m < startDate[1]; ++m) {
+        switch (m) {
+            case 4: case 6: case 9: case 11:
+                sdays += 30;
+            case 2:
+                sdays += 28;
+            default:
+                sdays += 31;
+        }
+    }
+
+    return edays-sdays;
+
 }
 
 void Order::writeAll() {
