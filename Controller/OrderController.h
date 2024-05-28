@@ -12,9 +12,9 @@ private:
     OrderRepository repo;
     int day = 86400;
 public:
-    void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee) const;
+    void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, std::string employeeName, std::string employeeSurname) const;
 
-    void updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee, int id);
+    void updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, std::string employeeName, std::string employeeSurname, int id);
 
     void completeOrder(int id);
 

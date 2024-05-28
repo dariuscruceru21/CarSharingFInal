@@ -3,33 +3,27 @@
 #include "OrderController.h"
 
 void OrderController::createOrder(float totalCost, std::string observation, Customer user, tm start, tm end,
-                                  Car car, Employee employee) const{
+                                  Car car, std::string employeeName, std::string employeeSurname) const{
 
-    time_t now = time(0);
-    tm *ltm = localtime(&now);
-    Order newOrder;
-    newOrder.setCar(car);
-    newOrder.setCustomer(user);
-    newOrder.setEnd(end);
-    newOrder.setStart(start);
-    newOrder.setMoney(totalCost);
-    newOrder.setObservation(observation);
-    newOrder.setEmployee(employee);
-    newOrder.setOrderDate(*ltm);
+    EmployeeRepository employeeSearch;
+    Order newOrder(totalCost, observation, user, start, end, car);
+    newOrder.setEmployee(employeeSearch.findEmployeeByName(employeeName, employeeSurname));
     newOrder.setRepository(repo.listAllOrders());
     this->repo.saveOrder(newOrder);
 }
 
 void OrderController::updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end,
-                                  Car car, Employee employee, int id) {
+                                  Car car, std::string employeeName, std::string employeeSurname, int id) {
+    //waiting for login info
     Order updatedOrder;
+    EmployeeRepository employeeSearch;
     updatedOrder.setCar(car);
     updatedOrder.setCustomer(user);
     updatedOrder.setEnd(end);
     updatedOrder.setStart(start);
     updatedOrder.setMoney(totalCost);
     updatedOrder.setObservation(observation);
-    updatedOrder.setEmployee(employee);
+    updatedOrder.setEmployee(employeeSearch.findEmployeeByName(employeeName, employeeSurname));
     updatedOrder.setOrderNr(id);
     updatedOrder.setRepository(repo.listAllOrders());
     repo.updateOrder(updatedOrder);
@@ -38,10 +32,7 @@ void OrderController::updateOrder(float totalCost, std::string observation, Cust
 void OrderController::completeOrder(int id) {
     Order completed = repo.searchOrder(id);
     long long diff = completed.getDiff();//dif dintre start si end
-    int numOfDays = diff /day;
-    if(numOfDays * day < diff){
-        numOfDays++;
-    }
+    int numOfDays = ceil(diff /day);
     completed.setMoney(numOfDays * completed.getCar().getDailyRate());
     completed.setStatus("completed");
     repo.updateOrder(completed);
