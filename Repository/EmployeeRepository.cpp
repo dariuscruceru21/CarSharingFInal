@@ -5,6 +5,7 @@
 #include <string>
 #include "../Models/Employee.h"
 #include "fstream"
+#include "sstream"
 
 // Method to list all employees
 std::vector<Employee> EmployeeRepository::listAllEmployees() {
@@ -58,66 +59,85 @@ Employee EmployeeRepository::findEmployeeByName(std::string employeeName, std::s
     }
     throw std::runtime_error("Employee not found");
 }
-/*
- * ///in opinia mea ii aceasi chestie ca si create,pareri, sanse ,nota ?
-void EmployeeRepository::saveEmployee(Employee employee) {
-    employees.push_back(employee);
-    writeToCsv();  // Write to CSV after saving
-}
-*/
-void EmployeeRepository::deleteEmployee(std::string employeeName, std::string employeeSurname) {
-    for (size_t i = 0; i < employees.size(); ++i) {
-        if (employees[i].getName() == employeeName && employees[i].getSurname() == employeeSurname) {
-            employees.erase(employees.begin() + i);
-            writeToCsv();  // Write to CSV after deleting
-            return;
-        }
-    }
-    throw std::runtime_error("Employee not found");
-}
 
-void EmployeeRepository::updateEmployee(Employee& updatedEmployee) {
-    bool found = false;
-    for (auto &employee: employees) {
-        if (employee.getEmail() == updatedEmployee.getEmail()) {
-            employee.setName(updatedEmployee.getName());
-            employee.setSurname(updatedEmployee.getSurname());
-            employee.setEmail(updatedEmployee.getEmail());
-            employee.setPosition(updatedEmployee.getPosition());
-            employee.setBirthdate(updatedEmployee.getBirthdate());
-            employee.setAbbreviation(updatedEmployee.getAbbreviation());
-            employee.setSalary(updatedEmployee.getSalary());
-            employee.setRemarks(updatedEmployee.getRemarks());
-            found = true;
+void EmployeeRepository::deleteEmployee(std::string employeeName, std::string employeeSurname) {
+    for(auto it = this->employees.begin();it != this->employees.end();++it){
+        if(it->getName() == employeeName && it->getSurname() == employeeSurname){
+            this->employees.erase(it);
             break;
         }
-    }
-    if (!found) {
-    throw std::runtime_error("Employee not found");
+
     }
     writeToCsv();
 }
+
+void EmployeeRepository::updateEmployee(Employee& updatedEmployee) {
+    readFromCsv();
+
+    for(auto &employee:this->employees){
+        if(employee.getName() == updatedEmployee.getName() && employee.getSurname() == updatedEmployee.getSurname())
+        {
+            employee = updatedEmployee;
+
+            writeToCsv();
+            return;
+        }
+    }
+    std::cerr <<"Employee with name" << updatedEmployee.getName() << "and surname"<<updatedEmployee.getSurname()<<"not found"<<std::endl;
+
+
+}
 EmployeeRepository::EmployeeRepository(std::string fileName) {
+    this->fileName = fileName;
     readFromCsv();
 }
 
 void EmployeeRepository::readFromCsv() {
     this->employees.clear();
-    std::ifstream file(this->fileName);
-    std::string line;
-    while (std::getline(file, line)) {
-        Employee employee;
-        employee.fromCsv(line);
-        this->employees.push_back(employee);
+    std::ifstream  file(fileName);
+    if(file.is_open()){
+        std::string line;
+        while(std::getline(file,line)){
+            std::stringstream ss(line);
+            std::string name, surname, email, password, position, birthdate, abrevation,salaryStr,remarks;
+            std::getline(ss,name,',');
+            std::getline(ss,surname,',');
+            std::getline(ss,email,',');
+            std::getline(ss,password,',');
+            std::getline(ss,position,',');
+            std::getline(ss,birthdate,',');
+            std::getline(ss,abrevation,',');
+            std::getline(ss,salaryStr,',');
+            float salary = std::stof(salaryStr);
+            std::getline(ss,remarks,',');
+            employees.emplace_back(name,surname,email,password,position,birthdate,abrevation,salary,remarks);
+
+
+        }
+        file.close();
+    } else{
+        std::cerr<<"Unable to open file:"<<fileName<<std::endl;
     }
-    file.close();
 }
 
 void EmployeeRepository::writeToCsv() {
-    std::ofstream file(this->fileName);
-    for (auto& employee : this->employees)
-        file << employee.toCsv() << "\n";
-    file.close();
+    std::ofstream file(fileName);
+    if(file.is_open()){
+        for(Employee &employee : employees){
+            file << employee.getName() << ","
+            <<employee.getSurname()<<","
+            <<employee.getEmail()<<","
+            <<employee.getPassword()<<","
+            <<employee.getPosition()<<","
+            <<employee.getBirthdate()<<","
+            <<employee.getAbbreviation()<<","
+            <<employee.getSalary()<<","
+            <<employee.getRemarks()<<std::endl;
+        }
+        file.close();
+    }else{
+        std::cerr << " Unable to open file: "<<fileName << std::endl;
+    }
 }
 
 std::vector<Employee> EmployeeRepository::getEmployes() {
