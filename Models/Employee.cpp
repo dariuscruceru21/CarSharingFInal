@@ -109,6 +109,18 @@ void Employee::updateProfile() {
 void Employee::setAdmin(bool adminStatus) {
     admin = adminStatus;
 }
+std::string Employee::toString(){
+    std::ostringstream oss;
+    oss << "Name: " << name << "\n"
+        << "Surname: " << surname << "\n"
+        << "Email: " << email << "\n"
+        << "Position: " << position << "\n"
+        << "Birthdate: " << birthdate << "\n"
+        << "Abbreviation: " << abbreviation << "\n"
+        << "Salary: " << salary << "\n"
+        << "Remarks: " << remarks;
+    return oss.str();
+}
 
 
 
