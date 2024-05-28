@@ -151,7 +151,7 @@ void OrderRepository::updateOrder(Order obj) {
 
 //B.3
 
-void OrderRepository::removeReservation(int orderNr, int userType) {
+void OrderRepository::removeReservation(int orderNr) {
 
     std::vector<Order> copy;
     for (Order obj: orders)

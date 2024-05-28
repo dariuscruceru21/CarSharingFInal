@@ -38,7 +38,7 @@ public:
     //B.3 -Grama Andrei
     //Order & Reservation handling
 
-    void removeReservation(int orderNr, int userType);
+    void removeReservation(int orderNr);
     void changeReservation(Order newReservation);
 
     static std::vector<Order> convertListToVector(std::list<Order> &repo);

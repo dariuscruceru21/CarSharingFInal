@@ -78,6 +78,6 @@ Order OrderController::searchOrder(int id) {
     return repo.searchOrder(id);
 }
 
-void OrderController::removeReservation(int orderNr, int userType) {
-    repo.removeReservation(orderNr,userType);
+void OrderController::removeReservation(int orderNr) {
+    repo.removeReservation(orderNr);
 }
