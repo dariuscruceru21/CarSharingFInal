@@ -28,7 +28,7 @@ private:
 public:
 
     Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car);
-    Order(float totalCost, std::string observation, Customer user, tm start, Car car, Employee employee1);
+    Order(float totalCost, std::string observation, Customer user, tm end, Car car, Employee employee1);
     Order(){};
     void changeStatus();
 
