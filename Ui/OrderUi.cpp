@@ -182,21 +182,23 @@ void OrderUi::completeOrder() {
 
 void OrderUi::takeAwayOrder() {
     int id;
-    Employee employee;
+//    Employee employee;
 
     std::cout << "Enter order ID to take away: ";
     std::cin >> id;
 
-    std::string employeeName, employeePosition;
+    std::string employeeName, employeePosition, employeeSurname;
     std::cin.ignore(); // Clear the input buffer
     std::cout << "Enter employee name: ";
     std::getline(std::cin, employeeName);
+    std::cout << "Enter employee surname: ";
+    std::getline(std::cin, employeeSurname);
     std::cout << "Enter employee position: ";
     std::getline(std::cin, employeePosition);
-    employee.setName(employeeName);
-    employee.setPosition(employeePosition);
+//    employee.setName(employeeName);
+//    employee.setPosition(employeePosition);
 
-    controller.takeAwayOrder(id, employee);
+    controller.takeAwayOrder(id, employeeName, employeeSurname);
     std::cout << "Order taken away successfully.\n";
 }
 
@@ -213,4 +215,26 @@ void OrderUi::searchOrder() {
     std::cin>>id;
     auto order = controller.searchOrder(id);
     order.displayOrder();
+}
+
+void OrderUi::takeOverOrder() {
+    int id;
+//    Employee employee;
+
+    std::cout << "Enter order ID to take over: ";
+    std::cin >> id;
+
+    std::string employeeName, employeePosition, employeeSurname;
+    std::cin.ignore(); // Clear the input buffer
+    std::cout << "Enter employee name: ";
+    std::getline(std::cin, employeeName);
+    std::cout << "Enter employee surname: ";
+    std::getline(std::cin, employeeSurname);
+    std::cout << "Enter employee position: ";
+    std::getline(std::cin, employeePosition);
+//    employee.setName(employeeName);
+//    employee.setPosition(employeePosition);
+
+    controller.takeOverOrder(id, employeeName, employeeSurname);
+    std::cout << "Order taken over successfully.\n";
 }
