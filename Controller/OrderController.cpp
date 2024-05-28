@@ -57,7 +57,7 @@ void OrderController::takeOverOrder(int id, std::string employeeName, std::strin
     repo.updateOrder(change);
 }
 
-std::list<Order> OrderController::listOrders() {
+std::vector<Order> OrderController::listOrders() {
     return repo.listAllOrders();
 }
 

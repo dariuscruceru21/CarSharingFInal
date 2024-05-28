@@ -10,7 +10,7 @@
 class OrderRepository {
 private:
     std::string filename = "CarSharingFInal/Information/Orders.csv";
-//    std::list<Order> orders;
+    //std::vector<Order> orders;
 
 public:
 
@@ -29,7 +29,8 @@ public:
     void saveOrder(Order obj) const;
     void deleteOrder(Order obj);
     void updateOrder(Order obj);
-    std::vector<Order> listAllOrders();
+
+    std::vector<Order> listAllOrders() const;
     Order searchOrder(int orderID);
 
     //B.3 -Grama Andrei
@@ -38,7 +39,10 @@ public:
     std::vector<Order> removeReservation(int orderNr);
     std::vector<Order> changeReservation(int orderNr);
 
-    std::vector<Order> convertListToVector(std::list<Order> &repo);
+    static std::vector<Order> convertListToVector(std::list<Order> &repo);
+
+    void readFromCsv();
+    void writeToCsv();
 };
 
 
