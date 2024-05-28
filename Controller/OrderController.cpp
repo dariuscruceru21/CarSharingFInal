@@ -52,6 +52,7 @@ void OrderController::completeOrder(int id) {
     numOfDays += (endMonth-startMonth) * 30; //a month has 30 days; + 30*amount of months
 
     completed.setMoney(numOfDays * completed.getCar().getDailyRate());
+
     completed.setStatus("completed");
     repo.updateOrder(completed);
 }
