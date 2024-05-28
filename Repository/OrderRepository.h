@@ -4,15 +4,17 @@
 #include <string>
 #include <fstream>
 #include "../Models/Order.h"
+#include "User.h"
 #include <vector>
 #include <list>
 
 class OrderRepository {
 private:
     std::string filename = "CarSharingFInal/Information/Orders.csv";
-    //std::vector<Order> orders;
+    std::vector<Order> orders;
 
 public:
+    OrderRepository(std::string &filename);
 
 //    void allOrders();
     //B.4 Auflisten der Bestellungen
@@ -36,12 +38,12 @@ public:
     //B.3 -Grama Andrei
     //Order & Reservation handling
     std::string returnUserType(Order obj);
-    std::vector<Order> removeReservation(int orderNr);
+    void removeReservation(int orderNr, User user);
     std::vector<Order> changeReservation(int orderNr);
 
     static std::vector<Order> convertListToVector(std::list<Order> &repo);
 
-    void readFromCsv();
+    std::vector<Orders> readFromCsv();
     void writeToCsv();
 };
 

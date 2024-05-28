@@ -267,3 +267,7 @@ void CustomerHandlingRepository::viewFavouriteCars() {
                   << current.getColor() << " " << current.getRemarks() << " " << current.getisActive() << '\n';
     }
 }
+
+std::string CustomerHandlingRepository::getFileName() {
+    return fileName;
+}

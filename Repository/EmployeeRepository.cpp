@@ -7,6 +7,12 @@
 #include "fstream"
 #include "sstream"
 
+EmployeeRepository::EmployeeRepository(std::string &fileName) {
+    this->fileName = fileName;
+    readFromCsv();
+}
+
+
 // Method to list all employees
 std::vector<Employee> EmployeeRepository::listAllEmployees() {
     return employees;

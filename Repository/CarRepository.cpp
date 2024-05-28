@@ -56,6 +56,7 @@ void CarRepository::writeToCsv() {
 }
 
 CarRepository::CarRepository(std::string fileName) {
+    this->fileName = fileName;
     readFromCsv();
 }
 
@@ -118,5 +119,9 @@ std::vector<Car> CarRepository::searchCar(std::string &licensePlate) {
             results.push_back(car);
         }
     }
+}
+
+std::string CarRepository::getFileName() {
+    return fileName;
 }
 

@@ -1,5 +1,7 @@
 #include "Order.h"
 #include "CarRepository.h"
+#include "CustomerHandlingRepository.h"
+#include "EmployeeRepository.h"
 
 Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
@@ -31,7 +33,6 @@ Order::Order(float totalCost, std::string observation, Customer user, std::strin
     this->employee = employee1;
     this->totalCost = totalCost;
     this->observation = observation;
-    time_t now = time(0);
     this->customer = user;
     this->status = "Order";
     this->start = start;
@@ -41,9 +42,17 @@ Order::Order(int orderNr, std::string orderDate, std::string start, std::string 
       std::string customerEmail, std::string employeeEmail, int totalCost, std::string observation)
 {
     this->orderNumber = orderNr; this->orderDate = orderDate; this->start = start; this->end = end; this->status = status;
-    ///search for car by License plate, customer & employee by email
-    CarRepository repo("");
+
+    CarRepository repo;
     this->car = repo.findByLicensePlate(carLicensePlate);
+
+    CustomerHandlingRepository repoC;
+    this->customer = repoC.searchCustomersByEmail(customerEmail)[0];
+
+    EmployeeRepository repoE;
+    this->employee = repoE.findEmployeeByString(employeeEmail)[0];
+
+
     this->totalCost = totalCost;
     this->observation = observation;
 }

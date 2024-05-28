@@ -24,7 +24,7 @@ public:
     User();
 
     //functie care returneaza true daca te ai logat corect Ppoate de mutat in controller
-    bool login();
+    int login();
 
     std::string getUserEmail() const;
     std::string getUserPassword() const;
