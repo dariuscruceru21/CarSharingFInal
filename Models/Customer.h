@@ -66,6 +66,7 @@ public:
 
     void setGdprDeleted(bool newGdprDeleted);
 
+    std::string toString();
 
 };
 
