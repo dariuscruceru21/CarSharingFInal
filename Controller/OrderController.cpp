@@ -2,7 +2,7 @@
 
 #include "OrderController.h"
 
-void OrderController::createOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end,
+void OrderController::createOrder(float totalCost, std::string observation, std::string customerPhoneNr, std::string start, std::string end,
                                   std::string carLicensePlate, std::string employeeName, std::string employeeSurname) const{
 
     EmployeeRepository employeeSearch;
@@ -14,7 +14,7 @@ void OrderController::createOrder(float totalCost, std::string observation, std:
     this->repo.saveOrder(newOrder);
 }
 
-void OrderController::updateOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end,
+void OrderController::updateOrder(float totalCost, std::string observation, std::string customerPhoneNr, std::string start, std::string end,
                                   std::string carLicensePlate, std::string employeeName, std::string employeeSurname, int id) {
     //waiting for login info
 
@@ -37,8 +37,7 @@ void OrderController::updateOrder(float totalCost, std::string observation, std:
 void OrderController::completeOrder(int id) {
     Order completed = repo.searchOrder(id);
     long long diff = completed.getDiff();//dif dintre start si end
-    int numOfDays = ceil(diff /day);
-    completed.setMoney(numOfDays * completed.getCar().getDailyRate());
+    completed.setMoney(diff * completed.getCar().getDailyRate());
     completed.setStatus("completed");
     repo.updateOrder(completed);
 }
