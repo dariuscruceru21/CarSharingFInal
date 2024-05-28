@@ -19,7 +19,7 @@ void CustomerHandlingRepository::readFromCsv() {
     if (file.is_open()) {
         std::string line;
         while (std::getline(file, line)) {
-            // Parse each line and create Customer objects
+            // Parse each line and create Cufstomer objects
             // Assuming your CSV format is comma-separated
             std::stringstream ss(line);
             std::string name, surname, email, password, address, remarks, phone, gdprDeletedStr;

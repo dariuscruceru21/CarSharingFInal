@@ -42,7 +42,7 @@ void EmployeeUi::handleMenu() {
                 getEmployeeByName();
                 break;
             case 6:
-                updateProfile();
+                //updateProfile();
                 break;
             case 0:
                 std::cout << "Exiting..." << std::endl;
@@ -135,18 +135,19 @@ void EmployeeUi::getEmployeeByName() {
     std::cout << emp.toString() << std::endl;
 }
 
-void EmployeeUi::updateProfile() {
-    std::string name, surname, newRemarks;
-
-    std::cout << "Enter name: ";
-    std::getline(std::cin, name);
-    std::cout << "Enter surname: ";
-    std::getline(std::cin, surname);
-    std::cout << "Enter new remarks: ";
-    std::getline(std::cin, newRemarks);
-
-    controller.updateProfile(name, surname, newRemarks);
-}
+//de vazut aici
+//void EmployeeUi::updateProfile() {
+//    std::string name, surname, newRemarks;
+//
+//    std::cout << "Enter name: ";
+//    std::getline(std::cin, name);
+//    std::cout << "Enter surname: ";
+//    std::getline(std::cin, surname);
+//    std::cout << "Enter new remarks: ";
+//    std::getline(std::cin, newRemarks);
+//
+//    controller.updateProfile(name, surname, newRemarks);
+//}
 
 // Uncomment and implement the following if needed
 /*

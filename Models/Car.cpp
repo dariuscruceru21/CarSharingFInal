@@ -18,6 +18,20 @@ Car::Car(std::string licensePlate, std::string model, std::string brand, int yea
     this->isActive = isActive;
 }
 
+Car::Car() {
+    this->licensePlate = "";
+    this->model = "";
+    this->brand = "";
+    this->yearOfFirstRegistration = 0;
+    this->mileage = 0;
+    this->dailyRate = 0;
+    this->fuelType = "";
+    this->transmission = "";
+    this->color = "";
+    this->remarks = "";
+    this->isActive = 0;
+}
+
 
 // Getters
 std::string Car::getLicensePlate() const {

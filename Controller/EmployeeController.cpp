@@ -4,11 +4,12 @@
 
 #include "EmployeeController.h"
 
-EmployeeController::EmployeeController(std::string &filename): employeeRepo(filename) {}
+
 
 void EmployeeController::addEmployee(std::string &name, std::string &surname, std::string &email, std::string &password,
                                      std::string &position, std::string &birthdate, std::string &abbreviation,
                                      float salary, std::string &remarks) {
+    //Employee newEmployee(name,surname,email,password,position,birthdate,abbreviation,salary,remarks);
     employeeRepo.createEmployee(name,surname,email,password,position,birthdate,abbreviation,salary,remarks);
 }
 //find by--> using getEmployeeByName from EmployeeRepository

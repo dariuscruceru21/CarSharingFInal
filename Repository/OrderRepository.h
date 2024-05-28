@@ -4,7 +4,7 @@
 #include <string>
 #include <fstream>
 #include "../Models/Order.h"
-#include "User.h"
+#include "../Models/User.h"
 #include <vector>
 #include <list>
 
@@ -43,7 +43,7 @@ public:
 
     static std::vector<Order> convertListToVector(std::list<Order> &repo);
 
-    std::vector<Orders> readFromCsv();
+    std::vector<Order> readFromCsv();
     void writeToCsv();
 };
 

@@ -14,7 +14,7 @@ class EmployeeController {
 private:
     EmployeeRepository employeeRepo;
 public:
-    EmployeeController(std::string &filename);
+    EmployeeController(const std::string& filename) : employeeRepo(filename){}
 
     void addEmployee(std::string &name, std::string &surname, std::string &email,
                      std::string &password, std::string &position, std::string &birthdate,

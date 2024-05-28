@@ -68,7 +68,7 @@ std::string User::inputPassword() {
 
 int User::login() {
     CustomerHandlingRepository customerRepo("Customers.csv");
-    EmployeeRepository emplyeeRepo("Employe.csv");
+    EmployeeRepository emplyeeRepo("acum.csv");
     std::string email = inputEmail();
     std::string password = inputPassword();
     customerRepo.readFromCsv();
@@ -76,6 +76,8 @@ int User::login() {
 
     std::vector<Customer> customers = customerRepo.geterCustomers();
     std::vector<Employee> employes = emplyeeRepo.getEmployes();
+    std::cout<<employes[0].getPassword();
+
 
     int userType = -1;
 
@@ -87,7 +89,7 @@ int User::login() {
         }
     for(int i = 0; i<employes.size();i++)
         if(email == employes[i].getEmail() && password == employes[i].getPassword()){
-            std::cout<<"You're an Employee";
+            std::cout<<"You're an Employee"<<"\n";
             if (employes[i].getPosition() == "Admin") {
                 userType = 3;
                 return userType;
@@ -98,7 +100,7 @@ int User::login() {
         }
 
     std::cout<<"Email or Password wrong!";
-    return login();
+    //return login();
 
 }
 

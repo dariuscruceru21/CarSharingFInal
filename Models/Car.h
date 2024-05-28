@@ -1,4 +1,8 @@
+#ifndef CAR_H
+#define CAR_H
+
 #include <string>
+
 
 class Car {
 private:
@@ -67,7 +71,8 @@ public:
     void setRemarks(const std::string &newRemarks);
 
 
-
     void setisActive(bool isActive);
+
     bool getisActive();
 };
+#endif // CAR_H

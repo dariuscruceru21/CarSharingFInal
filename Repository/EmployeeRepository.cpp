@@ -147,5 +147,5 @@ void EmployeeRepository::writeToCsv() {
 }
 
 std::vector<Employee> EmployeeRepository::getEmployes() {
-    return std::vector<Employee>();
+    return this->employees;
 }
