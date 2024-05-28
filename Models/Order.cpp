@@ -1,4 +1,5 @@
 #include "Order.h"
+#include "CarRepository.h"
 
 Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
@@ -24,12 +25,6 @@ Order::Order(float totalCost, std::string observation, Customer user, std::strin
     //order type: currently active (start equals current time)
 
     bool check = callAllValidationFunctions(car,start,end,"Order",user);
-
-Order::Order(float totalCost, std::string observation, Customer user, tm end, Car car, Employee employee1)
-        : car(car) {
-    //order type: currently active (start equals current time)
-
-    bool check = callAllValidationFunctions(car,*start,end,"Order",user);main
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -38,12 +33,19 @@ Order::Order(float totalCost, std::string observation, Customer user, tm end, Ca
     this->observation = observation;
     time_t now = time(0);
     this->customer = user;
-    orderDate = localtime(&now);
     this->status = "Order";
-    this->start = localtime(&now);
-    this->end = &end;
-
-
+    this->start = start;
+    this->end = end;
+}
+Order::Order(int orderNr, std::string orderDate, std::string start, std::string end, std::string status, std::string carLicensePlate,
+      std::string customerEmail, std::string employeeEmail, int totalCost, std::string observation)
+{
+    this->orderNumber = orderNr; this->orderDate = orderDate; this->start = start; this->end = end; this->status = status;
+    ///search for car by License plate, customer & employee by email
+    CarRepository repo("");
+    this->car = repo.findByLicensePlate(carLicensePlate);
+    this->totalCost = totalCost;
+    this->observation = observation;
 }
 
 void Order::setRepository(std::vector<Order> list) {
@@ -58,28 +60,28 @@ int Order::getOrderNr() const {
     return orderNumber;
 }
 
-void Order::setOrderDate(tm &time){
-    orderDate = &time;
+void Order::setOrderDate(std::string time){
+    orderDate = time;
 }
 
-tm Order::getOrderDate() {
-    return *orderDate;
+std::string Order::getOrderDate() {
+    return orderDate;
 }
 
-void Order::setStart(tm time) {
-    start = &time;
+void Order::setStart(std::string time) {
+    start = time;
 }
 
-tm Order::getStart() {
-    return *start;
+std::string Order::getStart() {
+    return start;
 }
 
-void Order::setEnd(tm time) {
-    end = &time;
+void Order::setEnd(std::string time) {
+    end = time;
 }
 
-tm Order::getEnd() {
-    return *end;
+std::string Order::getEnd() {
+    return end;
 }
 
 void Order::setStatus(std::string status) {
@@ -130,7 +132,7 @@ std::string Order::getObservation() {
     return observation;
 }
 
-long long Order::getDiff() {
+long long Order::getDiff() {  ///va trebui putin diferit aici, ma uit eu daca nu
     return mktime(end)-mktime(start);
 }
 
@@ -143,8 +145,8 @@ void Order::writeAll() {
 
 
 
-bool Order::callAllValidationFunctions(Car car, tm begin, tm end,
-                                                 std::string status, Customer user) {
+bool Order::callAllValidationFunctions(Car car, std::string begin, std::string end,
+                                       std::string status, Customer user) {
     if (checkIfCarIsAlreadyUsed(car,begin,end)) {std::cout<<"\nError: Car is already used on specified date; cannot create order\n"; return false;}
 
     if (!checkIfBeginIsSmallerOrEqualEnd(begin,end)) {std::cout<<"\nError: Begin time surpasses end time\n"; return false;}
@@ -156,18 +158,18 @@ bool Order::callAllValidationFunctions(Car car, tm begin, tm end,
     return true;
 }
 
-bool Order::checkIfCarIsAlreadyUsed(Car car, tm begin, tm end) {
+bool Order::checkIfCarIsAlreadyUsed(Car car, std::string begin, std::string end) {
     for (Order obj: repository)
     {
         if (obj.car.getLicensePlate() == car.getLicensePlate())  //an order has been found using the same car; check if the new order wants to use it in an already occupied time period
-            if (&end >= obj.start && &end <= obj.end || &begin <= obj.end && &begin >= obj.start)
+            if (end >= obj.start && end <= obj.end || begin <= obj.end && begin >= obj.start)
                 return true;  //car is used, cannot create order
     }
     return false;
 }
 
-bool Order::checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end) {
-    if (&begin <= &end) return true;
+bool Order::checkIfBeginIsSmallerOrEqualEnd(std::string begin, std::string end) {
+    if (begin <= end) return true;
     return false;
 }
 
@@ -199,8 +201,8 @@ int Order::determineOrderNumber(std::vector<Order> repository) {
 
 std::string Order::toCSV(){
     std::ostringstream oss;
-    oss << this->orderNumber << "," << orderDate->tm_year  << "," << orderDate->tm_mon  << "," <<
-        orderDate->tm_mday << "," << start << "," << end << "," <<
+    oss << this->orderNumber << "," << orderDate << "," <<
+        start << "," << end << "," <<
         status << "," << car.getLicensePlate() << "," << customer.getEmail() << "," <<
         employee.getEmail() << "," << totalCost << "," << observation << ",";
 }
@@ -217,26 +219,11 @@ void Order::fromCSV(const std::string &csvLine) {
     ss >> this->orderNumber;      //asa pt int-uri
     ss.ignore(1); // Ignore the comma
 
-    ss >> this->orderDate->tm_year;
-    ss.ignore(1);
-    ss >> this->orderDate->tm_mon;
-    ss.ignore(1);
-    ss >> this->orderDate->tm_mday;
-    ss.ignore(1);
+    std::getline(ss, this->orderDate, ',');
 
-    ss >> this->start->tm_year;
-    ss.ignore(1);
-    ss >> this->start->tm_mon;
-    ss.ignore(1);
-    ss >> this->start->tm_mday;
-    ss.ignore(1);
+    std::getline(ss, this->start, ',');
 
-    ss >> this->end->tm_year;
-    ss.ignore(1);
-    ss >> this->end->tm_mon;
-    ss.ignore(1);
-    ss >> this->end->tm_mday;
-    ss.ignore(1);
+    std::getline(ss, this->end, ',');
 
     std::getline(ss, this->status, ',');
 
@@ -263,10 +250,9 @@ void Order::displayOrder() {
     std::cout << "Total Cost: " << totalCost << "\n";
     std::cout << "Observation: " << observation << "\n";
     std::cout << "Customer: " << customer.getName() << ", Contact: " << customer.getPhone() << "\n";
-    std::cout << "Start Time: " << (start->tm_year + 2000) << "-" << (start->tm_mon + 1) << "-" << start->tm_mday
-                      << " " << start->tm_hour << ":" << start->tm_min << "\n"
-                      << "End Time: " << (end->tm_year + 2000) << "-" << (end->tm_mon + 1) << "-" << end->tm_mday
-                      << " " << end->tm_hour << ":" << end->tm_min << "\n";
+    std::cout << "Order Date: "<< orderDate << "\n"
+              << "Start Time: " << start << "\n"
+              << "End Time: " << end << "\n";
     std::cout << "Car: " << car.getModel() << " " << car.getModel() << ", Plate: " << car.getLicensePlate() << "\n";
     std::cout << "Employee: " << employee.getName() << ", Position: " << employee.getPosition() << "\n";
     std::cout << "Status: " << status << "\n";

@@ -31,8 +31,9 @@ public:
     Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car,
           Employee employee1);
 
-    Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car);
-    Order(float totalCost, std::string observation, Customer user, tm end, Car car, Employee employee1);
+    //only use this constructor when all info is already known (ex. when reading an existing obj from a file)
+    Order(int orderNr, std::string orderDate, std::string start, std::string end, std::string status, std::string carLicensePlate,
+          std::string customerEmail, std::string employeeEmail, int totalCost, std::string observation);
 
     Order(){};
 
@@ -40,12 +41,12 @@ public:
 
     void setOrderNr(int nr);
     int getOrderNr() const;
-    void setOrderDate(tm &time);
-    tm getOrderDate();
-    void setStart(tm time);
-    tm getStart();
-    void setEnd(tm time);
-    tm getEnd();
+    void setOrderDate(std::string time);
+    std::string getOrderDate();
+    void setStart(std::string time);
+    std::string getStart();
+    void setEnd(std::string time);
+    std::string getEnd();
     void setStatus(std::string status);
     std::string getStatus();
     void setCar(Car car);
@@ -65,13 +66,13 @@ public:
     void writeAll();
 
     //B.5 Validierungen   --> is called everytime when an object is created (in the constructor)
-    bool callAllValidationFunctions(Car car, tm begin, tm end,
+    bool callAllValidationFunctions(Car car, std::string begin, std::string end,
                                     std::string status, Customer user);
 
     //if the car is already used on the given date, an error occurs
-    static bool checkIfCarIsAlreadyUsed(Car car, tm begin, tm end);
+    static bool checkIfCarIsAlreadyUsed(Car car, std::string begin, std::string end);
     //begin must be smaller than end
-    static bool checkIfBeginIsSmallerOrEqualEnd(tm begin, tm end);
+    static bool checkIfBeginIsSmallerOrEqualEnd(std::string begin, std::string end);
     //a user is not allowed to have more than 5 reservations
     static bool userHasLessThanFiveReservations(Customer user, std::string status);
     //order number is issued automatically by the system

@@ -315,25 +315,29 @@ void OrderRepository::readFromCsv() {
         while (std::getline(file, line)) {
             // Parse each line and create Customer objects
             // Assuming your CSV format is comma-separated
-            //orderNr orderDate beginDate endDate
-            //status carLicensePlate customerEmail employeeEmail totalCost observation
+            //
+            //
             std::stringstream ss(line);
-            std::string name, surname, email, password, address, remarks, phone, gdprDeletedStr;
-            std::getline(ss, name, ',');
-            std::getline(ss, surname, ',');
-            std::getline(ss, email, ',');
-            std::getline(ss, password, ',');
-            std::getline(ss, address, ',');
-            std::getline(ss, remarks, ',');
-            std::getline(ss, phone, ',');
-            std::getline(ss, gdprDeletedStr, ',');
+            std::string orderNr, orderDate, beginDate, endDate, status, carLicensePlate,
+            customerEmail, employeeEmail, totalCost, observation;
 
-            // Convert gdprDeleted from string to bool
-            bool gdprDeleted = (gdprDeletedStr == "1" || gdprDeletedStr == "true");
+            std::getline(ss, orderNr, ',');
+            int orderNrFloat = std::stoi(orderNr);
+            std::getline(ss, orderDate, ',');
+            std::getline(ss, beginDate, ',');
+            std::getline(ss, endDate, ',');
+            std::getline(ss, status, ',');
+            std::getline(ss, carLicensePlate, ',');
+            std::getline(ss, customerEmail, ',');
+            std::getline(ss, employeeEmail, ',');
+            std::getline(ss, totalCost, ',');
+            float totalCostFloat = std::stof(totalCost);
+            std::getline(ss, observation, ',');
 
 
             // Create Customer object and add to vector
-            orders.emplace_back(name, surname, email, password, address, remarks, phone, gdprDeleted);
+            auto obj = new Order(orderNr, orderDate, beginDate, endDate, status, carLicensePlate,
+                                 customerEmail, employeeEmail, totalCost, observation)
         }
         file.close();
     } else {
