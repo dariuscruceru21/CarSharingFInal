@@ -3,7 +3,7 @@
 
 
 
-std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list<Order> repository, tm start, tm end) {
+std::vector<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, tm start, tm end) {
     std::list<Order> orderList;
     for (Order obj: repository)
     {
@@ -21,11 +21,11 @@ std::list<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::list
 //    {
 //        std::cout<<obj.getOrderNr()<<": price-"<<obj.getMoney()<<", car-"<<obj.getCar().getBrand()<<", customer-"<<obj.getCustomer().getSurname()<<", employee-"<<obj.getEmployee().getSurname();
 //    }
-    return orderList;
+    return convertListToVector(orderList);
 }
 
 
-void OrderRepository::totalSumOfATimeInterval(std::list<Order> repository, tm time, std::string type) { //type: either month or year
+void OrderRepository::totalSumOfATimeInterval(std::vector<Order> repository, tm time, std::string type) { //type: either month or year
     if (type == "month")
         for (Order obj: repository)
         {
@@ -149,11 +149,11 @@ std::string OrderRepository::returnUserType(Order obj) {
 /**maybe this ?
  * TODO
  * need to modify the params*/
-std::list<Order> OrderRepository::removeReservation(int orderNr, const std::string& requesterRole, const std::string& requesterID) {
+std::vector<Order> OrderRepository::removeReservation(int orderNr, const std::string& requesterRole, const std::string& requesterID) {
     std::ifstream f(filename);
     if (!f.is_open()) {
         std::cerr << "Unable to open file " << filename << std::endl;
-        return std::list<Order>();
+        return std::vector<Order>();
     }
 
     std::list<Order> repo;
@@ -184,17 +184,17 @@ std::list<Order> OrderRepository::removeReservation(int orderNr, const std::stri
         std::ofstream outFile(filename, std::ofstream::trunc);
         if (!outFile.is_open()) {
             std::cerr << "Unable to open file " << filename << std::endl;
-            return std::list<Order>();
+            return std::vector<Order>();
         }
 
-        for (const auto& order : repo) {
+        for (auto& order : repo) {
             outFile << order.toCSV() << "\n";
         }
 
         outFile.close();
     }
 
-    return repo;
+    return convertListToVector(repo);
 }
 
 //std::list <Order> OrderRepository::removeReservation(int orderNr) {
@@ -216,7 +216,7 @@ std::list<Order> OrderRepository::removeReservation(int orderNr, const std::stri
 //}
 
 //B.3.3
-std::list <Order> OrderRepository::changeReservation(int orderNr) {
+std::vector<Order> OrderRepository::changeReservation(int orderNr) {
     std::ifstream f(filename);
 
     std::list<Order> repo;
@@ -263,9 +263,9 @@ std::list <Order> OrderRepository::changeReservation(int orderNr) {
 //                }
 //            }
 //        }
-    return repo;
+    return convertListToVector(repo);
 }
-std::list<Order> OrderRepository::listAllOrders() const {
+std::vector<Order> OrderRepository::listAllOrders() {
     std::ifstream f(filename);
     std::list<Order> orders;
 
@@ -277,7 +277,7 @@ std::list<Order> OrderRepository::listAllOrders() const {
     }
     f.close();
 
-    return orders;
+    return convertListToVector(orders);
 }
 
 Order OrderRepository::searchOrder(int orderID) {
@@ -293,4 +293,12 @@ Order OrderRepository::searchOrder(int orderID) {
     }
     f.close();
     std::cout<<"Error: object does not exist";
+}
+
+
+std::vector<Order> OrderRepository::convertListToVector(std::list<Order> &repo) {
+    std::vector<Order> newRepo;
+    for (Order obj: repo)
+        newRepo.push_back(obj);
+    return newRepo;
 }
