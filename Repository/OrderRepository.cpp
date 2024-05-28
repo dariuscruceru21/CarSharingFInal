@@ -38,9 +38,9 @@ void OrderRepository::totalSumOfATimeInterval(std::vector<Order> repository, std
         for (Order obj: repository)
         {
             string c1(1, obj.getStart()[5]), c2(1, obj.getStart()[6]);
-            //c1 + c2 is the month of the start date month  (format: YYYY/MM/DD)
+            //c1 + c2 is the month of the start date  (format: YYYY/MM/DD)
             string c3(1, obj.getEnd()[5]), c4(1, obj.getEnd()[6]);
-            //c3 + c4 is the month of the end date month (format: YYYY/MM/DD)
+            //c3 + c4 is the month of the end date (format: YYYY/MM/DD)
             if ((c1+c2) <= time && (c3+c4) >= time) //if the month is included in the order's time interval
                 std::cout << obj.getOrderNr() << ": price-" << obj.getMoney() << ", car-" << obj.getCar().getBrand() << ", customer-" << obj.getCustomer().getSurname() << ", employee-" << obj.getEmployee().getSurname();
         }
@@ -48,9 +48,9 @@ void OrderRepository::totalSumOfATimeInterval(std::vector<Order> repository, std
         for (Order obj: repository)
         {
             string c1(1, obj.getStart()[0]), c2(1, obj.getStart()[1]), c3(1, obj.getStart()[2]), c4(1, obj.getStart()[3]);
-            //c1 + c2 is the month of the start year  (format: YYYY/MM/DD)
+            //c1 + c2 is the year of the start (format: YYYY/MM/DD)
             string c5(1, obj.getEnd()[0]), c6(1, obj.getEnd()[1]), c7(1, obj.getEnd()[2]), c8(1, obj.getEnd()[3]);
-            //c3 + c4 is the month of the end year  (format: YYYY/MM/DD)
+            //c3 + c4 is the year of the end (format: YYYY/MM/DD)
             if ((c1+c2+c3+c4) >= time && (c5+c6+c7+c8) <= time) //if the order time is included in the given year
                 std::cout<<obj.getOrderNr()<<": price-"<<obj.getMoney()<<", car-"<<obj.getCar().getBrand()<<", user-"<<obj.getCustomer().getSurname()<<", employee-"<<obj.getEmployee().getSurname();
 

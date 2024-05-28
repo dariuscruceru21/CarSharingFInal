@@ -60,7 +60,6 @@ public:
     void setObservation(std::string observation);
     std::string getObservation();
 
-    long long getDiff();//time difference between start and end
 
     //general function for writing an order's details
     void writeAll();
