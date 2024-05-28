@@ -4,7 +4,8 @@
 
 #include "../Repository/OrderRepository.h"
 #include "../Repository/EmployeeRepository.h"
-
+#include "../Repository/CarRepository.h"
+#include "../Repository/CustomerHandlingRepository.h"
 #include<list>
 
 class OrderController {
@@ -12,9 +13,9 @@ private:
     OrderRepository repo;
     int day = 86400;
 public:
-    void createOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee) const;
+    void createOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end, std::string carLicensePlate, std::string employeeName, std::string employeeSurname) const;
 
-    void updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end, Car car, Employee employee, int id);
+    void updateOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end, std::string carLicensePlate, std::string employeeName, std::string employeeSurname, int id);
 
     void completeOrder(int id);
 
