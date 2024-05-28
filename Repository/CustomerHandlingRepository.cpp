@@ -64,20 +64,38 @@ void CustomerHandlingRepository::updateCustomer(Customer& updatedCustomer) {
     writeToCsv();
 }
 
-
 bool CustomerHandlingRepository::checkFormatEmail(Customer c) {
     std::string email = c.getEmail();
-    const std::regex pattern(R"(^[a-zA-Z]+(?:\.[a-zA-Z]+)?@[a-zA-Z]+\.[a-zA-Z]{2,}$)");
+    bool has_at = false;
+    bool ends_with_com = false;
 
-    return std::regex_match(email, pattern);
+    for (size_t i = 0; i < email.length(); ++i) {
+        if (email[i] == '@') {
+            if (has_at || i == 0 || i == email.length() - 1) {
+                return false;
+            }
+            has_at = true;
+        } else if (i > email.length() - 4 && email.substr(i) == ".com") {
+            ends_with_com = true;
+        }
+    }
+
+    return has_at && ends_with_com;
 }
 
 bool CustomerHandlingRepository::checkFormatPhoneNumber(Customer c) {
     std::string phone = c.getPhone();
 
-    const std::regex pattern(R"(^\+\d{2} \d{9}$)");
+    // Remove all non-digit and space characters
+    std::string digits = "";
+    for (char ch : phone) {
+        if (isdigit(ch)) {
+            digits += ch;
+        }
+    }
 
-    return std::regex_match(phone, pattern);
+    // Check if the length is between 9 and 11 (inclusive)
+    return digits.length() >= 9 && digits.length() <= 11;
 }
 
 bool CustomerHandlingRepository::checkUniqueEmail(Customer c) {
@@ -92,6 +110,7 @@ bool CustomerHandlingRepository::checkUniqueEmail(Customer c) {
 
     return flagUnique == 1;
 }
+
 
 //see header for details
 bool CustomerHandlingRepository::validateProfileByGDPR(Customer c) {
