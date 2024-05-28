@@ -265,7 +265,7 @@ std::vector<Order> OrderRepository::changeReservation(int orderNr) {
 //        }
     return convertListToVector(repo);
 }
-std::vector<Order> OrderRepository::listAllOrders() {
+std::vector<Order> OrderRepository::listAllOrders() const {
     std::ifstream f(filename);
     std::list<Order> orders;
 
@@ -301,4 +301,63 @@ std::vector<Order> OrderRepository::convertListToVector(std::list<Order> &repo) 
     for (Order obj: repo)
         newRepo.push_back(obj);
     return newRepo;
+}
+
+
+
+void OrderRepository::readFromCsv() {
+    std::vector<Order> orders;
+
+    orders.clear();
+    std::ifstream file(filename);
+    if (file.is_open()) {
+        std::string line;
+        while (std::getline(file, line)) {
+            // Parse each line and create Customer objects
+            // Assuming your CSV format is comma-separated
+            //orderNr orderDate beginDate endDate
+            //status carLicensePlate customerEmail employeeEmail totalCost observation
+            std::stringstream ss(line);
+            std::string name, surname, email, password, address, remarks, phone, gdprDeletedStr;
+            std::getline(ss, name, ',');
+            std::getline(ss, surname, ',');
+            std::getline(ss, email, ',');
+            std::getline(ss, password, ',');
+            std::getline(ss, address, ',');
+            std::getline(ss, remarks, ',');
+            std::getline(ss, phone, ',');
+            std::getline(ss, gdprDeletedStr, ',');
+
+            // Convert gdprDeleted from string to bool
+            bool gdprDeleted = (gdprDeletedStr == "1" || gdprDeletedStr == "true");
+
+
+            // Create Customer object and add to vector
+            orders.emplace_back(name, surname, email, password, address, remarks, phone, gdprDeleted);
+        }
+        file.close();
+    } else {
+        std::cerr << "Unable to open file: " << filename << std::endl;
+    }
+
+}
+
+void OrderRepository::writeToCsv() {
+    std::ofstream file(fileName);
+    if (file.is_open()) {
+        for (Customer &customer: Customers) {
+            // Write each customer's data in CSV format
+            file << customer.getName() << ","
+                 << customer.getSurname() << ","
+                 << customer.getEmail() << ","
+                 << customer.getPassword() << ","
+                 << customer.getAddress() << ","
+                 << customer.getRemarks() << ","
+                 << customer.getPhone() << ","
+                 << (customer.getGdprDeleted() ? "1" : "0") << std::endl;
+        }
+        file.close();
+    } else {
+        std::cerr << "Unable to open file: " << fileName << std::endl;
+    }
 }

@@ -1,7 +1,6 @@
 #ifndef APP_ORDER_H
 #define APP_ORDER_H
 
-#include<ctime>
 #include<string>
 #include <list>
 #include "sstream"
@@ -14,9 +13,9 @@ class Order {
 private:
     int orderNumber;
 
-    tm* orderDate;
-    tm* start;
-    tm* end;
+    std::string orderDate;
+    std::string start;
+    std::string end;
 
     std::string status;
     Car car;/** TODO */
@@ -24,15 +23,15 @@ private:
     Employee employee; /** TODO */
     float totalCost;
     std::string observation;
-    static std::list <Order> repository;
+    static std::vector<Order> repository;
 public:
 
-    Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car);
-    Order(float totalCost, std::string observation, Customer user, tm start, Car car, Employee employee1);
+    Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car);
+    Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car,
+          Employee employee1);
     Order(){};
-    void changeStatus();
 
-    void setRepository(std::list<Order> list);
+    void setRepository(std::vector<Order> list);
 
     void setOrderNr(int nr);
     int getOrderNr() const;
@@ -71,7 +70,7 @@ public:
     //a user is not allowed to have more than 5 reservations
     static bool userHasLessThanFiveReservations(Customer user, std::string status);
     //order number is issued automatically by the system
-    static int determineOrderNumber(std::list<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
+    static int determineOrderNumber(std::vector<Order> repository);   //numbers are made by maximum + 1  (ex. 1 2 3 5 6 7 --> 8)
 
 
     //transform obect into csv format

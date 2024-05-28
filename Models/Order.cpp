@@ -1,27 +1,29 @@
 #include "Order.h"
 
-Order::Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car) : car(car) {
+Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
 
     bool check = callAllValidationFunctions(car, start, end, "Reservation", user);  //requirement B5: Validations
     if (!check) { status = "Error"; return;}  //order is not created; in Repository class, object will not be added if status == Error
 
-    time_t now = time(0);
     this->totalCost = totalCost;
     this->observation = observation;
     this->customer = user;
-    orderDate = localtime(&now);
     this->status = "Reservation";
-    this->start =& start;
-    this->end = &end;
-    //specification B5.5: employee field is not specified
+    this->start = start;
+    this->end = end;
+
+    ///delete once project is finished:
+    //time_t now = time(0);
+    //orderDate = localtime(&now);
 }
 
-Order::Order(float totalCost, std::string observation, Customer user, tm start, Car car, Employee employee1)
+Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car,
+             Employee employee1)
         : car(car) {
     //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,start,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,start,end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -38,7 +40,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm start, 
 
 }
 
-void Order::setRepository(std::list<Order> list) {
+void Order::setRepository(std::vector<Order> list) {
     repository = list;
 }
 
@@ -178,7 +180,7 @@ bool Order::userHasLessThanFiveReservations(Customer user, std::string status) {
     return true;
 }
 
-int Order::determineOrderNumber(std::list<Order> repository) {
+int Order::determineOrderNumber(std::vector<Order> repository) {
     int maxi = 0;
     for (Order obj: repository)
         if (obj.getOrderNr() > maxi)

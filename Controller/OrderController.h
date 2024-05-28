@@ -23,7 +23,7 @@ public:
 
     void takeAwayOrder(int id, std::string employeeName, std::string employeeSurname);
 
-    std::list<Order> listOrders();
+    std::vector<Order> listOrders();
 
     Order searchOrder(int id);
 
