@@ -76,6 +76,7 @@ public:
 
     void setAdmin(bool adminStatus);
 
+    std::string toString();
 };
 
 
