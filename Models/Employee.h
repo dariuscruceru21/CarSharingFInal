@@ -21,6 +21,7 @@ protected:
     std::string birthdate;
     float salary;
     std::string position;
+    bool admin;
 public:
 
     //constructor
@@ -48,6 +49,8 @@ public:
 
     std::string getBirthdate();
 
+    bool isAdmin();
+
     //setters
     void setPosition(std::string newPosition);
 
@@ -74,6 +77,8 @@ public:
 
     //convert into normal type from csv
     void fromCsv(std::string& csvLine);
+
+    void setAdmin(bool adminStatus);
 
 };
 
