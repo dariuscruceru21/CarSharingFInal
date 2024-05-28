@@ -19,9 +19,10 @@ Employee::Employee(std::string name, std::string surname, std::string email, std
     this->abbreviation = abbreviation;
     this->salary = salary;
     this->remarks = remarks;
+    this->admin = false;
 }
 
-Employee::Employee() {}
+Employee::Employee() : admin(false){}
 
 //getters
 
@@ -56,6 +57,11 @@ float Employee::getSalary() {
 std::string Employee::getPosition() {
     return this->position;
 }
+
+bool Employee::isAdmin() {
+    return admin;
+}
+
 //setters
 
 void Employee::setName(std::string newName) {
@@ -95,11 +101,15 @@ void Employee::updateProfile() {
 
 }
 
+void Employee::setAdmin(bool adminStatus) {
+    admin = adminStatus;
+}
+
 
 std::string Employee::toCsv() {
     std::ostringstream oss;
     oss << this->name << "," << this->surname << "," << this->email << "," << this->position << "," << this->birthdate
-        << "," << this->abbreviation << "," << this->salary << "," << this->remarks;
+        << "," << this->abbreviation << "," << this->salary << "," << this->remarks << "," << this->admin;
 }
 
 void Employee::fromCsv(std::string &csvLine) {
@@ -113,7 +123,7 @@ void Employee::fromCsv(std::string &csvLine) {
     ss >> this->salary;
     ss.ignore(1);
     std::getline(ss,this->remarks,',');
-
+    ss >> admin;
 }
 
 
