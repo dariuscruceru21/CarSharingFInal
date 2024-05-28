@@ -31,23 +31,23 @@ public:
     Employee();
 
     //getters
-    std::string getName();
+    std::string getName() const;
 
-    std::string getSurname();
+    std::string getSurname() const;
 
-    std::string getEmail();
+    std::string getEmail() const;
 
-    std::string getPassword();
+    std::string getPassword() const;
 
-    std::string getPosition();
+    std::string getPosition() const;
 
-    std::string getAbbreviation();
+    std::string getAbbreviation() const;
 
-    float getSalary();
+    float getSalary() const;
 
-    std::string getRemarks();
+    std::string getRemarks() const;
 
-    std::string getBirthdate();
+    std::string getBirthdate() const;
 
     bool isAdmin();
 
@@ -72,11 +72,7 @@ public:
     //method
     void updateProfile();
 
-    //convert to csv format
-    std::string toCsv();
 
-    //convert into normal type from csv
-    void fromCsv(std::string& csvLine);
 
     void setAdmin(bool adminStatus);
 

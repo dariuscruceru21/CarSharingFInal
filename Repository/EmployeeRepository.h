@@ -29,7 +29,6 @@ public:
     std::vector<Employee> findEmployeeByString(std::string searchString);
 
 
-    void saveEmployee(Employee employee);
 
     void deleteEmployee(std::string employeeName, std::string employeeSurname);
 
