@@ -71,3 +71,4 @@ void EmployeeController::updateProfile(std::string& name, std::string& surname ,
     emp.setRemarks(newRemarks);
     employeeRepo.updateEmployee(emp);
 }
+//
