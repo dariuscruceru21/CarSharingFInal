@@ -3,24 +3,55 @@
 //
 
 #include "CarRepository.h"
+#include "../Models/Car.h"
 #include <fstream>
+#include "sstream"
 
 void CarRepository::readFromCsv() {
     this->cars.clear();
     std::ifstream file(this->fileName);
     std::string line;
     while (std::getline(file, line)) {
-        Car car;
-        car.fromCsv(line);
-        this->cars.push_back(car);
+        std::stringstream ss(line);
+        std::string licensePlate, model, brand, yearOfFirstRegistration, mileage, dailyRate, fuelType,
+        transmission, color, remarks, isActive;
+        std::getline(ss, licensePlate, ',');
+        std::getline(ss, model, ',');
+        std::getline(ss, brand, ',');
+        std::getline(ss, yearOfFirstRegistration, ',');
+        int yearOfFirstRegistrationInt = std::stoi(yearOfFirstRegistration);
+        std::getline(ss, mileage, ',');
+        int mileageInt = std::stoi(mileage);
+        std::getline(ss, dailyRate, ',');
+        float dailyRateFloat = std::stof(dailyRate);
+        std::getline(ss, fuelType, ',');
+        std::getline(ss, transmission, ',');
+        std::getline(ss, color, ',');
+        std::getline(ss, remarks, ',');
+        std::getline(ss, isActive, ',');
+        bool isActiveBool = (isActive == "1" || isActive == "true");
+        Car newCar(licensePlate, model, brand,  yearOfFirstRegistrationInt, mileageInt, dailyRateFloat, fuelType,
+                   transmission, color, remarks, isActiveBool);
+        cars.emplace_back(newCar);
     }
     file.close();
 }
 
 void CarRepository::writeToCsv() {
     std::ofstream file(this->fileName);
-    for (auto &car: this->cars)
-        file << car.toCsv() << "\n";
+    for (auto &car: this->cars){
+        file << car.getLicensePlate() <<","
+            << car.getModel() << ","
+            << car.getBrand() << ","
+            << car.getYearOfFirstRegistration() << ","
+            << car.getMileage() << ","
+            << car.getDailyRate() << ","
+            << car.getFuelType() << ","
+            << car.getTransmission() << ","
+            << car.getColor() << ","
+            << car.getRemarks() << ","
+            << car.getisActive() << std::endl;
+    }
     file.close();
 }
 
@@ -80,7 +111,7 @@ std::vector<Car> CarRepository::listAllCars() {
 }
 
 std::vector<Car> CarRepository::searchCar(std::string &licensePlate) {
-    std::vector results = std::vector<Car>{};
+    std::vector <Car> results;
     for(Car car:this->cars){
         size_t found = car.getLicensePlate().find(licensePlate);
         if (found != std::string::npos)  {
