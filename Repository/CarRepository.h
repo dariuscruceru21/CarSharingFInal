@@ -22,6 +22,9 @@ private:
 public:
 
     CarRepository(std::string fileName);
+    CarRepository() {readFromCsv();};
+
+    std::string getFileName();
 
     Car findByLicensePlate(std::string &licensePlate);
 

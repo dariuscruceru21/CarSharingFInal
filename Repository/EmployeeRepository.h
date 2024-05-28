@@ -15,7 +15,8 @@ private:
     std::string fileName;
 
 public:
-    EmployeeRepository() {}
+    EmployeeRepository() { readFromCsv(); }
+    EmployeeRepository(std::string &fileName);
 
     ~EmployeeRepository() {}
 

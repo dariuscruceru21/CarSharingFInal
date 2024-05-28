@@ -29,6 +29,8 @@ public:
 
     CustomerHandlingRepository(const std::string& fileName);
 
+    CustomerHandlingRepository(){readFromCsv();}
+
     // Only Employees are allowed to create, delete and update clients
     // Only Employees are allowed to see Client related data
 
@@ -81,7 +83,7 @@ public:
     //false path to be used in UI to display error message accordingly
     bool validateProfileByGDPR(Customer c);
 
-
+    std::string getFileName();
 
 };
 

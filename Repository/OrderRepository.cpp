@@ -1,6 +1,11 @@
 #include "OrderRepository.h"
+#include "User.h"
 
 
+OrderRepository::OrderRepository(std::string &filename) {
+    this->filename = filename;
+    orders = readFromCsv();
+}
 
 
 std::vector<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, tm start, tm end) {
@@ -134,86 +139,28 @@ void OrderRepository::updateOrder(Order obj) {
 }
 
 //B.3
-std::string OrderRepository::returnUserType(Order obj) {
-    std::ifstream f("../Information/Customers.csv");
 
-    std::list<Customer> repo1;
-    std::string line;
-    while (std::getline(f, line)) {
-        Order obj1;
-        obj1.fromCSV(line);
-        /**TODO waiting for permission check (login page) */
-    }
-}
-
-/**maybe this ?
- * TODO
- * need to modify the params*/
-std::vector<Order> OrderRepository::removeReservation(int orderNr, const std::string& requesterRole, const std::string& requesterID) {
+void OrderRepository::removeReservation(int orderNr, User user) {
     std::ifstream f(filename);
     if (!f.is_open()) {
         std::cerr << "Unable to open file " << filename << std::endl;
-        return std::vector<Order>();
+        return;
     }
 
-    std::list<Order> repo;
-    std::string line;
-    bool removed = false;
+    std::vector<Order> copy;
+    for (Order obj: orders)
+    {
+        if (obj.getOrderNr() != orderNr)
+            copy.push_back(obj);
+        else
+        {
 
-    while (std::getline(f, line)) {
-        Order obj1;
-        obj1.fromCSV(line);
-
-        if (obj1.getOrderNr() != orderNr) {
-            repo.push_back(obj1);
-        } else {
-            // Check if the requester is allowed to remove this reservation
-            if (requesterRole == "admin" || requesterRole == "employee" || obj1.getCustomer() == requesterID) {
-                removed = true;  // Reservation removed
-            } else {
-                // If not allowed, keep the reservation
-                repo.push_back(obj1);
-            }
         }
     }
-
-    f.close();
-
-    if (removed) {
-        // Save the updated list back to the file
-        std::ofstream outFile(filename, std::ofstream::trunc);
-        if (!outFile.is_open()) {
-            std::cerr << "Unable to open file " << filename << std::endl;
-            return std::vector<Order>();
-        }
-
-        for (auto& order : repo) {
-            outFile << order.toCSV() << "\n";
-        }
-
-        outFile.close();
-    }
-
-    return convertListToVector(repo);
+    orders = copy;
 }
 
-//std::list <Order> OrderRepository::removeReservation(int orderNr) {
-//    std::ifstream f(filename);
-//
-//    std::list<Order> repo;
-//    std::string line;
-//    while (std::getline(f, line)) {
-//        Order obj1;
-//        obj1.fromCSV(line);
-//        if (obj1.getOrderNr() != orderNr)
-//            repo.push_back(obj1);
-//        else if(obj1.getCustomer())
-//    }
-//
-//    f.close();
-//    return repo;
-//
-//}
+
 
 //B.3.3
 std::vector<Order> OrderRepository::changeReservation(int orderNr) {
@@ -305,7 +252,7 @@ std::vector<Order> OrderRepository::convertListToVector(std::list<Order> &repo) 
 
 
 
-void OrderRepository::readFromCsv() {
+std::vector<Order> OrderRepository::readFromCsv() {
     std::vector<Order> orders;
 
     orders.clear();
@@ -322,7 +269,7 @@ void OrderRepository::readFromCsv() {
             customerEmail, employeeEmail, totalCost, observation;
 
             std::getline(ss, orderNr, ',');
-            int orderNrFloat = std::stoi(orderNr);
+            int orderNrInt = std::stoi(orderNr);
             std::getline(ss, orderDate, ',');
             std::getline(ss, beginDate, ',');
             std::getline(ss, endDate, ',');
@@ -335,11 +282,12 @@ void OrderRepository::readFromCsv() {
             std::getline(ss, observation, ',');
 
 
-            // Create Customer object and add to vector
-            auto obj = new Order(orderNr, orderDate, beginDate, endDate, status, carLicensePlate,
-                                 customerEmail, employeeEmail, totalCost, observation)
+            orders.emplace_back(orderNrInt, orderDate, beginDate, endDate, status, carLicensePlate,
+                                customerEmail, employeeEmail, totalCostFloat, observation);
+
         }
         file.close();
+        return orders;
     } else {
         std::cerr << "Unable to open file: " << filename << std::endl;
     }
@@ -347,21 +295,27 @@ void OrderRepository::readFromCsv() {
 }
 
 void OrderRepository::writeToCsv() {
-    std::ofstream file(fileName);
+    std::vector<Order> orders = listAllOrders();
+//int orderNr, std::string orderDate, std::string start, std::string end, std::string status, std::string carLicensePlate,
+//          std::string customerEmail, std::string employeeEmail, int totalCost, std::string observation
+    std::ofstream file(filename);
     if (file.is_open()) {
-        for (Customer &customer: Customers) {
+        for (Order &customer: orders) {
             // Write each customer's data in CSV format
-            file << customer.getName() << ","
-                 << customer.getSurname() << ","
-                 << customer.getEmail() << ","
-                 << customer.getPassword() << ","
-                 << customer.getAddress() << ","
-                 << customer.getRemarks() << ","
-                 << customer.getPhone() << ","
-                 << (customer.getGdprDeleted() ? "1" : "0") << std::endl;
+            file << customer.getOrderNr() << ","
+                 << customer.getOrderDate() << ","
+                 << customer.getStart() << ","
+                 << customer.getEnd() << ","
+                 << customer.getStatus() << ","
+                 << customer.getCar().getLicensePlate() << ","
+                 << customer.getCustomer().getEmail() << ","
+                 << customer.getEmployee().getEmail() << ","
+                 << customer.getMoney() << ","
+                 << customer.getObservation() << ","
+                 <<  std::endl;
         }
         file.close();
     } else {
-        std::cerr << "Unable to open file: " << fileName << std::endl;
+        std::cerr << "Unable to open file: " << filename << std::endl;
     }
 }
