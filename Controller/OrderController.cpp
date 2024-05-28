@@ -47,15 +47,18 @@ void OrderController::completeOrder(int id) {
     repo.updateOrder(completed);
 }
 
-void OrderController::takeAwayOrder(int id, Employee employee) {
+void OrderController::takeAwayOrder(int id, std::string employeeName, std::string employeeSurname) {
     Order change = repo.searchOrder(id);
-    change.setEmployee(employee);
+    EmployeeRepository employeeSearch;
+    change.setEmployee(employeeSearch.findEmployeeByName(employeeName, employeeSurname));
     repo.updateOrder(change);
 }
 
-void OrderController::takeOverOrder(int id) {
+void OrderController::takeOverOrder(int id, std::string employeeName, std::string employeeSurname) {
     Order change = repo.searchOrder(id);
-    change.setEmployee()
+    EmployeeRepository employeeSearch;
+    change.setEmployee(employeeSearch.findEmployeeByName(employeeName, employeeSurname));
+    repo.updateOrder(change);
 }
 
 std::list<Order> OrderController::listOrders() {

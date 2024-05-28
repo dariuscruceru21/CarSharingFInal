@@ -20,9 +20,10 @@ Employee::Employee(std::string name, std::string surname, std::string email, std
     this->abbreviation = abbreviation;
     this->salary = salary;
     this->remarks = remarks;
+    this->admin = false;
 }
 
-Employee::Employee() {}
+Employee::Employee() : admin(false){}
 
 //getters
 
@@ -61,6 +62,11 @@ float Employee::getSalary() const{
 std::string Employee::getPosition() const {
     return this->position;
 }
+
+bool Employee::isAdmin() {
+    return admin;
+}
+
 //setters
 
 void Employee::setName(std::string newName) {
@@ -100,6 +106,9 @@ void Employee::updateProfile() {
 
 }
 
+void Employee::setAdmin(bool adminStatus) {
+    admin = adminStatus;
+}
 
 
 

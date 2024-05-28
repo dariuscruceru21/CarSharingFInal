@@ -21,6 +21,7 @@ protected:
     std::string birthdate;
     float salary;
     std::string position;
+    bool admin;
 public:
 
     //constructor
@@ -48,6 +49,8 @@ public:
 
     std::string getBirthdate() const;
 
+    bool isAdmin();
+
     //setters
     void setPosition(std::string newPosition);
 
@@ -70,6 +73,8 @@ public:
     void updateProfile();
 
 
+
+    void setAdmin(bool adminStatus);
 
 };
 
