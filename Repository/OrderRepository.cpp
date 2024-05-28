@@ -8,12 +8,12 @@ OrderRepository::OrderRepository(std::string &filename) {
 }
 
 
-std::vector<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, tm start, tm end) {
+std::vector<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, std::string start, std::string end) {
     std::list<Order> orderList;
     for (Order obj: repository)
     {
-        if (obj.getStart().tm_year >= start.tm_year && obj.getStart().tm_mon >= start.tm_mon && obj.getStart().tm_mday >= start.tm_mday)
-            if (obj.getEnd().tm_year <= end.tm_year && obj.getEnd().tm_mon <= end.tm_mon && obj.getEnd().tm_mday <= end.tm_mday)
+        if (obj.getStart() >= start && obj.getStart() >= start && obj.getStart() >= start)
+            if (obj.getEnd() <= end && obj.getEnd() <= end && obj.getEnd() <= end)
         {
             orderList.push_back(obj);
         }
@@ -30,17 +30,28 @@ std::vector<Order> OrderRepository::showAllOrdersInASpecificTimeInterval(std::ve
 }
 
 
-void OrderRepository::totalSumOfATimeInterval(std::vector<Order> repository, tm time, std::string type) { //type: either month or year
+void OrderRepository::totalSumOfATimeInterval(std::vector<Order> repository, std::string time, std::string type) { //type: either month or year
+    //YYYY/MM/DD
+
+
     if (type == "month")
         for (Order obj: repository)
         {
-            if (obj.getStart().tm_mon <= time.tm_mon && obj.getEnd().tm_mon >= time.tm_mon) //if the month is included in the order's time interval
+            string c1(1, obj.getStart()[5]), c2(1, obj.getStart()[6]);
+            //c1 + c2 is the month of the start date  (format: YYYY/MM/DD)
+            string c3(1, obj.getEnd()[5]), c4(1, obj.getEnd()[6]);
+            //c3 + c4 is the month of the end date (format: YYYY/MM/DD)
+            if ((c1+c2) <= time && (c3+c4) >= time) //if the month is included in the order's time interval
                 std::cout << obj.getOrderNr() << ": price-" << obj.getMoney() << ", car-" << obj.getCar().getBrand() << ", customer-" << obj.getCustomer().getSurname() << ", employee-" << obj.getEmployee().getSurname();
         }
     else
         for (Order obj: repository)
         {
-            if (obj.getStart().tm_year >= time.tm_year && obj.getEnd().tm_year <= time.tm_year) //if the order time is included in the given year
+            string c1(1, obj.getStart()[0]), c2(1, obj.getStart()[1]), c3(1, obj.getStart()[2]), c4(1, obj.getStart()[3]);
+            //c1 + c2 is the year of the start (format: YYYY/MM/DD)
+            string c5(1, obj.getEnd()[0]), c6(1, obj.getEnd()[1]), c7(1, obj.getEnd()[2]), c8(1, obj.getEnd()[3]);
+            //c3 + c4 is the year of the end (format: YYYY/MM/DD)
+            if ((c1+c2+c3+c4) >= time && (c5+c6+c7+c8) <= time) //if the order time is included in the given year
                 std::cout<<obj.getOrderNr()<<": price-"<<obj.getMoney()<<", car-"<<obj.getCar().getBrand()<<", user-"<<obj.getCustomer().getSurname()<<", employee-"<<obj.getEmployee().getSurname();
 
         }
@@ -140,77 +151,36 @@ void OrderRepository::updateOrder(Order obj) {
 
 //B.3
 
-void OrderRepository::removeReservation(int orderNr, User user) {
-    std::ifstream f(filename);
-    if (!f.is_open()) {
-        std::cerr << "Unable to open file " << filename << std::endl;
-        return;
-    }
+void OrderRepository::removeReservation(int orderNr) {
 
     std::vector<Order> copy;
     for (Order obj: orders)
     {
         if (obj.getOrderNr() != orderNr)
             copy.push_back(obj);
-        else
-        {
-
-        }
     }
     orders = copy;
+
+    writeToCsv();
 }
 
 
 
 //B.3.3
-std::vector<Order> OrderRepository::changeReservation(int orderNr) {
-    std::ifstream f(filename);
-
-    std::list<Order> repo;
-    std::string line;
-    while (std::getline(f, line)) {
-        Order obj1;
-        obj1.fromCSV(line);
-        if (obj1.getOrderNr() != orderNr)
-            repo.push_back(obj1);
-
+void OrderRepository::changeReservation(Order newReservation) {
+    std::vector<Order> copy;
+    for (Order obj: orders)
+    {
+        if (obj.getOrderNr() != newReservation.getOrderNr())
+            copy.push_back(obj);
+        else
+        {
+            copy.push_back(newReservation);
+        }
     }
-    f.close();
+    orders = copy;
 
-//    std::list<Order> aux;
-//    for (Order obj: repo)
-//        if (obj.getOrderNr() != obj.getOrderNr())
-//            aux.push_back(obj);
-//        else if ( /*is admin*/) { /**TODO verification*/
-//            int option;
-//            std::cin >> option;
-//
-//            switch (option) {
-//                case 1: {    //Admins
-//
-//                    break;
-//                }
-//                case 2: {
-//
-//                    break;
-//                }
-//            }
-//        } else if ( /*is customer*/) {
-//            int option;
-//            std::cin >> option;
-//
-//            switch (option) {
-//                case 1: {    //customers
-//
-//                    break;
-//                }
-//                case 2: {
-//
-//                    break;
-//                }
-//            }
-//        }
-    return convertListToVector(repo);
+    writeToCsv();
 }
 std::vector<Order> OrderRepository::listAllOrders() const {
     std::ifstream f(filename);
@@ -253,8 +223,6 @@ std::vector<Order> OrderRepository::convertListToVector(std::list<Order> &repo) 
 
 
 std::vector<Order> OrderRepository::readFromCsv() {
-    std::vector<Order> orders;
-
     orders.clear();
     std::ifstream file(filename);
     if (file.is_open()) {
@@ -295,7 +263,7 @@ std::vector<Order> OrderRepository::readFromCsv() {
 }
 
 void OrderRepository::writeToCsv() {
-    std::vector<Order> orders = listAllOrders();
+
 //int orderNr, std::string orderDate, std::string start, std::string end, std::string status, std::string carLicensePlate,
 //          std::string customerEmail, std::string employeeEmail, int totalCost, std::string observation
     std::ofstream file(filename);

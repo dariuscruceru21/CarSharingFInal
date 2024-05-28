@@ -1,7 +1,7 @@
 #include "Order.h"
-#include "CarRepository.h"
-#include "CustomerHandlingRepository.h"
-#include "EmployeeRepository.h"
+#include "../Repository//CarRepository.h"
+#include "../Repository//CustomerHandlingRepository.h"
+#include "../Repository//EmployeeRepository.h"
 
 Order::Order(float totalCost, std::string observation, Customer user, std::string start, std::string end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
@@ -141,9 +141,6 @@ std::string Order::getObservation() {
     return observation;
 }
 
-long long Order::getDiff() {  ///va trebui putin diferit aici, ma uit eu daca nu
-    return mktime(end)-mktime(start);
-}
 
 void Order::writeAll() {
     std::cout<<orderNumber<<" ordered on "<<orderDate<<"; from "<<start<<" until "<<end

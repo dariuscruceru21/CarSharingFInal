@@ -11,10 +11,11 @@ void OrderUi::displayMenu() {
     std::cout << "5. Take Away Order\n";
     std::cout << "6. List Orders\n";
     std::cout << "7. Search Order\n";
+    std::cout << "8. Remove Order\n";
     std::cout << "0. Exit\n";
 }
 
-void OrderUi::handleUserInput() {
+void OrderUi::handleUserInput(int userType) {
     int choice;
     do {
         displayMenu();
@@ -43,6 +44,16 @@ void OrderUi::handleUserInput() {
             case 7:
                 searchOrder();
                 break;
+            case 8:
+                if (userType == 3)
+                {
+                    removeOrder();
+                }//remove
+                else if (userType <= 2)
+                {
+                    std::cout<<"Cannot remove order; permissions not granted\n";
+                }
+                break;
             case 0:
                 std::cout << "Exiting...\n";
                 break;
@@ -56,7 +67,7 @@ void OrderUi::handleUserInput() {
 void OrderUi::createOrder() {
     float totalCost;
     std::string observation;
-    tm start = {}, end = {};
+    std::string start, end;
 
     std::cout << "Enter total cost: ";
     std::cin >> totalCost;
@@ -71,15 +82,11 @@ void OrderUi::createOrder() {
     std::cout << "Enter customer contact: ";
     std::getline(std::cin, customerContact);
 
-    std::cout << "Enter start time (year month day hour minute): ";
-    std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
-    start.tm_year -= 2000;
-    start.tm_mon -= 1;
+    std::cout << "Enter start time (year month day; Format: YYYY/MM/DD, for ex. introduce 2004/10/21): ";
+    std::cin >> start;
 
-    std::cout << "Enter end time (year month day hour minute): ";
-    std::cin >> end.tm_year >> end.tm_mon >> end.tm_mday >> end.tm_hour >> end.tm_min;
-    end.tm_year -= 2000;
-    end.tm_mon -= 1;
+    std::cout << "Enter end time (year month day; Format: YYYY/MM/DD, for ex. introduce 2004/10/21): ";
+    std::cin >> end;
 
     std::string carMake, carModel, carPlate;
     std::cin.ignore(); // Clear the input buffer
@@ -103,7 +110,7 @@ void OrderUi::createOrder() {
 void OrderUi::updateOrder() {
     float totalCost;
     std::string observation;
-    tm start = {}, end = {};
+    std::string start, end;
     int id;
 
     std::cout << "Enter order ID to update: ";
@@ -123,15 +130,11 @@ void OrderUi::updateOrder() {
     std::cout << "Enter customer contact: ";
     std::getline(std::cin, customerContact);
 
-    std::cout << "Enter start time (year month day hour minute): ";
-    std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
-    start.tm_year -= 2000;
-    start.tm_mon -= 1;
+    std::cout << "Enter start time (year month day; Format: YYYY/MM/DD, for ex. introduce 2004/10/21): ";
+    std::cin >> start;
 
-    std::cout << "Enter end time (year month day hour minute): ";
-    std::cin >> end.tm_year >> end.tm_mon >> end.tm_mday >> end.tm_hour >> end.tm_min;
-    end.tm_year -= 2000;
-    end.tm_mon -= 1;
+    std::cout << "Enter end time (year month day; Format: YYYY/MM/DD, for ex. introduce 2004/10/21): ";
+    std::cin >> end;
 
     std::string carMake, carModel, carPlate;
     std::cin.ignore(); // Clear the input buffer
@@ -211,4 +214,12 @@ void OrderUi::takeOverOrder() {
 
     controller.takeOverOrder(id, employeeName, employeeSurname);
     std::cout << "Order taken over successfully.\n";
+}
+
+int OrderUi::removeOrder() {
+    int id;
+    std::cout<<" Enter order ID to remove: ";
+    std::cin>>id;
+    controller.removeReservation(id);
+
 }
