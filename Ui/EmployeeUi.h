@@ -1,7 +1,7 @@
 #ifndef EMPLOYEE_UI_H
 #define EMPLOYEE_UI_H
 
-#include "EmployeeController.h"
+#include "../Controller/EmployeeController.h"
 #include <iostream>
 #include <string>
 
