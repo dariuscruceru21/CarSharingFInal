@@ -1,7 +1,7 @@
 #include "TestCarRepository.h"
 #include <iostream>
 
-void TestCarRepository::testAll() {
+void TestCarRepository::testAllCR() {
     CarRepository repository("test_cars.csv");
 
     testSaveCar(repository);

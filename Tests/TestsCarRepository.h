@@ -5,13 +5,13 @@
 
 class TestCarRepository {
 public:
-    void testAll();
+    void testAllCR();
 private:
-    void testSaveCar(CarRepository &repository);
-    void testUpdateCar(CarRepository &repository);
-    void testDeleteCar(CarRepository &repository);
-    void testFindCarByLicensePlate(CarRepository &repository);
-    void testListAllCars(CarRepository &repository);
+    void testSaveCar(CarRepository &repository); // Test saving a car
+    void testUpdateCar(CarRepository &repository); // Test updating a car
+    void testDeleteCar(CarRepository &repository); // Test deleting a car
+    void testFindCarByLicensePlate(CarRepository &repository); // Test finding a car by its license plate
+    void testListAllCars(CarRepository &repository); // Test listing all cars
 };
 
 #endif // TESTCARREPOSITORY_H
