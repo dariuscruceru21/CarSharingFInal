@@ -1,9 +1,9 @@
 #include "Order.h"
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *start, tm *end, Car car) : car(car) {
+Order::Order(float totalCost, std::string observation, Customer user, tm start, tm end, Car car) : car(car) {
     //order type: reservation (start is given by parameter)
 
-    bool check = callAllValidationFunctions(car, *start, *end, "Reservation", user);  //requirement B5: Validations
+    bool check = callAllValidationFunctions(car, start, end, "Reservation", user);  //requirement B5: Validations
     if (!check) { status = "Error"; return;}  //order is not created; in Repository class, object will not be added if status == Error
 
     time_t now = time(0);
@@ -12,16 +12,16 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *start,
     this->customer = user;
     orderDate = localtime(&now);
     this->status = "Reservation";
-    this->start = start;
-    this->end = end;
+    this->start =& start;
+    this->end = &end;
     //specification B5.5: employee field is not specified
 }
 
-Order::Order(float totalCost, std::string observation, Customer user, tm *end, Car car, Employee employee1)
+Order::Order(float totalCost, std::string observation, Customer user, tm start, Car car, Employee employee1)
         : car(car) {
     //order type: currently active (start equals current time)
 
-    bool check = callAllValidationFunctions(car,*start,*end,"Order",user);
+    bool check = callAllValidationFunctions(car,start,*end,"Order",user);
     if (!check) { status = "Error"; return;}  //order is not created
 
     this->car = car;
@@ -33,7 +33,7 @@ Order::Order(float totalCost, std::string observation, Customer user, tm *end, C
     orderDate = localtime(&now);
     this->status = "Order";
     this->start = localtime(&now);
-    this->end = end;
+    this->start = &start;
 
 
 }
@@ -123,7 +123,7 @@ std::string Order::getObservation() {
 }
 
 long long Order::getDiff() {
-    return difftime(mktime(end), mktime(start));
+    return mktime(end)-mktime(start);
 }
 
 void Order::writeAll() {

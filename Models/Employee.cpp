@@ -14,6 +14,7 @@ Employee::Employee(std::string name, std::string surname, std::string email, std
     this->name = name;
     this->surname = surname;
     this->email = email;
+    this->password = password;
     this->position = position;
     this->birthdate = birthdate;
     this->abbreviation = abbreviation;
@@ -26,35 +27,39 @@ Employee::Employee() : admin(false){}
 
 //getters
 
-std::string Employee::getName() {
+std::string Employee::getName() const {
     return this->name;
 }
 
-std::string Employee::getSurname() {
+std::string Employee::getSurname() const{
     return this->surname;
 }
 
-std::string Employee::getEmail() {
+std::string Employee::getEmail() const{
     return this->email;
 }
 
-std::string Employee::getAbbreviation() {
+std::string Employee::getPassword() const{
+    return this->password;
+}
+
+std::string Employee::getAbbreviation() const{
     return this->abbreviation;
 }
 
-std::string Employee::getRemarks() {
+std::string Employee::getRemarks() const{
     return this->remarks;
 }
 
-std::string Employee::getBirthdate() {
+std::string Employee::getBirthdate() const{
     return this->birthdate;
 }
 
-float Employee::getSalary() {
+float Employee::getSalary() const{
     return salary;
 }
 
-std::string Employee::getPosition() {
+std::string Employee::getPosition() const {
     return this->position;
 }
 
@@ -106,27 +111,6 @@ void Employee::setAdmin(bool adminStatus) {
 }
 
 
-std::string Employee::toCsv() {
-    std::ostringstream oss;
-    oss << this->name << "," << this->surname << "," << this->email << "," << this->position << "," << this->birthdate
-        << "," << this->abbreviation << "," << this->salary << "," << this->remarks << "," << this->admin;
-}
-
-void Employee::fromCsv(std::string &csvLine) {
-    std::istringstream ss(csvLine);
-    std::getline(ss,this->name,',');
-    std::getline(ss,this->surname,',');
-    std::getline(ss,this->email,',');
-    std::getline(ss,this->position,',');
-    std::getline(ss, this->birthdate, ',');
-    std::getline(ss,this->abbreviation,',');
-    ss >> this->salary;
-    ss.ignore(1);
-    std::getline(ss,this->remarks,',');
-    ss >> admin;
-}
 
 
-std::string Employee::getPassword() {
-    return this->password;
-}
+

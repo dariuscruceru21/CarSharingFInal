@@ -56,10 +56,7 @@ void OrderUi::handleUserInput() {
 void OrderUi::createOrder() {
     float totalCost;
     std::string observation;
-    Customer user;
     tm start = {}, end = {};
-    Car car;
-    Employee employee;
 
     std::cout << "Enter total cost: ";
     std::cin >> totalCost;
@@ -73,8 +70,6 @@ void OrderUi::createOrder() {
     std::getline(std::cin, customerName);
     std::cout << "Enter customer contact: ";
     std::getline(std::cin, customerContact);
-    user.setName(customerName);
-    user.setPhone(customerContact);
 
     std::cout << "Enter start time (year month day hour minute): ";
     std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
@@ -94,29 +89,21 @@ void OrderUi::createOrder() {
     std::getline(std::cin, carModel);
     std::cout << "Enter car plate number: ";
     std::getline(std::cin, carPlate);
-    car.setModel(carMake);
-    car.setModel(carModel);
-    car.setLicensePlate(carPlate);
 
-    std::string employeeName, employeePosition;
+    std::string employeeName, employeeSurname;
     std::cout << "Enter employee name: ";
     std::getline(std::cin, employeeName);
-    std::cout << "Enter employee position: ";
-    std::getline(std::cin, employeePosition);
-    employee.setName(employeeName);
-    employee.setPosition(employeePosition);
+    std::cout << "Enter employee surname: ";
+    std::getline(std::cin, employeeSurname);
 
-    controller.createOrder(totalCost, observation, user, start, end, car, employee);
+    controller.createOrder(totalCost, observation, customerContact, start, end, carPlate, employeeName, employeeSurname);
     std::cout << "Order created successfully.\n";
 }
 
 void OrderUi::updateOrder() {
     float totalCost;
     std::string observation;
-    Customer user;
     tm start = {}, end = {};
-    Car car;
-    Employee employee;
     int id;
 
     std::cout << "Enter order ID to update: ";
@@ -135,8 +122,6 @@ void OrderUi::updateOrder() {
     std::getline(std::cin, customerName);
     std::cout << "Enter customer contact: ";
     std::getline(std::cin, customerContact);
-    user.setName(customerName);
-    user.setPhone(customerContact);
 
     std::cout << "Enter start time (year month day hour minute): ";
     std::cin >> start.tm_year >> start.tm_mon >> start.tm_mday >> start.tm_hour >> start.tm_min;
@@ -156,19 +141,14 @@ void OrderUi::updateOrder() {
     std::getline(std::cin, carModel);
     std::cout << "Enter car plate number: ";
     std::getline(std::cin, carPlate);
-    car.setModel(carMake);
-    car.setModel(carModel);
-    car.setLicensePlate(carPlate);
 
-    std::string employeeName, employeePosition;
+    std::string employeeName, employeeSurname;
     std::cout << "Enter employee name: ";
     std::getline(std::cin, employeeName);
-    std::cout << "Enter employee position: ";
-    std::getline(std::cin, employeePosition);
-    employee.setName(employeeName);
-    employee.setPosition(employeePosition);
+    std::cout << "Enter employee surname: ";
+    std::getline(std::cin, employeeSurname);
 
-    controller.updateOrder(totalCost, observation, user, start, end, car, employee, id);
+    controller.updateOrder(totalCost, observation, customerContact, start, end, carPlate, employeeName, employeeSurname, id);
     std::cout << "Order updated successfully.\n";
 }
 
@@ -182,7 +162,6 @@ void OrderUi::completeOrder() {
 
 void OrderUi::takeAwayOrder() {
     int id;
-//    Employee employee;
 
     std::cout << "Enter order ID to take away: ";
     std::cin >> id;
@@ -195,8 +174,6 @@ void OrderUi::takeAwayOrder() {
     std::getline(std::cin, employeeSurname);
     std::cout << "Enter employee position: ";
     std::getline(std::cin, employeePosition);
-//    employee.setName(employeeName);
-//    employee.setPosition(employeePosition);
 
     controller.takeAwayOrder(id, employeeName, employeeSurname);
     std::cout << "Order taken away successfully.\n";
@@ -219,7 +196,6 @@ void OrderUi::searchOrder() {
 
 void OrderUi::takeOverOrder() {
     int id;
-//    Employee employee;
 
     std::cout << "Enter order ID to take over: ";
     std::cin >> id;
@@ -232,8 +208,6 @@ void OrderUi::takeOverOrder() {
     std::getline(std::cin, employeeSurname);
     std::cout << "Enter employee position: ";
     std::getline(std::cin, employeePosition);
-//    employee.setName(employeeName);
-//    employee.setPosition(employeePosition);
 
     controller.takeOverOrder(id, employeeName, employeeSurname);
     std::cout << "Order taken over successfully.\n";

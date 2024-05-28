@@ -37,7 +37,7 @@ public:
                         std::string remarks, std::string phone, bool gdprDeleted, std::string customerPassword,
                         std::vector<std::string> favoriteCars);
 
-    void deleteCustomer(std::string Email);
+    void deleteCustomer(std::string email);
 
     void updateCustomer(Customer& updatedCustomer);
 

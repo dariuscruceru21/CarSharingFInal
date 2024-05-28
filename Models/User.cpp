@@ -49,20 +49,7 @@ void User::setUserPassword(std::string newPassword) {
     this->password = newPassword;
 }
 
-std::string User::toCsv() {
-    std::ostringstream oss;
-    oss << this->id<<","<<this->email<<","<<this->password<<","<<this->firstName<<","<<this->lastName;
-}
 
-void User::fromCsv(std::string &csvLine) {
-    std::istringstream ss(csvLine);
-    ss >> this->id;
-    ss.ignore(1);//ignore comma for ints,floats...
-    std::getline(ss,this->email,',');
-    std::getline(ss,this->password,',');
-    std::getline(ss,this->firstName,',');
-    std::getline(ss,this->lastName,',');
-}
 
 std::string User::inputEmail() {
     std::string email;
@@ -91,12 +78,19 @@ bool User::login() {
     std::vector<Employee> employes = emplyeeRepo.getEmployes();
 
     for(int i = 0; i<customers.size();i++)
-        if(email == customers[i].getEmail() && password == customers[i].getPassword())
+        if(email == customers[i].getEmail() && password == customers[i].getPassword()){
+            std::cout<<"You're logged in as a Customer";
             return true;
+        }
     for(int i = 0; i<employes.size();i++)
-        if(email == employes[i].getEmail() && password == employes[i].getPassword())
+        if(email == employes[i].getEmail() && password == employes[i].getPassword()){
+            std::cout<<"You're an Employee";
             return true;
+        }
+
     std::cout<<"Email or Password wrong!";
     return login();
 
 }
+
+User::User() {}

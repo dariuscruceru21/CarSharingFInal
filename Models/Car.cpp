@@ -109,34 +109,6 @@ bool Car::getisActive() {
     return isActive;
 }
 
-std::string Car::toCsv() {
-    std::ostringstream oss;
-    oss << this->licensePlate << "," << this->model << "," << this->brand << "," << this->yearOfFirstRegistration << ","
-        << this->mileage << "," << this->dailyRate << "," << this->fuelType << "," << this->transmission << ","
-        << this->color << "," << this->remarks;
-}
-
-void Car::fromCsv(std::string &csvLine) {
-    std::istringstream ss(csvLine);
-    //only strings
-    std::getline(ss, this->model, ',');
-    std::getline(ss, this->brand, ',');
-    std::getline(ss, this->fuelType, ',');
-    std::getline(ss, this->transmission, ',');
-    std::getline(ss, this->color, ',');
-    std::getline(ss, this->remarks, ',');
-
-    //ints,floats---> we ignore the comma
-    ss >> this->licensePlate;
-    ss.ignore(1);
-    ss >> this->dailyRate;
-    ss.ignore(1);
-    ss >> this->yearOfFirstRegistration;
-    ss.ignore(1);
-    ss >> this->mileage;
-    ss.ignore(1);
-
-}
 
 
 

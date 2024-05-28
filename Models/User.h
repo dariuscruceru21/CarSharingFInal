@@ -43,11 +43,7 @@ public:
 
 
 
-    //convert to csv format
-    std::string toCsv();
 
-    //convert into normal type from csv
-    void fromCsv(std::string& csvLine);
 
 };
 
