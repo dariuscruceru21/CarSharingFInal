@@ -1,10 +1,9 @@
 #include "Admin.h"
 
-Admin::Admin(std::string name, std::string surname, std::string email, std::string position, tm *birthdate,
-             std::string abbreviation, float salary, std::string remarks) {
-    Employee(name, surname, email, position, birthdate,
-            abbreviation, salary, remarks);
-}
+// Constructor
+Admin::Admin(std::string name, std::string surname, std::string email, std::string password, std::string position, std::string birthdate,
+             std::string abbreviation, float salary, std::string remarks)
+        : Employee(name, surname, email, password, position, birthdate, abbreviation, salary, remarks) {}
 
 //getters
 std::string Admin::getName() {
@@ -27,7 +26,7 @@ std::string Admin::getRemarks() {
     return this->remarks;
 }
 
-tm *Admin::getBirthdate() {
+std::string Admin::getBirthdate() {
     return this->birthdate;
 }
 
@@ -56,7 +55,7 @@ void Admin::setPosition(std::string newPosition) {
     this->position = newPosition;
 }
 
-void Admin::setBirthdate(tm *newBirthdate) {
+void Admin::setBirthdate(std::string newBirthdate) {
     this->birthdate = newBirthdate;
 }
 

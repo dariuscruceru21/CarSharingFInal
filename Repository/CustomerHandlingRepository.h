@@ -36,7 +36,7 @@ public:
     void createCustomer(std::string name, std::string surname, std::string customerEmail, std::string password, std::string address, std::string remarks, std::string phone,
                         bool gdprDeleted);
 
-    void deleteCustomer(std::string Email);
+    void deleteCustomer(std::string email);
 
     void updateCustomer(Customer& updatedCustomer);
 

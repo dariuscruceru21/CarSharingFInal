@@ -14,18 +14,18 @@ private:
     std::string surname;
     std::string phone;
     std::string customerEmail;
+    std::string password;
     std::string address;
     std::string remarks;
     bool gdprDeleted;
-    std::string password;
     std::vector<std::string> favoriteCars;
 
 
 
 public:
 
-    Customer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
-             std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars);
+    Customer(std::string name, std::string surname, std::string customerEmail,std::string password, std::string address,
+             std::string remarks,std::string phone, bool gdprDeleted);
 
     //pentru default constructor?
     Customer();
@@ -66,11 +66,7 @@ public:
 
     void setGdprDeleted(bool newGdprDeleted);
 
-    //convert to csv format
-    std::string toCsv();
 
-    //convert into normal type from csv
-    void fromCsv(std::string &csvLine);
 };
 
 
