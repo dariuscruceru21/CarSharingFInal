@@ -18,11 +18,11 @@ public:
 
 //    void allOrders();
     //B.4 Auflisten der Bestellungen
-    std::vector<Order> showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, tm start, tm end);
+    std::vector<Order> showAllOrdersInASpecificTimeInterval(std::vector<Order> repository, std::string start, std::string end);
     static bool compareByTotalPrice(Order c1, Order c2)
     { return c1.getMoney() < c2.getMoney(); }
 
-    void totalSumOfATimeInterval(std::vector<Order> repository, tm time, std::string type); //time is either a month or a year (ex. January or 2024)
+    void totalSumOfATimeInterval(std::vector<Order> repository, std::string time, std::string type); //time is either a month or a year (ex. January or 2024)
 
 //    std::list<Order> fromFile();
 
@@ -37,13 +37,13 @@ public:
 
     //B.3 -Grama Andrei
     //Order & Reservation handling
-    std::string returnUserType(Order obj);
-    void removeReservation(int orderNr, User user);
-    std::vector<Order> changeReservation(int orderNr);
+
+    void removeReservation(int orderNr, int userType);
+    void changeReservation(Order newReservation);
 
     static std::vector<Order> convertListToVector(std::list<Order> &repo);
 
-    std::vector<Orders> readFromCsv();
+    std::vector<Order> readFromCsv();
     void writeToCsv();
 };
 

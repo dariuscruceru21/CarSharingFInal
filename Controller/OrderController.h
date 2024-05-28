@@ -27,6 +27,7 @@ public:
 
     Order searchOrder(int id);
 
+    void removeReservation(int orderNr, int userType);
 };
 
 

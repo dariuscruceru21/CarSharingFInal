@@ -14,7 +14,7 @@ private:
 
 public:
     void displayMenu();
-    void handleUserInput();
+    void handleUserInput(int userType);
     void createOrder();
     void updateOrder();
     void completeOrder();
@@ -22,6 +22,7 @@ public:
     void takeAwayOrder();
     void listOrders();
     void searchOrder();
+    int removeOrder(int userType);
 };
 
 
