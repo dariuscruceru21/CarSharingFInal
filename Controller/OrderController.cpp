@@ -2,23 +2,28 @@
 
 #include "OrderController.h"
 
-void OrderController::createOrder(float totalCost, std::string observation, Customer user, tm start, tm end,
-                                  Car car, std::string employeeName, std::string employeeSurname) const{
+void OrderController::createOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end,
+                                  std::string carLicensePlate, std::string employeeName, std::string employeeSurname) const{
 
     EmployeeRepository employeeSearch;
-    Order newOrder(totalCost, observation, user, start, end, car);
+    CustomerHandlingRepository customerSearch("CarSharingFInal/Information/Customers.csv");
+    CarRepository carSearch("");//TODO:carfile
+    Order newOrder(totalCost, observation, customerSearch.searchCustomersByPhoneNumber(customerPhoneNr)[0], start, end, carSearch.findByLicensePlate(carLicensePlate));
     newOrder.setEmployee(employeeSearch.findEmployeeByName(employeeName, employeeSurname));
     newOrder.setRepository(repo.listAllOrders());
     this->repo.saveOrder(newOrder);
 }
 
-void OrderController::updateOrder(float totalCost, std::string observation, Customer user, tm start, tm end,
-                                  Car car, std::string employeeName, std::string employeeSurname, int id) {
+void OrderController::updateOrder(float totalCost, std::string observation, std::string customerPhoneNr, tm start, tm end,
+                                  std::string carLicensePlate, std::string employeeName, std::string employeeSurname, int id) {
     //waiting for login info
+
     Order updatedOrder;
     EmployeeRepository employeeSearch;
-    updatedOrder.setCar(car);
-    updatedOrder.setCustomer(user);
+    CustomerHandlingRepository customerSearch("CarSharingFInal/Information/Customers.csv");
+    CarRepository carSearch("");//TODO: waiting for carfile
+    updatedOrder.setCar(carSearch.findByLicensePlate(carLicensePlate));
+    updatedOrder.setCustomer(customerSearch.searchCustomersByPhoneNumber(customerPhoneNr)[0]);
     updatedOrder.setEnd(end);
     updatedOrder.setStart(start);
     updatedOrder.setMoney(totalCost);
