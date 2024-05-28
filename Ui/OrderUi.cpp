@@ -27,7 +27,7 @@ void OrderUi::handleUserInput(int userType) {
                 createOrder();
                 break;
             case 2:
-                updateOrder();
+                updateOrder(userType);
                 break;
             case 3:
                 completeOrder();
@@ -76,6 +76,9 @@ void OrderUi::createOrder() {
     std::cout << "Enter observation: ";
     std::getline(std::cin, observation);
 
+    std::cout << "Enter status: ";
+    std::getline(std::cin, observation);
+
     std::string customerName, customerContact;
     std::cout << "Enter customer name: ";
     std::getline(std::cin, customerName);
@@ -107,9 +110,9 @@ void OrderUi::createOrder() {
     std::cout << "Order created successfully.\n";
 }
 
-void OrderUi::updateOrder() {
+void OrderUi::updateOrder(int userType) {
     float totalCost;
-    std::string observation;
+    std::string observation, status;
     std::string start, end;
     int id;
 
@@ -123,6 +126,9 @@ void OrderUi::updateOrder() {
 
     std::cout << "Enter observation: ";
     std::getline(std::cin, observation);
+
+    std::cout << "Enter status: ";
+    std::getline(std::cin, status);
 
     std::string customerName, customerContact;
     std::cout << "Enter customer name: ";
@@ -150,9 +156,14 @@ void OrderUi::updateOrder() {
     std::getline(std::cin, employeeName);
     std::cout << "Enter employee surname: ";
     std::getline(std::cin, employeeSurname);
-
-    controller.updateOrder(totalCost, observation, customerContact, start, end, carPlate, employeeName, employeeSurname, id);
-    std::cout << "Order updated successfully.\n";
+    if((userType == 3 || userType ==  2 ) && status != "Completed") {
+        controller.updateOrder(totalCost, observation, customerContact, start, end, carPlate, employeeName,
+                               employeeSurname, id);
+        std::cout << "Order updated successfully.\n";
+    }
+    else{
+        std::cout << "The order cannot be updated.\n";
+    }
 }
 
 void OrderUi::completeOrder() {

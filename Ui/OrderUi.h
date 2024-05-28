@@ -16,7 +16,7 @@ public:
     void displayMenu();
     void handleUserInput(int userType);
     void createOrder();
-    void updateOrder();
+    void updateOrder(int userType);
     void completeOrder();
     void takeOverOrder();
     void takeAwayOrder();
