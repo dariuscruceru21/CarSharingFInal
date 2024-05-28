@@ -108,6 +108,7 @@ std::string Customer::toString(){
         << "Surname: " << surname << "\n"
         << "Phone: " << phone << "\n"
         << "Email: " << customerEmail << "\n"
+        << "Password" << password << "\n"
         << "Address: " << address << "\n"
         << "Remarks: " << remarks << "\n"
         << "GDPR Deleted: " << (gdprDeleted ? "Yes" : "No") << "\n"

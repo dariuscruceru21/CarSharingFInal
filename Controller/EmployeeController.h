@@ -5,7 +5,8 @@
 #ifndef CARSHARINGFINAL_EMPLOYEECONTROLLER_H
 #define CARSHARINGFINAL_EMPLOYEECONTROLLER_H
 
-#include "C:\Users\scoti\CLionProjects\CarSharingFInal\Repository\EmployeeRepository.h"
+#include "../Models/Employee.h"
+#include "../Repository/EmployeeRepository.h"
 #include <vector>
 #include <iostream>
 

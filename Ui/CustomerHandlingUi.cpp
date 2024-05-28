@@ -18,7 +18,7 @@ void CustomerHandlingUI::printMenu() {
 }
 
 void CustomerHandlingUI::handleAddCustomer() {
-    std::string name, surname, email, address, remarks, phone;
+    std::string name, surname, email, address, remarks, phone,password;
     bool gdprDeleted;
 
     std::cout << "Enter Name: ";
@@ -27,6 +27,8 @@ void CustomerHandlingUI::handleAddCustomer() {
     std::cin >> surname;
     std::cout << "Enter Email: ";
     std::cin >> email;
+    std::cout << "Enter Password";
+    std::cin >> password;
     std::cout << "Enter Address: ";
     std::cin >> address;
     std::cout << "Enter Remarks: ";
@@ -37,7 +39,7 @@ void CustomerHandlingUI::handleAddCustomer() {
     std::cin >> gdprDeleted;
 
     try {
-        customerController.addCustomer(name, surname, email, address, remarks, phone, gdprDeleted, favo);
+        customerController.addCustomer(name, surname, email, password, address, remarks, phone, gdprDeleted);
         std::cout << "Customer added successfully!" << std::endl;
     } catch (std::invalid_argument e) {
         std::cerr << "Error: " << e.what() << std::endl;
@@ -75,7 +77,7 @@ void CustomerHandlingUI::handleUpdateCustomer() {
     std::cout << "Is GDPR Deleted (1 for Yes, 0 for No): ";
     std::cin >> gdprDeleted;
 
-    Customer updatedCustomer(name, surname, phone, email, address, remarks, gdprDeleted, password, favoriteCars);
+    Customer updatedCustomer(name, surname, email, password, address, remarks, phone, gdprDeleted);
 
     try {
         customerController.updateCustomer(updatedCustomer);

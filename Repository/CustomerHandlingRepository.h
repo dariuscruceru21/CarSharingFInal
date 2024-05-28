@@ -33,9 +33,9 @@ public:
     // Only Employees are allowed to see Client related data
 
     // Client Handling functions
-    void createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address,
-                        std::string remarks, std::string phone, bool gdprDeleted, std::string customerPassword,
-                        std::vector<std::string> favoriteCars);
+    void createCustomer(std::string name, std::string surname, std::string customerEmail,
+                        std::string password, std::string address, std::string remarks,
+                        std::string phone, bool gdprDeleted);
 
     void deleteCustomer(std::string email);
 
