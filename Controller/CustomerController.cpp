@@ -7,12 +7,13 @@
 
 #include <stdexcept>
 
-void CustomerController::addCustomer(const std::string& name, const std::string& surname, const std::string& customerEmail, const std::string& address, const std::string& remarks, const std::string& phone, bool gdprDeleted) {
-    Customer newCustomer(name, surname, phone, customerEmail, address, remarks, gdprDeleted);
+void CustomerController::addCustomer(std::string name, std::string surname, std::string phone, std::string customerEmail, std::string address,
+                                     std::string remarks, bool gdprDeleted, std::string password, std::vector<std::string> favoriteCars) {
+    Customer newCustomer(name, surname, phone, customerEmail, address, remarks, password, gdprDeleted ,favoriteCars);
 
     if (customerRepo.checkUniqueEmail(newCustomer) && customerRepo.checkFormatEmail(newCustomer) && customerRepo.checkFormatPhoneNumber(newCustomer)) {
         if (customerRepo.validateProfileByGDPR(newCustomer)) {
-            customerRepo.createCustomer(name, surname, customerEmail, address, remarks, phone, gdprDeleted);
+            customerRepo.createCustomer(name, surname, phone, customerEmail, address, remarks, password, gdprDeleted ,favoriteCars);
         } else {
             throw std::invalid_argument("Invalid customer profile according to GDPR.");
         }

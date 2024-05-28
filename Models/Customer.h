@@ -69,6 +69,7 @@ public:
     //convert to csv format
     std::string toCsv();
 
+    std::string toString();
     //convert into normal type from csv
     void fromCsv(std::string &csvLine);
 };

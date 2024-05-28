@@ -31,9 +31,9 @@ void CustomerHandlingRepository::writeToCsv() {
     file.close();
 }
 
-void CustomerHandlingRepository::createCustomer(std::string name, std::string surname, std::string customerEmail, std::string customerPassword, std::string address, std::string remarks, std::string phone,
-                                                bool gdprDeleted) {
-    Customer newCustomer(name, surname, phone, customerEmail, customerPassword, address, remarks, gdprDeleted);
+void CustomerHandlingRepository::createCustomer(std::string name, std::string surname, std::string customerEmail, std::string address, std::string remarks, std::string phone,
+                                                bool gdprDeleted,std::string customerPassword, std::vector<std::string> favoriteCars) {
+    Customer newCustomer(name, surname, phone, customerEmail, address, remarks, gdprDeleted, customerPassword, favoriteCars);
     Customers.push_back(newCustomer);
     Customers.push_back(newCustomer);
     writeToCsv();
@@ -177,9 +177,6 @@ std::vector<Customer> CustomerHandlingRepository::searchCustomersByName(std::str
 }
 
 std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
-    return this->Customers;
-}
-/std::vector<Customer> CustomerHandlingRepository::geterCustomers() {
     return this->Customers;
 }
 

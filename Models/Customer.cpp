@@ -115,5 +115,19 @@ void Customer::fromCsv(std::string &csvLine) {
     ss.ignore(1);//ignores comma
 }
 
-
+std::string Customer::toString(){
+    std::ostringstream oss;
+    oss << "Name: " << name << "\n"
+        << "Surname: " << surname << "\n"
+        << "Phone: " << phone << "\n"
+        << "Email: " << customerEmail << "\n"
+        << "Address: " << address << "\n"
+        << "Remarks: " << remarks << "\n"
+        << "GDPR Deleted: " << (gdprDeleted ? "Yes" : "No") << "\n"
+        << "Favorite Cars: ";
+    for (const auto &car : favoriteCars) {
+        oss << car << " ";
+    }
+    return oss.str();
+}
 
