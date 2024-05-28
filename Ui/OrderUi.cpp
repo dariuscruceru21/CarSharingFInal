@@ -46,10 +46,12 @@ void OrderUi::handleUserInput(int userType) {
                 break;
             case 8:
                 if (userType == 3)
-                {}//remove
-                else if (userType == 2)
                 {
-
+                    removeOrder();
+                }//remove
+                else if (userType <= 2)
+                {
+                    std::cout<<"Cannot remove order; permissions not granted\n";
                 }
                 break;
             case 0:
@@ -214,10 +216,10 @@ void OrderUi::takeOverOrder() {
     std::cout << "Order taken over successfully.\n";
 }
 
-int OrderUi::removeOrder(int userType) {
+int OrderUi::removeOrder() {
     int id;
     std::cout<<" Enter order ID to remove: ";
     std::cin>>id;
-    controller.removeReservation(id,userType);
+    controller.removeReservation(id);
 
 }

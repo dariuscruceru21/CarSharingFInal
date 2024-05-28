@@ -22,7 +22,7 @@ public:
     void takeAwayOrder();
     void listOrders();
     void searchOrder();
-    int removeOrder(int userType);
+    int removeOrder();
 };
 
 
