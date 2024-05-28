@@ -11,10 +11,11 @@ void OrderUi::displayMenu() {
     std::cout << "5. Take Away Order\n";
     std::cout << "6. List Orders\n";
     std::cout << "7. Search Order\n";
+    std::cout << "8. Remove Order\n";
     std::cout << "0. Exit\n";
 }
 
-void OrderUi::handleUserInput() {
+void OrderUi::handleUserInput(int userType) {
     int choice;
     do {
         displayMenu();
@@ -42,6 +43,14 @@ void OrderUi::handleUserInput() {
                 break;
             case 7:
                 searchOrder();
+                break;
+            case 8:
+                if (userType == 3)
+                {}//remove
+                else if (userType == 2)
+                {
+
+                }
                 break;
             case 0:
                 std::cout << "Exiting...\n";
@@ -211,4 +220,12 @@ void OrderUi::takeOverOrder() {
 
     controller.takeOverOrder(id, employeeName, employeeSurname);
     std::cout << "Order taken over successfully.\n";
+}
+
+int OrderUi::removeOrder(int userType) {
+    int id;
+    std::cout<<" Enter order ID to remove: ";
+    std::cin>>id;
+    controller.removeReservation(id,userType);
+
 }
