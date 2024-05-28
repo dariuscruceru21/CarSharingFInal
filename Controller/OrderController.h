@@ -3,6 +3,8 @@
 #define APP_ORDERCONTROLLER_H
 
 #include "../Repository/OrderRepository.h"
+#include "../Repository/EmployeeRepository.h"
+
 #include<list>
 
 class OrderController {
@@ -16,9 +18,9 @@ public:
 
     void completeOrder(int id);
 
-    void takeOverOrder(int id);
+    void takeOverOrder(int id, std::string employeeName, std::string employeeSurname);
 
-    void takeAwayOrder(int id, Employee employee);
+    void takeAwayOrder(int id, std::string employeeName, std::string employeeSurname);
 
     std::list<Order> listOrders();
 
