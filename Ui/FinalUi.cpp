@@ -40,4 +40,5 @@ void FinalUi::runAll() {
     if(user.login() == 2 || user.login() == 3){//Logged as Employee or admin
         handleMenuEmployee();
     }
+
 }
