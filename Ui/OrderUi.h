@@ -13,6 +13,7 @@ private:
     OrderController controller;
 
 public:
+    OrderUi(OrderController& controller) : controller(controller) {}
     void displayMenu();
     void handleUserInput(int userType);
     void createOrder();
